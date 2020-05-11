@@ -55,7 +55,7 @@ public class DB {
             password = "ItsAmeMario123";
 
 // should be updated with database to be edited
-            dataBaseName = "Project";
+            dataBaseName = "CleaningService";
 
 // Load compiled driver(jar file) specific to DB into memory  
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
