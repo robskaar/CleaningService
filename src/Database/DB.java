@@ -14,7 +14,7 @@ import java.util.Properties;
 /**
  * @Author Robert Skaar, revised version from Tommy Haug
  * @Project newProject  -  https://github.com/robskaar
- * @Date 18-03-2020
+ * @Date 11-05-2020
  **/
 
 public class DB {

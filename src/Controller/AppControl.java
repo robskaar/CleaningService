@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 /**
  * @Author Robert Skaar
  * @Project newProject  -  https://github.com/robskaar
- * @Date 18-03-2020
+ * @Date 11-05-2020
  **/
 
 abstract public class AppControl {
