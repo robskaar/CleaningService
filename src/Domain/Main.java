@@ -20,24 +20,24 @@ import javafx.stage.StageStyle;
     public void start(Stage primaryStage) throws Exception {
         //initial stage setup
         Controller_Application.primaryStage = primaryStage;
-        Controller_Application.fxmlLoader = new FXMLLoader(getClass().getResource("../GUI/Costumer/login.fxml"));
+        Controller_Application.fxmlLoader = new FXMLLoader(getClass().getResource("../GUI/Costumer/loginScene.fxml"));
         Controller_Application.parent = Controller_Application.fxmlLoader.load();
         Controller_Application.scene = new Scene(Controller_Application.parent);
 
 
         // Scene created for Log In
-        FXMLLoader logInLoader = new FXMLLoader(getClass().getResource("../GUI/Costumer/login.fxml"));
+        FXMLLoader logInLoader = new FXMLLoader(getClass().getResource("../GUI/Costumer/loginScene.fxml"));
         Parent logInParent = logInLoader.load();
         Controller_Application.logInScene = new Scene(logInParent, 600, 600);
 
         // Scene created for Register
-        FXMLLoader registerLoader = new FXMLLoader(getClass().getResource("../GUI/Costumer/register.fxml"));
+        FXMLLoader registerLoader = new FXMLLoader(getClass().getResource("../GUI/Costumer/registerScene.fxml"));
         Parent registerParent = registerLoader.load();
         Controller_Application.registerScene = new Scene(registerParent, 600, 600);
 
 
         // scene created for loggedIn
-        FXMLLoader loggedInLoader = new FXMLLoader(getClass().getResource("../GUI/Costumer/loggedIn.fxml"));
+        FXMLLoader loggedInLoader = new FXMLLoader(getClass().getResource("../GUI/Costumer/loggedInScene.fxml"));
         Parent loggedInParent = loggedInLoader.load();
         Controller_Application.loggedInScene = new Scene(loggedInParent, 600, 600);
 

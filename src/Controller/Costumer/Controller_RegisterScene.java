@@ -20,7 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class Controller_Register extends Controller_Application implements Initializable {
+public class Controller_RegisterScene extends Controller_Application implements Initializable {
 
     @FXML
     TextField userName;

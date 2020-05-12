@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  * @Date 11-05-2020
  **/
 
-public class Controller_LogIn extends Controller_Application implements Initializable {
+public class Controller_LogInScene extends Controller_Application implements Initializable {
 
     @FXML
     private TextField userName;

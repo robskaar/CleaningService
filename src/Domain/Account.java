@@ -34,7 +34,6 @@ public abstract class Account {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
     }
 
     public static Boolean logIn(String userName, String password) {
