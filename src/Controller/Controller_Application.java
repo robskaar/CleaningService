@@ -1,6 +1,7 @@
 package Controller;
 
 import Domain.ResizeHelper;
+import Domain.ThemeControl;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +20,7 @@ import javafx.stage.Stage;
  * @Date 11-05-2020
  **/
 
-abstract public class AppControl {
+abstract public class Controller_Application {
     @FXML
     Button closeBtn;
     @FXML
@@ -79,7 +80,7 @@ abstract public class AppControl {
         primaryStage.setFullScreen(isFullScreen);
         scene.getStylesheets().clear();
         scene.getStylesheets().add(ThemeControl.currentTheme.getTheme());
-        AppControl.scene = scene;
+        Controller_Application.scene = scene;
         ResizeHelper.addResizeListener(primaryStage);
     }
 

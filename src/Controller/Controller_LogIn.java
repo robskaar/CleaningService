@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  * @Date 11-05-2020
  **/
 
-public class Controller_LogIn extends AppControl implements Initializable {
+public class Controller_LogIn extends Controller_Application implements Initializable {
 
     @FXML
     private TextField userName;
@@ -49,7 +49,7 @@ public class Controller_LogIn extends AppControl implements Initializable {
 
     @Override
     public void changeScene() {
-        changeScene(AppControl.registerScene);
+        changeScene(Controller_Application.registerScene);
         clearFields((Pane) userName.getParent());
     }
 }

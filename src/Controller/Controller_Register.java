@@ -19,7 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class Controller_Register extends AppControl implements Initializable {
+public class Controller_Register extends Controller_Application implements Initializable {
 
     @FXML
     TextField userName;
@@ -121,7 +121,7 @@ public class Controller_Register extends AppControl implements Initializable {
 
     @Override
     public void changeScene() {
-        changeScene(AppControl.logInScene);
+        changeScene(Controller_Application.logInScene);
         clearFields((Pane) userName.getParent());
     }
 }

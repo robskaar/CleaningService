@@ -6,7 +6,7 @@ package Controller;
  * @Date 11-05-2020
  **/
 
-public class Controller_LoggedIn extends AppControl {
+public class Controller_LoggedIn extends Controller_Application {
 
     @Override
     public void changeScene() {

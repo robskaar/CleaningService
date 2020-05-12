@@ -1,8 +1,6 @@
 package Domain;
 
-import Domain.ResizeHelper;
-import Controller.AppControl;
-import Controller.ThemeControl;
+import Controller.Controller_Application;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,37 +19,37 @@ import javafx.stage.StageStyle;
     @Override
     public void start(Stage primaryStage) throws Exception {
         //initial stage setup
-        AppControl.primaryStage = primaryStage;
-        AppControl.fxmlLoader = new FXMLLoader(getClass().getResource("../GUI/login.fxml"));
-        AppControl.parent = AppControl.fxmlLoader.load();
-        AppControl.scene = new Scene(AppControl.parent);
+        Controller_Application.primaryStage = primaryStage;
+        Controller_Application.fxmlLoader = new FXMLLoader(getClass().getResource("../GUI/login.fxml"));
+        Controller_Application.parent = Controller_Application.fxmlLoader.load();
+        Controller_Application.scene = new Scene(Controller_Application.parent);
 
 
         // Scene created for Log In
         FXMLLoader logInLoader = new FXMLLoader(getClass().getResource("../GUI/login.fxml"));
         Parent logInParent = logInLoader.load();
-        AppControl.logInScene = new Scene(logInParent, 600, 600);
+        Controller_Application.logInScene = new Scene(logInParent, 600, 600);
 
         // Scene created for Register
         FXMLLoader registerLoader = new FXMLLoader(getClass().getResource("../GUI/register.fxml"));
         Parent registerParent = registerLoader.load();
-        AppControl.registerScene = new Scene(registerParent, 600, 600);
+        Controller_Application.registerScene = new Scene(registerParent, 600, 600);
 
 
         // scene created for loggedIn
         FXMLLoader loggedInLoader = new FXMLLoader(getClass().getResource("../GUI/loggedIn.fxml"));
         Parent loggedInParent = loggedInLoader.load();
-        AppControl.loggedInScene = new Scene(loggedInParent, 600, 600);
+        Controller_Application.loggedInScene = new Scene(loggedInParent, 600, 600);
 
 
         //sets initial theme for the application
         ThemeControl.currentTheme = ThemeControl.DEFAULT;
-        AppControl.scene.getStylesheets().add(ThemeControl.currentTheme.getTheme());
+        Controller_Application.scene.getStylesheets().add(ThemeControl.currentTheme.getTheme());
 
 
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setTitle("Project");
-        primaryStage.setScene(AppControl.scene);
+        primaryStage.setScene(Controller_Application.scene);
         primaryStage.show();
 
         // helper class to resize window as setting the primaryStage init style to transparent / undecorated will remove resize options

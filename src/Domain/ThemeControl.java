@@ -1,4 +1,4 @@
-package Controller;
+package Domain;
 
 /**
  * @Author Robert Skaar
