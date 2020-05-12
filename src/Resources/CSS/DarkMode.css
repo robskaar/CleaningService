@@ -28,7 +28,7 @@
     -fx-pref-width: 16;
     -fx-pref-height: 16;
     -fx-background-color: transparent;
-    -fx-background-image: url('../../Icons/TopMenuBar/close.png');
+    -fx-background-image: url('../Icons/TopMenuBar/close.png');
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
     -fx-background-position: center;
@@ -40,14 +40,14 @@
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
     -fx-background-position: center;
-    -fx-background-image: url('../../Icons/TopMenuBar/closeHovered.png');
+    -fx-background-image: url('../Icons/TopMenuBar/closeHovered.png');
 }
 
 #minimizeBtn {
     -fx-pref-width: 16;
     -fx-pref-height: 16;
     -fx-background-color: transparent;
-    -fx-background-image: url('../../Icons/TopMenuBar/minimize.png');
+    -fx-background-image: url('../Icons/TopMenuBar/minimize.png');
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
     -fx-background-position: center;
@@ -59,13 +59,13 @@
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
     -fx-background-position: center;
-    -fx-background-image: url('../../Icons/TopMenuBar/minimizeHovered.png');
+    -fx-background-image: url('../Icons/TopMenuBar/minimizeHovered.png');
 }
 #maximizeBtn {
     -fx-pref-width: 16;
     -fx-pref-height: 16;
     -fx-background-color: transparent;
-    -fx-background-image: url('../../Icons/TopMenuBar/maximize.png');
+    -fx-background-image: url('../Icons/TopMenuBar/maximize.png');
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
     -fx-background-position: center;
@@ -77,7 +77,7 @@
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
     -fx-background-position: center;
-    -fx-background-image: url('../../Icons/TopMenuBar/maximizeHovered.png');
+    -fx-background-image: url('../Icons/TopMenuBar/maximizeHovered.png');
 }
 .menu-button > .arrow-button > .arrow {
     -fx-padding: 0;
@@ -86,7 +86,7 @@
     -fx-pref-width: 16;
     -fx-pref-height: 16;
     -fx-background-color: transparent;
-    -fx-background-image: url('../../Icons/TopMenuBar/settingsCog.png');
+    -fx-background-image: url('../Icons/TopMenuBar/settingsCog.png');
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
     -fx-background-position: center;

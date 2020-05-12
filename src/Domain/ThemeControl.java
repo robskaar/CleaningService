@@ -8,8 +8,8 @@ package Domain;
 
 public enum ThemeControl {
     // Stylesheet paths
-    DARK("Resources/CSS/StyleSheets/DarkMode.css"),
-    DEFAULT("Resources/CSS/StyleSheets/DefaultStyle.css"),
+    DARK("Resources/CSS/DarkMode.css"),
+    DEFAULT("Resources/CSS/DefaultStyle.css"),
     ; // semicolon needed when fields / methods follow
     private String theme;
     public static ThemeControl currentTheme;
