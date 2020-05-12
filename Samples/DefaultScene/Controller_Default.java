@@ -7,7 +7,7 @@ import Controller.Controller_Application;
  * @Date 18-03-2020
  **/
 
-public class Controller_Default extends AppControl {
+public class Controller_Default extends Controller_Application {
 
 
     @Override
