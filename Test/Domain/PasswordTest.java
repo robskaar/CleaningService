@@ -1,5 +1,6 @@
 package Domain;
 
+import Services.Password;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

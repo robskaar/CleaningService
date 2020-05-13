@@ -1,6 +1,6 @@
-package Controller.Costumer;
+package Application.Costumer;
 
-import Controller.Controller_Application;
+import Application.Controller_Application;
 
 /**
  * @Author Robert Skaar
@@ -8,7 +8,7 @@ import Controller.Controller_Application;
  * @Date 11-05-2020
  **/
 
-public class Controller_LoggedInScene extends Controller_Application {
+public class Controller_Costumer extends Controller_Application {
 
     @Override
     public void changeScene() {

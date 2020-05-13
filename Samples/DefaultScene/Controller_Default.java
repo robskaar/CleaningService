@@ -1,5 +1,5 @@
 package Samples.DefaultScene;
-import Controller.Controller_Application;
+import Application.Controller_Application;
 
 /**
  * @Author Robert Skaar

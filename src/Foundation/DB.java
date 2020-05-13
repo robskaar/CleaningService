@@ -1,4 +1,4 @@
-package Database;
+package Foundation;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,10 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Properties;
 
 /**
  * @Author Robert Skaar, revised version from Tommy Haug
@@ -200,36 +196,6 @@ public class DB {
 
     public static boolean insertSQL(String sql) {
         return executeUpdate(sql);
-    }
-
-    /**
-     * @param sql    - this is the sql query string itself
-     * @param values - this is the supplied values from hashmap arrays
-     * @throws SQLException- exception from sql execution
-     */
-    public static void addBatch(String sql, LinkedList<LinkedList> values) throws SQLException {
-        connect();
-        if (ps == null) {
-            ps = con.prepareStatement(sql);
-        }
-        for (LinkedList linkedList : values) {
-            for (int i = 1; i < linkedList.size() + 1; i++) {
-                ps.setString(i, linkedList.get(i).toString());
-            }
-            ps.addBatch();
-        }
-    }
-
-    /**
-     * user for batch sql commands
-     * this executes and closes prepared statement + connection to DB.
-     *
-     * @throws SQLException - exception from sql execution
-     */
-    public static void executeBatch() throws SQLException {
-        ps.executeBatch();
-        ps.close();
-        disconnect();
     }
 
     public static boolean updateSQL(String sql) {

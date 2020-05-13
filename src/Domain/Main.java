@@ -1,6 +1,8 @@
 package Domain;
 
-import Controller.Controller_Application;
+import Application.Controller_Application;
+import Services.ResizeHelper;
+import Services.ThemeControl;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,26 +22,26 @@ import javafx.stage.StageStyle;
     public void start(Stage primaryStage) throws Exception {
         //initial stage setup
         Controller_Application.primaryStage = primaryStage;
-        Controller_Application.fxmlLoader = new FXMLLoader(getClass().getResource("../GUI/Costumer/loginScene.fxml"));
+        Controller_Application.fxmlLoader = new FXMLLoader(getClass().getResource("../UI/loginScene.fxml"));
         Controller_Application.parent = Controller_Application.fxmlLoader.load();
         Controller_Application.scene = new Scene(Controller_Application.parent);
 
 
         // Scene created for Log In
-        FXMLLoader logInLoader = new FXMLLoader(getClass().getResource("../GUI/Costumer/loginScene.fxml"));
+        FXMLLoader logInLoader = new FXMLLoader(getClass().getResource("../UI/loginScene.fxml"));
         Parent logInParent = logInLoader.load();
         Controller_Application.logInScene = new Scene(logInParent, 600, 600);
 
         // Scene created for Register
-        FXMLLoader registerLoader = new FXMLLoader(getClass().getResource("../GUI/Costumer/registerScene.fxml"));
+        FXMLLoader registerLoader = new FXMLLoader(getClass().getResource("../UI/registerScene.fxml"));
         Parent registerParent = registerLoader.load();
         Controller_Application.registerScene = new Scene(registerParent, 600, 600);
 
 
         // scene created for loggedIn
-        FXMLLoader loggedInLoader = new FXMLLoader(getClass().getResource("../GUI/Costumer/loggedInScene.fxml"));
-        Parent loggedInParent = loggedInLoader.load();
-        Controller_Application.loggedInScene = new Scene(loggedInParent, 600, 600);
+        FXMLLoader costumerLoader = new FXMLLoader(getClass().getResource("../UI/Costumer/costumer.fxml"));
+        Parent costumerParent = costumerLoader.load();
+        Controller_Application.costumerScene = new Scene(costumerParent, 600, 600);
 
 
         //sets initial theme for the application

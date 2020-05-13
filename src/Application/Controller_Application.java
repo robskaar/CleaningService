@@ -1,7 +1,7 @@
-package Controller;
+package Application;
 
-import Domain.ResizeHelper;
-import Domain.ThemeControl;
+import Services.ResizeHelper;
+import Services.ThemeControl;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,7 +39,7 @@ abstract public class Controller_Application {
     //Scenes
     public static Scene logInScene;
     public static Scene registerScene;
-    public static Scene loggedInScene;
+    public static Scene costumerScene;
 
 
     public void changeThemeDark() {

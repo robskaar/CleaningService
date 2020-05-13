@@ -1,4 +1,4 @@
-package Domain;
+package Services;
 
 /**
  * @Author Robert Skaar

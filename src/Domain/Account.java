@@ -1,6 +1,7 @@
 package Domain;
 
-import Database.DB;
+import Foundation.DB;
+import Services.Password;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -16,18 +17,21 @@ public abstract class Account {
     public static String currentUser;
     public static Boolean isLoggedIn = false;
 
-    public static void register(String userName, String password, String firstName, String lastName, String emailAddress, String phoneNumber, LocalDate dateOfBirth) {
+    public static void register(String userName, String password, String firstName, String lastName, String emailAddress, String phoneNumber, LocalDate dateOfBirth,int isTemporary) {
         try {
+            System.out.println(dateOfBirth);
+            System.out.println(Date.valueOf(dateOfBirth));
             CallableStatement cstmt;
             Connection con = DB.getConnection();
-            cstmt = con.prepareCall("{call Project.dbo.create_user(?,?,?,?,?,?,?)}");
+            cstmt = con.prepareCall("{call CleaningService.dbo.create_user(?,?,?,?,?,?,?,?)}");
             cstmt.setString(1, userName);
             cstmt.setString(2, Password.hashPassword(password));
             cstmt.setString(3, firstName);
             cstmt.setString(4, lastName);
             cstmt.setString(5, emailAddress);
             cstmt.setString(6, phoneNumber);
-            cstmt.setString(7, String.valueOf(dateOfBirth));
+            cstmt.setDate(7, Date.valueOf(dateOfBirth));
+            cstmt.setInt(8,isTemporary);
             boolean results = cstmt.execute();
             cstmt.close();
             con.close();

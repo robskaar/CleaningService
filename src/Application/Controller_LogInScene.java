@@ -1,7 +1,6 @@
-package Controller.Costumer;
+package Application;
 
 
-import Controller.Controller_Application;
 import Domain.Account;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,8 +36,8 @@ public class Controller_LogInScene extends Controller_Application implements Ini
         String user_name = userName.getText();
 
         if (Account.logIn(user_name, pass_word)) {
-            scene = loggedInScene;
-            changeScene(loggedInScene);
+            scene = costumerScene;
+            changeScene(costumerScene);
             userName.setText(null);
             passWord.setText(null);
         }

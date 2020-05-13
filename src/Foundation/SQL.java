@@ -1,4 +1,4 @@
-package Database;
+package Foundation;
 
 /**
  * @Author Robert Skaar

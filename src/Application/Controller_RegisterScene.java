@@ -1,6 +1,6 @@
-package Controller.Costumer;
+package Application;
 
-import Controller.Controller_Application;
+import Application.Controller_Application;
 import Domain.Account;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -8,13 +8,11 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
 
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -72,19 +70,7 @@ public class Controller_RegisterScene extends Controller_Application implements 
         the datepicker will not pick it up for the registration, unless assigning it to the value.
          */
         dateOfBirth.setTooltip(dateTip); // lets user know what date format to use
-        dateOfBirth.setPromptText("dd/mm/yyyy");
-        dateOfBirth.getEditor().textProperty().addListener((observableValue, oldVal, newVal) -> {
-            try {
-                LocalDate date = LocalDate.parse(dateOfBirth.getEditor().getText());
-                dateOfBirth.setValue(date);
-            }
-            catch (DateTimeParseException e) {
-                        /*we get formatting error in compiler, but the datepicker field and SQL is actually smart enough
-                        to get the correct date anyhow.
-                        this happens if you enter mm/dd/yyyy instead of the format above
-                        * */
-            }
-        });
+        dateOfBirth.setPromptText("DoB: dd/mm/yyyy");
 
 
     }
@@ -93,13 +79,16 @@ public class Controller_RegisterScene extends Controller_Application implements 
         String dateRegex = "^(3[01]|[12][0-9]|0[1-9])/(1[0-2]|0[1-9])/[0-9]{4}$";
         Pattern pattern = Pattern.compile(dateRegex);
         Matcher matcher = pattern.matcher(dateOfBirth.getEditor().getText());
+        if (dateOfBirth.getValue() == null) {
+            LocalDate tempDate = LocalDate.parse(dateOfBirth.getEditor().getText(), formatter);
+            dateOfBirth.setValue(tempDate);
+        }
         if (pwdCriteriasMet && matcher.matches() && userName.getText() != null
             && firstName.getText() != null && lastName.getText() != null
             && emailAddress.getText() != null && phoneNumber.getText() != null) {
-
-            formatter.parse(dateOfBirth.getEditor().getCharacters());
             Account.register(userName.getText(), passWord.getText(), firstName.getText(), lastName.getText(),
-                             emailAddress.getText(), phoneNumber.getText(), dateOfBirth.getValue());
+                             emailAddress.getText(), phoneNumber.getText(), dateOfBirth.getValue(),
+                             0); //0 is a false bit and 1 is a true in mssql
             changeScene(); // changes into login scene after successful registration
         }
         else {

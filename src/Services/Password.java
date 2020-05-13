@@ -1,4 +1,4 @@
-package Domain;
+package Services;
 
 public class Password {
     // Define the BCrypt workload to use when generating password hashes. 10-31 is a valid value.
