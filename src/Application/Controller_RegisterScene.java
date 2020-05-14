@@ -1,7 +1,6 @@
 package Application;
 
-import Application.Controller_Application;
-import Domain.Account;
+import Domain.AccountManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
@@ -10,7 +9,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -35,7 +33,6 @@ public class Controller_RegisterScene extends Controller_Application implements 
     @FXML
     DatePicker dateOfBirth;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private Date costumDate;
     private boolean pwdCriteriasMet = false;
     private Tooltip passwordTip = new Tooltip(
             "Minimum eight characters, need one uppercase, one lowercase letter, one number and a special character");
@@ -86,9 +83,9 @@ public class Controller_RegisterScene extends Controller_Application implements 
         if (pwdCriteriasMet && matcher.matches() && userName.getText() != null
             && firstName.getText() != null && lastName.getText() != null
             && emailAddress.getText() != null && phoneNumber.getText() != null) {
-            Account.register(userName.getText(), passWord.getText(), firstName.getText(), lastName.getText(),
-                             emailAddress.getText(), phoneNumber.getText(), dateOfBirth.getValue(),
-                             0); //0 is a false bit and 1 is a true in mssql
+            AccountManager.register(userName.getText(), passWord.getText(), firstName.getText(), lastName.getText(),
+                                    emailAddress.getText(), phoneNumber.getText(), dateOfBirth.getValue(),
+                                    0); //0 is a false bit and 1 is a true in mssql
             changeScene(); // changes into login scene after successful registration
         }
         else {

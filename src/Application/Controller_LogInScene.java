@@ -1,7 +1,7 @@
 package Application;
 
 
-import Domain.Account;
+import Domain.AccountManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
@@ -35,7 +35,7 @@ public class Controller_LogInScene extends Controller_Application implements Ini
         String pass_word = passWord.getText();
         String user_name = userName.getText();
 
-        if (Account.logIn(user_name, pass_word)) {
+        if (AccountManager.logIn(user_name, pass_word)) {
             scene = costumerScene;
             changeScene(costumerScene);
             userName.setText(null);

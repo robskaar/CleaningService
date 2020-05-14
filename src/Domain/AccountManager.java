@@ -12,10 +12,11 @@ import java.time.LocalDate;
  * @Date 11-05-2020
  **/
 
-public abstract class Account {
+public abstract class AccountManager {
 
     public static String currentUser;
     public static Boolean isLoggedIn = false;
+    public static String currentRole = "false";
 
     public static void register(String userName, String password, String firstName, String lastName, String emailAddress, String phoneNumber, LocalDate dateOfBirth,int isTemporary) {
         try {
@@ -52,9 +53,11 @@ public abstract class Account {
             cstmt.close();
             con.close();
             if (Password.checkPassword(password, passHash)) {
-                isLoggedIn = true;
+               isLoggedIn = true;
+                currentRole = //TODO get the role from db, parse it here and update it depending on acc logging in.
                 currentUser = userName;
             } else {
+                currentRole = null;
                 isLoggedIn = false;
             }
             return isLoggedIn;

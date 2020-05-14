@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
  * @Date 11-05-2020
  **/
 
-public class AccountTest {
+public class AccountManagerTest {
 
     /**
      * fields used to test with, should also be present in database (note password is stored hashed not plaintext)
@@ -26,7 +26,7 @@ public class AccountTest {
     public void successfulLogIn() {
         System.out.println("Testing if log in method / procedure works");
         System.out.println();
-        assertTrue(Account.logIn(userName,passWord));
+        assertTrue(AccountManager.logIn(userName, passWord));
         System.out.println();
         System.out.println("SUCCESS");
     }
