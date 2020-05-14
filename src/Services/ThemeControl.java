@@ -8,8 +8,8 @@ package Services;
 
 public enum ThemeControl {
     // Stylesheet paths
-    DARK("Resources/CSS/DarkMode.css"),
-    DEFAULT("Resources/CSS/DefaultStyle.css"),
+    DARK("Foundation/Resources/CSS/DarkMode.css"),
+    DEFAULT("Foundation/Resources/CSS/DefaultStyle.css"),
     ; // semicolon needed when fields / methods follow
     private String theme;
     public static ThemeControl currentTheme;

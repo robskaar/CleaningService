@@ -12,11 +12,15 @@ import java.time.LocalDate;
  * @Date 11-05-2020
  **/
 
-public abstract class AccountManager {
+public final class AccountManager {
 
     public static String currentUser;
     public static Boolean isLoggedIn = false;
     public static String currentRole = "false";
+
+    private AccountManager (){
+
+    }
 
     public static void register(String userName, String password, String firstName, String lastName, String emailAddress, String phoneNumber, LocalDate dateOfBirth,int isTemporary) {
         try {
