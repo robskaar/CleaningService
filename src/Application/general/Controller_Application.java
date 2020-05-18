@@ -8,7 +8,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,7 +24,7 @@ import java.util.ResourceBundle;
  * @Date 11-05-2020
  **/
 
- public class Controller_Application implements Initializable {
+ public class Controller_Application {
     @FXML Button closeBtn;
     @FXML Button maximizeBtn;
     @FXML Button minimizeBtn;
@@ -55,12 +54,7 @@ import java.util.ResourceBundle;
     public static Scene driverScene;
     public static Scene defaultScene;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        passWord.setOnAction(e -> {
-//            logIn();
-//        });
-    }
+
     public void changeThemeDark() {
         ThemeControl.currentTheme = ThemeControl.DARK;
         currentScene.getStylesheets().add(ThemeControl.currentTheme.getTheme());
@@ -143,7 +137,7 @@ import java.util.ResourceBundle;
             }
             else if (actionEvent.getSource() == emulateAsLaundryCentral) {
                 Controller_Application.currentEmulator = Emulator.LaundryCentral;
-                emulationType.setText(" Laundry Central");
+                emulationType.setText(" Costumer");
             }
             registerButton.setDisable(true);
         }
@@ -160,15 +154,19 @@ import java.util.ResourceBundle;
                 case Driver:
                     currentScene = driverScene;
                     changeScene(driverScene);
+                    break;
                 case LaundryCentral:
                     currentScene = laundryScene;
                     changeScene(laundryScene);
+                    break;
                 case Costumer:
                     currentScene = costumerScene;
                     changeScene(costumerScene);
+                    break;
                 case DeliveryPoint:
                     currentScene = deliveryPointScene;
                     changeScene(deliveryPointScene);
+                    break;
             }
             userName.setText(null);
             passWord.setText(null);
