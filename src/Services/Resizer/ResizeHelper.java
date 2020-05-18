@@ -1,4 +1,4 @@
-package Services;
+package Services.Resizer;
 
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;

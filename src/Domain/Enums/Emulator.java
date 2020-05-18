@@ -1,4 +1,4 @@
-package Domain;
+package Domain.Enums;
 
 /**
  * @Author Robert Skaar
@@ -6,10 +6,9 @@ package Domain;
  * @Date 18-05-2020
  **/
 
-public enum Role {
-    Laundry_Manager,
-    Laundry_Assistant,
+public enum Emulator {
     Driver,
-    Delivery_Point,
-    Costumer
+    Costumer,
+    LaundryCentral,
+    DeliveryPoint
 }

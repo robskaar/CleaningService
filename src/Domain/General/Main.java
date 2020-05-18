@@ -1,8 +1,9 @@
-package Domain;
+package Domain.General;
 
-import Application.Controller_Application;
-import Services.ResizeHelper;
-import Services.ThemeControl;
+import Application.general.Controller_Application;
+import Domain.Enums.Emulator;
+import Services.Resizer.ResizeHelper;
+import Services.Themes.ThemeControl;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -38,6 +39,7 @@ import javafx.util.Callback;
         Controller_Application.primaryStage = primaryStage;
 
         // Scene created for Log In
+        FXMLLoader logInLoader = new FXMLLoader(getClass().getResource("../UI/Login/loginScene.fxml"));
         FXMLLoader logInLoader = new FXMLLoader(getClass().getResource("../UI/loginScene.fxml"));
         FXMLLoader defaultLoader = new FXMLLoader(getClass().getResource("../UI/defaultScene.fxml"));
         defaultLoader.setControllerFactory(controllerFactory);
@@ -48,7 +50,7 @@ import javafx.util.Callback;
 
 
         // Scene created for Register
-        FXMLLoader registerLoader = new FXMLLoader(getClass().getResource("../UI/registerScene.fxml"));
+        FXMLLoader registerLoader = new FXMLLoader(getClass().getResource("../UI/Login/registerScene.fxml"));
         Parent registerParent = registerLoader.load();
         Controller_Application.registerScene = new Scene(registerParent, 600, 600);
 

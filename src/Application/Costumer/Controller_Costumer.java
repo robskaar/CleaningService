@@ -1,6 +1,6 @@
 package Application.Costumer;
 
-import Application.Controller_Application;
+import Application.general.Controller_Application;
 
 /**
  * @Author Robert Skaar

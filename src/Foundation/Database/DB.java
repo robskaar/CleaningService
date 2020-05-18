@@ -1,4 +1,4 @@
-package Foundation;
+package Foundation.Database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
