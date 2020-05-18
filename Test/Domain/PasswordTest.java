@@ -1,6 +1,7 @@
 package Domain;
 
-import Services.Password;
+
+import Services.Passwordmodifier.Password;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -25,7 +26,7 @@ public class PasswordTest {
         String passWord = "test";
         String hashedPassword = Password.hashPassword(passWord);
         System.out.println(hashedPassword);
-        assertTrue(Password.checkPassword(passWord,hashedPassword));
+        assertTrue(Password.checkPassword(passWord, hashedPassword));
         System.out.println();
         System.out.println("SUCCESS");
     }

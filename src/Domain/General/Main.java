@@ -24,14 +24,15 @@ import javafx.util.Callback;
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Callback<Class<?>, Object> controllerFactory = new Callback<Class<?>, Object>() {
+        Callback<Class<?>, Object> controllerFactory = new Callback<>() {
             Controller_Application a = new Controller_Application();
+
             @Override
             public Object call(Class<?> type) {
                 if (type == Controller_Application.class) {
-                    return a ;
+                    return a;
                 }
-                return null ;
+                return null;
             }
         };
 
@@ -39,9 +40,8 @@ import javafx.util.Callback;
         Controller_Application.primaryStage = primaryStage;
 
         // Scene created for Log In
-        FXMLLoader logInLoader = new FXMLLoader(getClass().getResource("../UI/Login/loginScene.fxml"));
-        FXMLLoader logInLoader = new FXMLLoader(getClass().getResource("../UI/loginScene.fxml"));
-        FXMLLoader defaultLoader = new FXMLLoader(getClass().getResource("../UI/defaultScene.fxml"));
+        FXMLLoader logInLoader = new FXMLLoader(getClass().getResource("/UI/General/loginScene.fxml"));
+        FXMLLoader defaultLoader = new FXMLLoader(getClass().getResource("/UI/General/defaultScene.fxml"));
         defaultLoader.setControllerFactory(controllerFactory);
         logInLoader.setControllerFactory(controllerFactory);
         Parent logInParent = logInLoader.load();
@@ -50,28 +50,28 @@ import javafx.util.Callback;
 
 
         // Scene created for Register
-        FXMLLoader registerLoader = new FXMLLoader(getClass().getResource("../UI/Login/registerScene.fxml"));
+        FXMLLoader registerLoader = new FXMLLoader(getClass().getResource("/UI/Costumer/registerScene.fxml"));
         Parent registerParent = registerLoader.load();
         Controller_Application.registerScene = new Scene(registerParent, 600, 600);
 
 
         // scene created for loggedIn
-        FXMLLoader costumerLoader = new FXMLLoader(getClass().getResource("../UI/Costumer/costumer.fxml"));
+        FXMLLoader costumerLoader = new FXMLLoader(getClass().getResource("/UI/Costumer/costumer.fxml"));
         Parent costumerParent = costumerLoader.load();
         Controller_Application.costumerScene = new Scene(costumerParent, 600, 600);
 
 //        // scene created for loggedIn
-//        FXMLLoader driverLoader = new FXMLLoader(getClass().getResource("../UI/Driver/driver.fxml"));
+//        FXMLLoader driverLoader = new FXMLLoader(getClass().getResource("/UI/Driver/driver.fxml"));
 //        Parent driverParent = driverLoader.load();
 //        Controller_Application.driverScene = new Scene(driverParent, 600, 600);
 //
 //        // scene created for loggedIn
-//        FXMLLoader deliveryPointLoader = new FXMLLoader(getClass().getResource("../UI/DeliveryPoint/deliveryPoint.fxml"));
+//        FXMLLoader deliveryPointLoader = new FXMLLoader(getClass().getResource("/UI/DeliveryPoint/deliveryPoint.fxml"));
 //        Parent deliveryPointParent = deliveryPointLoader.load();
 //        Controller_Application.deliveryPointScene = new Scene(deliveryPointParent, 600, 600);
 //
 //        // scene created for loggedIn
-//        FXMLLoader laundryLoader = new FXMLLoader(getClass().getResource("../UI/LaundryCentral/laundry.fxml"));
+//        FXMLLoader laundryLoader = new FXMLLoader(getClass().getResource("/UI/LaundryCentral/laundry.fxml"));
 //        Parent laundryParent = laundryLoader.load();
 //        Controller_Application.laundryScene = new Scene(laundryParent, 600, 600);
 

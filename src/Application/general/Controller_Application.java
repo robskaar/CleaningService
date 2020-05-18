@@ -37,6 +37,7 @@ import java.util.ResourceBundle;
     @FXML public Button registerButton;
     @FXML private TextField userName;
     @FXML private PasswordField passWord;
+    @FXML private Label emulationType;
     // Fields
     private static boolean isFullScreen;
     public static FXMLLoader fxmlLoader;
@@ -129,16 +130,20 @@ import java.util.ResourceBundle;
         if (actionEvent.getSource() == emulateAsCostumer) {
             Controller_Application.currentEmulator = Emulator.Costumer;
             registerButton.setDisable(false);
+            emulationType.setText(" Costumer");
         }
         else {
             if (actionEvent.getSource() == emulateAsDeliveryPoint) {
                 Controller_Application.currentEmulator = Emulator.DeliveryPoint;
+                emulationType.setText(" Delivery Point");
             }
             else if (actionEvent.getSource() == emulateAsDriver) {
                 Controller_Application.currentEmulator = Emulator.Driver;
+                emulationType.setText(" Driver");
             }
             else if (actionEvent.getSource() == emulateAsLaundryCentral) {
                 Controller_Application.currentEmulator = Emulator.LaundryCentral;
+                emulationType.setText(" Laundry Central");
             }
             registerButton.setDisable(true);
         }

@@ -15,7 +15,7 @@
 
 <BorderPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.general.Controller_Application">
    <top>
-      <fx:include source="../General/defaultScene.fxml"/>
+      <fx:include source="defaultScene.fxml"/>
    </top>
    <center>
       <VBox alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="90.0" prefWidth="174.0" BorderPane.alignment="CENTER">
