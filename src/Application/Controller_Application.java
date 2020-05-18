@@ -1,18 +1,23 @@
 package Application;
 
+import Domain.AccountManager;
+import Domain.Emulator;
 import Services.ResizeHelper;
 import Services.ThemeControl;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * @Author Robert Skaar
@@ -20,38 +25,50 @@ import javafx.stage.Stage;
  * @Date 11-05-2020
  **/
 
-abstract public class Controller_Application {
-    @FXML
-    Button closeBtn;
-    @FXML
-    Button maximizeBtn;
-    @FXML
-    Button minimizeBtn;
-
-
+ public class Controller_Application implements Initializable {
+    @FXML Button closeBtn;
+    @FXML Button maximizeBtn;
+    @FXML Button minimizeBtn;
+    @FXML private Menu emulatorMenu;
+    @FXML private MenuItem emulateAsCostumer;
+    @FXML private MenuItem emulateAsDriver;
+    @FXML private MenuItem emulateAsDeliveryPoint;
+    @FXML private MenuItem emulateAsLaundryCentral;
+    @FXML public Button registerButton;
+    @FXML private TextField userName;
+    @FXML private PasswordField passWord;
     // Fields
     private static boolean isFullScreen;
     public static FXMLLoader fxmlLoader;
     public static Parent parent;
-    public static Scene scene;
+    public static Scene currentScene;
     public static Stage primaryStage;
+    public static Emulator currentEmulator = null;
 
     //Scenes
     public static Scene logInScene;
     public static Scene registerScene;
     public static Scene costumerScene;
+    public static Scene deliveryPointScene;
+    public static Scene laundryScene;
+    public static Scene driverScene;
 
-
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+//        passWord.setOnAction(e -> {
+//            logIn();
+//        });
+    }
     public void changeThemeDark() {
         ThemeControl.currentTheme = ThemeControl.DARK;
-        scene.getStylesheets().add(ThemeControl.currentTheme.getTheme());
-        changeScene(scene);
+        currentScene.getStylesheets().add(ThemeControl.currentTheme.getTheme());
+        changeScene(currentScene);
     }
 
     public void changeThemeDefault() {
         ThemeControl.currentTheme = ThemeControl.DEFAULT;
-        scene.getStylesheets().add(ThemeControl.currentTheme.getTheme());
-        changeScene(scene);
+        currentScene.getStylesheets().add(ThemeControl.currentTheme.getTheme());
+        changeScene(currentScene);
     }
 
     protected void clearFields(Pane pane) {
@@ -67,20 +84,14 @@ abstract public class Controller_Application {
         }
     }
 
-    /**
-     * should call changeScene(Scene scene) and param the scene to change into
-     * is done this way since we sometimes want to clear field or whatever after/before a scene change, this should be put in the overwritten method here as well.
-     * making this abstract will force subclasses to implement this method, since all panes
-     * need to be able to change to another pane, we need this.
-     */
-    abstract public void changeScene();
+
 
     protected static void changeScene(Scene scene) {
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(isFullScreen);
         scene.getStylesheets().clear();
         scene.getStylesheets().add(ThemeControl.currentTheme.getTheme());
-        Controller_Application.scene = scene;
+        Controller_Application.currentScene = scene;
         ResizeHelper.addResizeListener(primaryStage);
     }
 
@@ -113,5 +124,58 @@ abstract public class Controller_Application {
         return primaryStage;
     }
 
+    public void emulateAs(ActionEvent actionEvent) {
+        if (actionEvent.getSource() == emulateAsCostumer) {
+            Controller_Application.currentEmulator = Emulator.Costumer;
+            //registerButton.setDisable(false);
+        }
+        else {
+            if (actionEvent.getSource() == emulateAsDeliveryPoint) {
+                Controller_Application.currentEmulator = Emulator.DeliveryPoint;
+            }
+            else if (actionEvent.getSource() == emulateAsDriver) {
+                Controller_Application.currentEmulator = Emulator.Driver;
+            }
+            else if (actionEvent.getSource() == emulateAsLaundryCentral) {
+                Controller_Application.currentEmulator = Emulator.LaundryCentral;
+            }
+            registerButton.setDisable(true);
+        }
+    }
 
+
+
+    public void logIn() {
+        String pass_word = passWord.getText();
+        String user_name = userName.getText();
+
+        if (AccountManager.logIn(user_name, pass_word)) {
+            switch (Controller_Application.currentEmulator) {
+                case Driver:
+                    currentScene = driverScene;
+                    changeScene(driverScene);
+                case LaundryCentral:
+                    currentScene = laundryScene;
+                    changeScene(laundryScene);
+                case Costumer:
+                    currentScene = costumerScene;
+                    changeScene(costumerScene);
+                case DeliveryPoint:
+                    currentScene = deliveryPointScene;
+                    changeScene(deliveryPointScene);
+            }
+            userName.setText(null);
+            passWord.setText(null);
+        }
+        else {
+            userName.setText("Incorrect Credentials");
+            passWord.setText("Incorrect Credentials");
+        }
+    }
+
+
+    public void changeScene() {
+        changeScene(Controller_Application.registerScene);
+        clearFields((Pane) userName.getParent());
+    }
 }

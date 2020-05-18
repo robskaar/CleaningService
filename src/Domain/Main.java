@@ -24,7 +24,7 @@ import javafx.stage.StageStyle;
         Controller_Application.primaryStage = primaryStage;
         Controller_Application.fxmlLoader = new FXMLLoader(getClass().getResource("../UI/loginScene.fxml"));
         Controller_Application.parent = Controller_Application.fxmlLoader.load();
-        Controller_Application.scene = new Scene(Controller_Application.parent);
+        Controller_Application.currentScene = new Scene(Controller_Application.parent);
 
 
         // Scene created for Log In
@@ -43,15 +43,31 @@ import javafx.stage.StageStyle;
         Parent costumerParent = costumerLoader.load();
         Controller_Application.costumerScene = new Scene(costumerParent, 600, 600);
 
+//        // scene created for loggedIn
+//        FXMLLoader driverLoader = new FXMLLoader(getClass().getResource("../UI/Driver/driver.fxml"));
+//        Parent driverParent = driverLoader.load();
+//        Controller_Application.driverScene = new Scene(driverParent, 600, 600);
+//
+//        // scene created for loggedIn
+//        FXMLLoader deliveryPointLoader = new FXMLLoader(getClass().getResource("../UI/DeliveryPoint/deliveryPoint.fxml"));
+//        Parent deliveryPointParent = deliveryPointLoader.load();
+//        Controller_Application.deliveryPointScene = new Scene(deliveryPointParent, 600, 600);
+//
+//        // scene created for loggedIn
+//        FXMLLoader laundryLoader = new FXMLLoader(getClass().getResource("../UI/LaundryCentral/laundry.fxml"));
+//        Parent laundryParent = laundryLoader.load();
+//        Controller_Application.laundryScene = new Scene(laundryParent, 600, 600);
+
 
         //sets initial theme for the application
         ThemeControl.currentTheme = ThemeControl.DEFAULT;
-        Controller_Application.scene.getStylesheets().add(ThemeControl.currentTheme.getTheme());
+        Controller_Application.currentScene.getStylesheets().add(ThemeControl.currentTheme.getTheme());
+        Controller_Application.currentEmulator=Emulator.Costumer;
 
 
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setTitle("Project");
-        primaryStage.setScene(Controller_Application.scene);
+        primaryStage.setScene(Controller_Application.currentScene);
         primaryStage.show();
 
         // helper class to resize window as setting the primaryStage init style to transparent / undecorated will remove resize options

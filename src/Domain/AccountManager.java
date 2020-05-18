@@ -1,5 +1,6 @@
 package Domain;
 
+import Application.Controller_Application;
 import Foundation.DB;
 import Services.Password;
 
@@ -16,7 +17,8 @@ public final class AccountManager {
 
     public static String currentUser;
     public static Boolean isLoggedIn = false;
-    public static String currentRole = "false";
+    public static Role currentRole = null;
+
 
     private AccountManager (){
 
@@ -49,16 +51,38 @@ public final class AccountManager {
         try {
             CallableStatement cstmt;
             Connection con = DB.getConnection();
-            cstmt = con.prepareCall("{call Project.dbo.logIn(?,?)}");
+            switch (Controller_Application.currentEmulator){
+                case Costumer:
+                    cstmt = con.prepareCall("{call Project.dbo.logInCostumer(?,?)}");
+                    currentRole = Role.Costumer;
+                case Driver:
+                    cstmt = con.prepareCall("{call Project.dbo.logInDriver(?,?)}");
+                    currentRole = Role.Driver;
+                case DeliveryPoint:
+                    cstmt = con.prepareCall("{call Project.dbo.logInDeliveryPoint(?,?)}");
+                    currentRole = Role.Delivery_Point;
+                case LaundryCentral:
+                    cstmt = con.prepareCall("{call Project.dbo.logInLaundryAccount(?,?,?)}");
+                default:
+                    cstmt = null;
+            }
+
             cstmt.setString(1, userName);
             cstmt.registerOutParameter(2, Types.VARCHAR);
             boolean results = cstmt.execute();
             String passHash = cstmt.getString(2);
+            if ( Controller_Application.currentEmulator == Emulator.LaundryCentral){
+                String roleName = cstmt.getString(3);
+                if (roleName.equalsIgnoreCase("Laundry Manager")){
+                    currentRole=Role.Laundry_Manager;
+                }else{
+                    currentRole=Role.Laundry_Assistant;
+                }
+            }
             cstmt.close();
             con.close();
             if (Password.checkPassword(password, passHash)) {
                isLoggedIn = true;
-                currentRole = //TODO get the role from db, parse it here and update it depending on acc logging in.
                 currentUser = userName;
             } else {
                 currentRole = null;

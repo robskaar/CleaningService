@@ -1,5 +1,6 @@
-package Application;
+package Application.Costumer;
 
+import Application.Controller_Application;
 import Domain.AccountManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -106,7 +107,7 @@ public class Controller_RegisterScene extends Controller_Application implements 
         }
     }
 
-    @Override
+
     public void changeScene() {
         changeScene(Controller_Application.logInScene);
         clearFields((Pane) userName.getParent());

@@ -13,34 +13,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controller_LogInScene">
+<BorderPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controller_Application">
    <top>
-      <VBox prefHeight="74.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <HBox fx:id="toolBar" prefHeight="16.0" prefWidth="600.0">
-               <children>
-                  <ToolBar prefHeight="38.0" prefWidth="142.0">
-                     <items>
-                        <MenuButton fx:id="settingsBtn" minHeight="16.0" minWidth="16.0" mnemonicParsing="false">
-                           <items>
-                              <Menu mnemonicParsing="false" text="Themes">
-                                 <items>
-                                    <MenuItem fx:id="defaultThemeBtn" mnemonicParsing="false" onAction="#changeThemeDefault" text="Default" />
-                                    <MenuItem fx:id="darkThemeBtn" mnemonicParsing="false" onAction="#changeThemeDark" text="Dark" />
-                                 </items>
-                              </Menu>
-                           </items>
-                        </MenuButton>
-                        <Button fx:id="closeBtn" minHeight="16.0" minWidth="16.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="16.0" prefWidth="16.0" />
-                        <Button fx:id="minimizeBtn" minHeight="16.0" minWidth="16.0" mnemonicParsing="false" onAction="#minimizeWindow" />
-                        <Button fx:id="maximizeBtn" alignment="CENTER" contentDisplay="CENTER" minHeight="16.0" minWidth="16.0" mnemonicParsing="false" onAction="#maximizeWindow" />
-                     </items>
-                  </ToolBar>
-               </children>
-            </HBox>
-            <Separator prefWidth="600.0" />
-         </children>
-      </VBox>
+      <fx:include source="defaultScene.fxml"/>
    </top>
    <center>
       <VBox alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="90.0" prefWidth="174.0" BorderPane.alignment="CENTER">
@@ -50,7 +25,7 @@
             <HBox alignment="CENTER" prefHeight="54.0" prefWidth="174.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#logIn" prefHeight="26.0" prefWidth="70.0" text="Log in" />
-                  <Button mnemonicParsing="false" onAction="#changeScene" prefHeight="26.0" prefWidth="72.0" text="Register">
+                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#changeScene" prefHeight="26.0" prefWidth="72.0" text="Register">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
