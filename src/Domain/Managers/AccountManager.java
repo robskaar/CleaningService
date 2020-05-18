@@ -1,8 +1,10 @@
-package Domain;
+package Domain.Managers;
 
-import Application.Controller_Application;
-import Foundation.DB;
-import Services.Password;
+import Application.general.Controller_Application;
+import Domain.Enums.Emulator;
+import Domain.Enums.Role;
+import Foundation.Database.DB;
+import Services.Passwordmodifier.Password;
 
 import java.sql.*;
 import java.time.LocalDate;

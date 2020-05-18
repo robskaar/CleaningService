@@ -1,9 +1,9 @@
-package Application;
+package Application.general;
 
-import Domain.AccountManager;
-import Domain.Emulator;
-import Services.ResizeHelper;
-import Services.ThemeControl;
+import Domain.Managers.AccountManager;
+import Domain.Enums.Emulator;
+import Services.Resizer.ResizeHelper;
+import Services.Themes.ThemeControl;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

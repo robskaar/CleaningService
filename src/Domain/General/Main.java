@@ -1,8 +1,9 @@
-package Domain;
+package Domain.General;
 
-import Application.Controller_Application;
-import Services.ResizeHelper;
-import Services.ThemeControl;
+import Application.general.Controller_Application;
+import Domain.Enums.Emulator;
+import Services.Resizer.ResizeHelper;
+import Services.Themes.ThemeControl;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,18 +23,18 @@ import javafx.stage.StageStyle;
     public void start(Stage primaryStage) throws Exception {
         //initial stage setup
         Controller_Application.primaryStage = primaryStage;
-        Controller_Application.fxmlLoader = new FXMLLoader(getClass().getResource("../UI/loginScene.fxml"));
+        Controller_Application.fxmlLoader = new FXMLLoader(getClass().getResource("../UI/Login/loginScene.fxml"));
         Controller_Application.parent = Controller_Application.fxmlLoader.load();
         Controller_Application.currentScene = new Scene(Controller_Application.parent);
 
 
         // Scene created for Log In
-        FXMLLoader logInLoader = new FXMLLoader(getClass().getResource("../UI/loginScene.fxml"));
+        FXMLLoader logInLoader = new FXMLLoader(getClass().getResource("../UI/Login/loginScene.fxml"));
         Parent logInParent = logInLoader.load();
         Controller_Application.logInScene = new Scene(logInParent, 600, 600);
 
         // Scene created for Register
-        FXMLLoader registerLoader = new FXMLLoader(getClass().getResource("../UI/registerScene.fxml"));
+        FXMLLoader registerLoader = new FXMLLoader(getClass().getResource("../UI/Login/registerScene.fxml"));
         Parent registerParent = registerLoader.load();
         Controller_Application.registerScene = new Scene(registerParent, 600, 600);
 
@@ -62,7 +63,7 @@ import javafx.stage.StageStyle;
         //sets initial theme for the application
         ThemeControl.currentTheme = ThemeControl.DEFAULT;
         Controller_Application.currentScene.getStylesheets().add(ThemeControl.currentTheme.getTheme());
-        Controller_Application.currentEmulator=Emulator.Costumer;
+        Controller_Application.currentEmulator= Emulator.Costumer;
 
 
         primaryStage.initStyle(StageStyle.TRANSPARENT);

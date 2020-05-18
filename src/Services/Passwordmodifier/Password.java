@@ -1,4 +1,6 @@
-package Services;
+package Services.Passwordmodifier;
+
+import Services.Passwordmodifier.BCrypt;
 
 public class Password {
     // Define the BCrypt workload to use when generating password hashes. 10-31 is a valid value.

@@ -1,7 +1,7 @@
 package Application.Costumer;
 
-import Application.Controller_Application;
-import Domain.AccountManager;
+import Application.general.Controller_Application;
+import Domain.Managers.AccountManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
