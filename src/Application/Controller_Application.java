@@ -52,6 +52,7 @@ import java.util.ResourceBundle;
     public static Scene deliveryPointScene;
     public static Scene laundryScene;
     public static Scene driverScene;
+    public static Scene defaultScene;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -127,7 +128,7 @@ import java.util.ResourceBundle;
     public void emulateAs(ActionEvent actionEvent) {
         if (actionEvent.getSource() == emulateAsCostumer) {
             Controller_Application.currentEmulator = Emulator.Costumer;
-            //registerButton.setDisable(false);
+            registerButton.setDisable(false);
         }
         else {
             if (actionEvent.getSource() == emulateAsDeliveryPoint) {
