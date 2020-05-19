@@ -60,11 +60,11 @@ import javafx.util.Callback;
         Parent costumerParent = costumerLoader.load();
         Controller_Application.costumerScene = new Scene(costumerParent, 600, 600);
 
-//        // scene created for loggedIn
-//        FXMLLoader driverLoader = new FXMLLoader(getClass().getResource("/UI/Driver/driver.fxml"));
-//        Parent driverParent = driverLoader.load();
-//        Controller_Application.driverScene = new Scene(driverParent, 600, 600);
-//
+        // scene created for loggedIn
+        FXMLLoader driverLoader = new FXMLLoader(getClass().getResource("/UI/Driver/driver.fxml"));
+        Parent driverParent = driverLoader.load();
+        Controller_Application.driverScene = new Scene(driverParent, 1020, 860);
+
 //        // scene created for loggedIn
 //        FXMLLoader deliveryPointLoader = new FXMLLoader(getClass().getResource("/UI/DeliveryPoint/deliveryPoint.fxml"));
 //        Parent deliveryPointParent = deliveryPointLoader.load();
