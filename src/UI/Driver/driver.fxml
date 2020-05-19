@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import UI.General.*?>
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -13,7 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="860.0" prefWidth="1020.0" stylesheets="@../../Foundation/Resources/CSS/Driver/Driver.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.general.Controller_Application">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="860.0" prefWidth="1020.0" stylesheets="@../../Foundation/Resources/CSS/Driver/Driver.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Driver.Controller_Driver">
     <top>
         <fx:include source="../General/defaultScene.fxml" />
     </top>
@@ -29,7 +27,7 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" styleClass="HBox_top">
                      <children>
-                        <Button mnemonicParsing="false" text="Start Route" />
+                        <Button mnemonicParsing="false" onAction="#execFunction" text="Start Route" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="832.0" styleClass="HBox_bottom" VBox.vgrow="ALWAYS">
