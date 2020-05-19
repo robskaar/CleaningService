@@ -149,13 +149,15 @@ import java.util.ResourceBundle;
         String pass_word = passWord.getText();
         String user_name = userName.getText();
 
-        if (AccountManager.logIn(user_name, pass_word)) {
+        //if (AccountManager.logIn(user_name, pass_word)) {
             switch (Controller_Application.currentEmulator) {
                 case Driver:
+                    System.out.println("driver");
                     currentScene = driverScene;
                     changeScene(driverScene);
                     break;
                 case LaundryCentral:
+                    System.out.println("lcentral");
                     currentScene = laundryScene;
                     changeScene(laundryScene);
                     break;
@@ -170,11 +172,17 @@ import java.util.ResourceBundle;
             }
             userName.setText(null);
             passWord.setText(null);
-        }
+
+        //}
+        /*
         else {
             userName.setText("Incorrect Credentials");
             passWord.setText("Incorrect Credentials");
         }
+
+         */
+
+
     }
 
 
