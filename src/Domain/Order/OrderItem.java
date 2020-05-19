@@ -1,33 +1,19 @@
 package Domain.Order;
 
-import java.time.LocalDateTime;
-
 public class OrderItem {
 
     private boolean isWashed;
     private int ID;
-    private int orderID;
-    private int laundryItemID;
-    private LocalDateTime startDateTime;
-    private LocalDateTime endDateTime;
+    private String type;
 
-    public OrderItem(int ID, int laundryItemID, int orderID, boolean isWashed, LocalDateTime startDateTime, LocalDateTime endDateTime){
+    public OrderItem(boolean isWashed, int ID, String type){
         this.isWashed = isWashed;
         this.ID =  ID;
-        this.laundryItemID = laundryItemID;
-        this.orderID = orderID;
-        this.startDateTime = startDateTime;
-        this.endDateTime = endDateTime;
+        this.type = type;
     }
 
     public void updateStatus(boolean status){
 
-    }
-
-    @Override
-    public String toString() {
-        return "ID: " + ID + " OrderID: " + orderID + " laundryItemID " + laundryItemID + " isWashed " + isWashed +
-                " start date " + startDateTime + " end date " + endDateTime;
     }
 
     public boolean isWashed() {
@@ -38,5 +24,7 @@ public class OrderItem {
         return ID;
     }
 
-
+    public String getType() {
+        return type;
+    }
 }
