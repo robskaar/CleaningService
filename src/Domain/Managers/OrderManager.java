@@ -23,10 +23,6 @@ public class OrderManager {
         return new ArrayList<>();
     }
 
-    /**
-     * @param routeID Id of the route where driver needs to pick-up/deliver orders
-     * @return Returns array list with orders from the route
-     */
     public static ArrayList<Order> getRouteOrders(int routeID) {
 
         DB.selectSQL("SELECT * FROM getRouteOrder(" + routeID + ")");
@@ -46,7 +42,7 @@ public class OrderManager {
 
     /**
      * Only use after making a SQL select query that contains orders
-     * <p>
+     *
      * This method takes the result set from the DB Class and converts the raw data into
      * an array list which contains instances of orders
      *
@@ -89,6 +85,7 @@ public class OrderManager {
         addOrderItems(orders);
 
         return orders;
+
     }
 
     /**
@@ -121,6 +118,8 @@ public class OrderManager {
                 }
                 order.getOrderItems().add(new OrderItem(orderItemID, laundryItemID, orderID, isWashed, startDateTime, endDateTime));
             }
+
         }
     }
+
 }
