@@ -27,20 +27,19 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" styleClass="HBox_top">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#execFunction" text="Start Route" />
+                        <Button mnemonicParsing="false" text="Start Route" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="832.0" spacing="105.0" styleClass="HBox_bottom" VBox.vgrow="ALWAYS">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="832.0" spacing="80.0" styleClass="HBox_bottom" VBox.vgrow="ALWAYS">
                      <children>
-                        <TableView fx:id="orderTable" onMouseClicked="#cellClick" prefHeight="566.0" prefWidth="279.0">
+                        <TableView fx:id="orderTable" onMouseClicked="#cellClick" prefHeight="566.0" prefWidth="300.0">
                           <columns>
                             <TableColumn fx:id="columnOrderID" editable="false" minWidth="50.0" prefWidth="50.0" resizable="false" text="Order" />
                           </columns>
                         </TableView>
-                        <TableView fx:id="itemTable" prefHeight="566.0" prefWidth="266.0">
+                        <TableView fx:id="itemTable" prefHeight="566.0" prefWidth="300.0">
                           <columns>
                             <TableColumn fx:id="columnItemID" prefWidth="75.0" text="Item" />
-                            <TableColumn prefWidth="75.0" text="C2" />
                           </columns>
                         </TableView>
                      </children>
