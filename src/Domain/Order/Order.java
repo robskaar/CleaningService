@@ -40,6 +40,7 @@ public class Order {
     }
 
     public ArrayList<OrderItem> getOrderItems() {
+        System.out.println("Arraylist size" + items.size());
         return this.items;
     }
 

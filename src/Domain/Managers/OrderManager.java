@@ -110,9 +110,11 @@ public class OrderManager {
         LocalDateTime endDateTime = null;
 
         for (Order order : orders) {
+            
             DB.selectSQL("SELECT * FROM getOrderItem(" + order.getID() + ")");
 
-            if (!(temp = DB.getData()).equals("|ND|")) {
+            while (!(temp = DB.getData()).equals("|ND|")) {
+
                 orderItemID = Integer.parseInt(temp);
                 laundryItemID = Integer.parseInt(DB.getData());
                 orderID = Integer.parseInt(DB.getData());
@@ -122,8 +124,11 @@ public class OrderManager {
                 if (!(temp = DB.getData()).equals("null")) {
                     endDateTime = LocalDateTime.parse(temp, formatter);
                 }
+                System.out.println("Adding order item");
                 order.getOrderItems().add(new OrderItem(orderItemID, laundryItemID, orderID, isWashed, startDateTime, endDateTime));
+
             }
+
         }
     }
 }
