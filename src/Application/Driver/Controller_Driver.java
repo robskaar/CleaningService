@@ -1,9 +1,11 @@
 package Application.Driver;
 
 import Application.general.Controller_Application;
+import Domain.Enums.Role;
 import Domain.Managers.OrderManager;
 import Domain.Order.Order;
 import Domain.Order.OrderItem;
+import Foundation.Database.DB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -26,6 +28,7 @@ public class Controller_Driver extends Controller_Application implements Initial
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        DB.setDBPropertiesPath(Role.Driver);
         initOrderTable();
         initItemTable();
     }
