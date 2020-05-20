@@ -1,6 +1,11 @@
 package Domain;
 
+import Application.Costumer.Controller_Costumer;
+import Application.general.Controller_Application;
+import Domain.Enums.Emulator;
+import Domain.Enums.Role;
 import Domain.Managers.AccountManager;
+import Services.Passwordmodifier.Password;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -17,14 +22,15 @@ public class AccountManagerTest {
      * fields used to test with, should also be present in database (note password is stored hashed not plaintext)
      *  so if you dont have this user in you test environment/DB, run the program, register it and then run the test
      */
-    String userName ="TestAccount";
-    String passWord = "TestAccount123";
+    String userName ="Driver";
+    String passWord = "$2a$12$vcsUNpvsGmtqsENhfYlNCOiTFm8uxEqp1JB44mO/KLwIUP7khLYPu";
 
     /**
      * Test's that log In connects to Database, logs a user in, stores username and generally successful login.
      */
     @Test
     public void successfulLogIn() {
+        Controller_Application.currentEmulator = Emulator.Driver;
         System.out.println("Testing if log in method / procedure works");
         System.out.println();
         assertTrue(AccountManager.logIn(userName, passWord));

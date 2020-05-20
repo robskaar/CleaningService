@@ -50,26 +50,36 @@ public final class AccountManager {
     public static Boolean logIn(String userName, String password) {
         try {
             CallableStatement cstmt;
-            Connection con = DB.getConnection();
+            Connection con = null;
             switch (Controller_Application.currentEmulator){
                 case Costumer:
-                    cstmt = con.prepareCall("{call Project.dbo.logInCostumer(?,?)}");
                     currentRole = Role.Costumer;
                     DB.setDBPropertiesPath(currentRole);
+                    con = DB.getConnection();
+                    cstmt = con.prepareCall("{call CleaningService.dbo.logInCostumer(?,?)}");
+                    break;
                 case Driver:
-                    cstmt = con.prepareCall("{call Project.dbo.logInDriver(?,?)}");
                     currentRole = Role.Driver;
                     DB.setDBPropertiesPath(currentRole);
+                    con = DB.getConnection();
+                    cstmt = con.prepareCall("{call CleaningService.dbo.logInDriver(?,?)}");
+                    break;
                 case DeliveryPoint:
-                    cstmt = con.prepareCall("{call Project.dbo.logInDeliveryPoint(?,?)}");
                     currentRole = Role.Delivery_Point;
                     DB.setDBPropertiesPath(currentRole);
+                    con = DB.getConnection();
+                    cstmt = con.prepareCall("{call CleaningService.dbo.logInDeliveryPoint(?,?)}");
+                    break;
                 case LaundryCentral:
-                    cstmt = con.prepareCall("{call Project.dbo.logInLaundryAccount(?,?,?)}");
+                    currentRole = Role.Laundry_Manager;
                     DB.setDBPropertiesPath(currentRole);
+                    con = DB.getConnection();
+                    cstmt = con.prepareCall("{call CleaningService.dbo.logInLaundryAccount(?,?,?)}");
+                    break;
                 default:
                     DB.setDBPropertiesPath(null);
                     cstmt = null;
+                    break;
             }
 
             cstmt.setString(1, userName);

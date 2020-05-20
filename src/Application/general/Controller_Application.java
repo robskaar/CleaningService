@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  * @Date 11-05-2020
  **/
 
- public class Controller_Application {
+public class Controller_Application {
     @FXML Button closeBtn;
     @FXML Button maximizeBtn;
     @FXML Button minimizeBtn;
@@ -81,7 +81,6 @@ import java.util.ResourceBundle;
     }
 
 
-
     protected static void changeScene(Scene scene) {
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(isFullScreen);
@@ -100,7 +99,8 @@ import java.util.ResourceBundle;
         if (primaryStage.isFullScreen()) {
             primaryStage.setFullScreen(false);
             isFullScreen = false;
-        } else {
+        }
+        else {
             primaryStage.setIconified(true);
         }
     }
@@ -122,21 +122,21 @@ import java.util.ResourceBundle;
 
     public void emulateAs(ActionEvent actionEvent) {
         if (actionEvent.getSource() == emulateAsCostumer) {
-            Controller_Application.currentEmulator = Emulator.Costumer;
+            currentEmulator = Emulator.Costumer;
             registerButton.setDisable(false);
             emulationType.setText(" Costumer");
         }
         else {
             if (actionEvent.getSource() == emulateAsDeliveryPoint) {
-                Controller_Application.currentEmulator = Emulator.DeliveryPoint;
+                currentEmulator = Emulator.DeliveryPoint;
                 emulationType.setText(" Delivery Point");
             }
             else if (actionEvent.getSource() == emulateAsDriver) {
-                Controller_Application.currentEmulator = Emulator.Driver;
+                currentEmulator = Emulator.Driver;
                 emulationType.setText(" Driver");
             }
             else if (actionEvent.getSource() == emulateAsLaundryCentral) {
-                Controller_Application.currentEmulator = Emulator.LaundryCentral;
+                currentEmulator = Emulator.LaundryCentral;
                 emulationType.setText(" Costumer");
             }
             registerButton.setDisable(true);
@@ -144,20 +144,17 @@ import java.util.ResourceBundle;
     }
 
 
-
     public void logIn() {
         String pass_word = passWord.getText();
         String user_name = userName.getText();
 
-        //if (AccountManager.logIn(user_name, pass_word)) {
+        if (AccountManager.logIn(user_name, pass_word)) {
             switch (Controller_Application.currentEmulator) {
                 case Driver:
-                    System.out.println("driver");
                     currentScene = driverScene;
                     changeScene(driverScene);
                     break;
                 case LaundryCentral:
-                    System.out.println("lcentral");
                     currentScene = laundryScene;
                     changeScene(laundryScene);
                     break;
@@ -173,16 +170,11 @@ import java.util.ResourceBundle;
             userName.setText(null);
             passWord.setText(null);
 
-        //}
-        /*
+        }
         else {
             userName.setText("Incorrect Credentials");
             passWord.setText("Incorrect Credentials");
         }
-
-         */
-
-
     }
 
 
