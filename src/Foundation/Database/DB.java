@@ -1,11 +1,21 @@
 package Foundation.Database;
 
+import Domain.Enums.Role;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Properties;
 
 /**
  * @Author Robert Skaar, revised version from Tommy Haug
@@ -20,12 +30,14 @@ public class DB {
     private static PreparedStatement ps;
     private static ResultSet rs;
     private static String port;
-    private static String dataBaseName;
+    private static String databaseName;
     private static String userName;
     private static String password;
     private static final String NOMOREDATA = "|ND|";
     private static int numberOfColumns;
     private static int currentColumnNumber = 1;
+    private static  Path dbPropertiesPath = null;
+    private static URL resource;
 
     /**
      * STATES
@@ -34,40 +46,83 @@ public class DB {
     private static boolean pendingData = false; // from select statement
     private static boolean terminated = false;
 
-    // Static connection informations
-    static {
+    public static void setDBPropertiesPath(Role role){
+        Properties props = new Properties();
+        switch (role){
+            case Costumer:
+                 resource = DB.class.getResource("customer.properties");
+                break;
+            case Driver:
+                 resource = DB.class.getResource("driver.properties");
+                break;
+            case Laundry_Assistant:
+            case Laundry_Manager:
+                resource = DB.class.getResource("laundry.properties");
+                break;
+            case Delivery_Point:
+                 resource = DB.class.getResource("deliveryPoint.properties");
+                break;
+            default:
+                resource = DB.class.getResource("default.properties");
+                break;
+        }
         try {
-// port to be establish connection on by default
-            //    if (port.equals(null))
-            port = "1433";
-            //  else{
-//should be updated with port to be used
-            //  }
-
-// should be updated with username of logged in
-            userName = "appUser";
-
-// should be updated with passsword logged in
-            password = "ItsAmeMario123";
-
-// should be updated with database to be edited
-            dataBaseName = "CleaningService";
-
-// Load compiled driver(jar file) specific to DB into memory  
+            dbPropertiesPath =  Paths.get(resource.toURI());
+        }
+        catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        String fileName = dbPropertiesPath.toString();
+        InputStream input;
+        try{
+            input = new FileInputStream(fileName);
+            props.load(input);
+            port = props.getProperty("port","1433");
+            databaseName = props.getProperty("databaseName");
+            userName=props.getProperty("userName", "sa");
+            password=props.getProperty("password");
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-
-// status message that connection established succesfull
             System.out.println("Database Ready");
 
+        }catch(IOException | ClassNotFoundException e){
+            System.err.println(e.getMessage());
         }
-        catch (ClassNotFoundException e) {
+    }
+
+    private DB(){
+    }
+    /**
+     * Static initializer - no object construction
+     */
+    static {
+        Properties props = new Properties();
+        URL resource = DB.class.getResource("default.properties");
+        try {
+             dbPropertiesPath =  Paths.get(resource.toURI());
+        }
+        catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        String fileName = dbPropertiesPath.toString();
+        InputStream input;
+        try{
+            input = new FileInputStream(fileName);
+            props.load(input);
+            port = props.getProperty("port","1433");
+            databaseName = props.getProperty("databaseName");
+            userName=props.getProperty("userName", "sa");
+            password=props.getProperty("password");
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            System.out.println("Database Ready");
+
+        }catch(IOException | ClassNotFoundException e){
             System.err.println(e.getMessage());
         }
     }
 
     public static Connection getConnection() {
         try {
-            con = DriverManager.getConnection("jdbc:sqlserver://localhost:" + port + ";databaseName=" + dataBaseName,
+            con = DriverManager.getConnection("jdbc:sqlserver://localhost:" + port + ";databaseName=" + databaseName,
                                               userName, password);
         }
         catch (SQLException e) {
@@ -80,7 +135,7 @@ public class DB {
     private static void connect() {
         try {
                 con = DriverManager.getConnection(
-                        "jdbc:sqlserver://localhost:" + port + ";databaseName=" + dataBaseName, userName, password);
+                        "jdbc:sqlserver://localhost:" + port + ";databaseName=" + databaseName, userName, password);
         }
         catch (SQLException e) {
             System.err.println(e.getMessage());

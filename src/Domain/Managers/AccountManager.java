@@ -28,8 +28,6 @@ public final class AccountManager {
 
     public static void register(String userName, String password, String firstName, String lastName, String emailAddress, String phoneNumber, LocalDate dateOfBirth,int isTemporary) {
         try {
-            System.out.println(dateOfBirth);
-            System.out.println(Date.valueOf(dateOfBirth));
             CallableStatement cstmt;
             Connection con = DB.getConnection();
             cstmt = con.prepareCall("{call CleaningService.dbo.create_user(?,?,?,?,?,?,?,?)}");
@@ -57,15 +55,20 @@ public final class AccountManager {
                 case Costumer:
                     cstmt = con.prepareCall("{call Project.dbo.logInCostumer(?,?)}");
                     currentRole = Role.Costumer;
+                    DB.setDBPropertiesPath(currentRole);
                 case Driver:
                     cstmt = con.prepareCall("{call Project.dbo.logInDriver(?,?)}");
                     currentRole = Role.Driver;
+                    DB.setDBPropertiesPath(currentRole);
                 case DeliveryPoint:
                     cstmt = con.prepareCall("{call Project.dbo.logInDeliveryPoint(?,?)}");
                     currentRole = Role.Delivery_Point;
+                    DB.setDBPropertiesPath(currentRole);
                 case LaundryCentral:
                     cstmt = con.prepareCall("{call Project.dbo.logInLaundryAccount(?,?,?)}");
+                    DB.setDBPropertiesPath(currentRole);
                 default:
+                    DB.setDBPropertiesPath(null);
                     cstmt = null;
             }
 
