@@ -4,6 +4,8 @@ import Application.general.Controller_Application;
 import Domain.Managers.OrderManager;
 import Domain.Order.Order;
 import Domain.Order.OrderItem;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -25,10 +27,7 @@ public class Controller_Driver extends Controller_Application implements Initial
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initOrderTable();
-    }
-
-    public void execFunction(){
-
+        initItemTable();
     }
 
     private void initOrderTable(){
@@ -39,14 +38,17 @@ public class Controller_Driver extends Controller_Application implements Initial
     }
 
     private void initItemTable(){
-        //columnOrderID.prefWidthProperty().bind(orderTable.widthProperty());
-        columnOrderID.setCellValueFactory(new PropertyValueFactory<>("ID"));
-
+        columnItemID.prefWidthProperty().bind(orderTable.widthProperty());
+        columnItemID.setCellValueFactory(new PropertyValueFactory<>("ID"));
     }
 
     public void cellClick(){
-        System.out.println(orderTable.getSelectionModel().getSelectedItem().getID());
-        System.out.println(orderTable.getSelectionModel().getSelectedItem().getStatusMessage());
+        ObservableList<OrderItem> orderItems = FXCollections.observableArrayList(orderTable.getSelectionModel().getSelectedItem().getOrderItems());
+
+        for (OrderItem oi : orderTable.getSelectionModel().getSelectedItem().getOrderItems()){
+            System.out.println(oi.toString());
+        }
+        itemTable.setItems(orderItems);
     }
 
 }
