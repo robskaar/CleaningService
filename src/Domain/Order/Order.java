@@ -1,5 +1,7 @@
 package Domain.Order;
 
+import Foundation.Database.DB;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,8 +16,8 @@ public class Order {
     private int customerID;
     private ArrayList<OrderItem> items;
 
-    public Order(int ID, LocalDateTime startDate, LocalDateTime endDate, String status, int deliveryPointID, int customerID){
-        this.ID =  ID;
+    public Order(int ID, LocalDateTime startDate, LocalDateTime endDate, String status, int deliveryPointID, int customerID) {
+        this.ID = ID;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
@@ -25,11 +27,19 @@ public class Order {
         this.items = new ArrayList<>();
     }
 
-    public void updateStatus(String status){
+    public void updateStatus(String status) {
 
     }
 
-    public ArrayList<OrderItem> getOrderItems(){
+    /**
+     * @return Status message of the order
+     */
+    public String getStatusMessage() {
+        DB.selectSQL("SELECT * FROM getOrderStatus(" + this.status + ")");
+        return DB.getData();
+    }
+
+    public ArrayList<OrderItem> getOrderItems() {
         return this.items;
     }
 
