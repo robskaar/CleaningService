@@ -47,8 +47,6 @@ import javafx.util.Callback;
         Parent logInParent = logInLoader.load();
         Controller_Application.logInScene = new Scene(logInParent, 600, 600);
 
-
-
         // Scene created for Register
         FXMLLoader registerLoader = new FXMLLoader(getClass().getResource("/UI/Costumer/registerScene.fxml"));
         Parent registerParent = registerLoader.load();
@@ -60,7 +58,7 @@ import javafx.util.Callback;
         Parent costumerParent = costumerLoader.load();
         Controller_Application.costumerScene = new Scene(costumerParent, 600, 600);
 
-        // scene created for loggedIn
+        // scene created for Driver
         FXMLLoader driverLoader = new FXMLLoader(getClass().getResource("/UI/Driver/driver.fxml"));
         Parent driverParent = driverLoader.load();
         Controller_Application.driverScene = new Scene(driverParent, 1020, 860);
