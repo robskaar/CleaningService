@@ -121,6 +121,7 @@ public class Controller_Application {
     }
 
     public void emulateAs(ActionEvent actionEvent) {
+        changeScene(logInScene);
         if (actionEvent.getSource() == emulateAsCostumer) {
             currentEmulator = Emulator.Costumer;
             registerButton.setDisable(false);
@@ -176,6 +177,7 @@ public class Controller_Application {
             passWord.setText("Incorrect Credentials");
         }
     }
+
 
 
     public void changeScene() {

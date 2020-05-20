@@ -48,24 +48,23 @@ import javafx.util.Callback;
         Controller_Application.logInScene = new Scene(logInParent, 600, 600);
 
 
-
         // Scene created for Register
         FXMLLoader registerLoader = new FXMLLoader(getClass().getResource("/UI/Costumer/registerScene.fxml"));
         Parent registerParent = registerLoader.load();
         Controller_Application.registerScene = new Scene(registerParent, 600, 600);
 
 
-        // scene created for loggedIn
+        // scene created for Costumer
         FXMLLoader costumerLoader = new FXMLLoader(getClass().getResource("/UI/Costumer/costumer.fxml"));
         Parent costumerParent = costumerLoader.load();
         Controller_Application.costumerScene = new Scene(costumerParent, 600, 600);
 
-        // scene created for loggedIn
+        // scene created for Driver
         FXMLLoader driverLoader = new FXMLLoader(getClass().getResource("/UI/Driver/driver.fxml"));
         Parent driverParent = driverLoader.load();
         Controller_Application.driverScene = new Scene(driverParent, 1020, 860);
 
-//        // scene created for loggedIn
+//        // scene created for DeliveryPoint
 //        FXMLLoader deliveryPointLoader = new FXMLLoader(getClass().getResource("/UI/DeliveryPoint/deliveryPoint.fxml"));
 //        Parent deliveryPointParent = deliveryPointLoader.load();
 //        Controller_Application.deliveryPointScene = new Scene(deliveryPointParent, 600, 600);
