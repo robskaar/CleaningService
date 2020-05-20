@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  * @Date 11-05-2020
  **/
 
-public class Controller_Application {
+ public class Controller_Application {
     @FXML Button closeBtn;
     @FXML Button maximizeBtn;
     @FXML Button minimizeBtn;
@@ -81,6 +81,7 @@ public class Controller_Application {
     }
 
 
+
     protected static void changeScene(Scene scene) {
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(isFullScreen);
@@ -99,8 +100,7 @@ public class Controller_Application {
         if (primaryStage.isFullScreen()) {
             primaryStage.setFullScreen(false);
             isFullScreen = false;
-        }
-        else {
+        } else {
             primaryStage.setIconified(true);
         }
     }
@@ -121,23 +121,22 @@ public class Controller_Application {
     }
 
     public void emulateAs(ActionEvent actionEvent) {
-        changeScene(logInScene);
         if (actionEvent.getSource() == emulateAsCostumer) {
-            currentEmulator = Emulator.Costumer;
+            Controller_Application.currentEmulator = Emulator.Costumer;
             registerButton.setDisable(false);
             emulationType.setText(" Costumer");
         }
         else {
             if (actionEvent.getSource() == emulateAsDeliveryPoint) {
-                currentEmulator = Emulator.DeliveryPoint;
+                Controller_Application.currentEmulator = Emulator.DeliveryPoint;
                 emulationType.setText(" Delivery Point");
             }
             else if (actionEvent.getSource() == emulateAsDriver) {
-                currentEmulator = Emulator.Driver;
+                Controller_Application.currentEmulator = Emulator.Driver;
                 emulationType.setText(" Driver");
             }
             else if (actionEvent.getSource() == emulateAsLaundryCentral) {
-                currentEmulator = Emulator.LaundryCentral;
+                Controller_Application.currentEmulator = Emulator.LaundryCentral;
                 emulationType.setText(" Costumer");
             }
             registerButton.setDisable(true);
@@ -145,17 +144,20 @@ public class Controller_Application {
     }
 
 
+
     public void logIn() {
         String pass_word = passWord.getText();
         String user_name = userName.getText();
 
-        if (AccountManager.logIn(user_name, pass_word)) {
+        //if (AccountManager.logIn(user_name, pass_word)) {
             switch (Controller_Application.currentEmulator) {
                 case Driver:
+                    System.out.println("driver");
                     currentScene = driverScene;
                     changeScene(driverScene);
                     break;
                 case LaundryCentral:
+                    System.out.println("lcentral");
                     currentScene = laundryScene;
                     changeScene(laundryScene);
                     break;
@@ -171,13 +173,17 @@ public class Controller_Application {
             userName.setText(null);
             passWord.setText(null);
 
-        }
+        //}
+        /*
         else {
             userName.setText("Incorrect Credentials");
             passWord.setText("Incorrect Credentials");
         }
-    }
 
+         */
+
+
+    }
 
 
     public void changeScene() {
