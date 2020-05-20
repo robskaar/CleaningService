@@ -23,7 +23,7 @@ public class AccountManagerTest {
      *  so if you dont have this user in you test environment/DB, run the program, register it and then run the test
      */
     String userName ="Driver";
-    String passWord = "$2a$12$vcsUNpvsGmtqsENhfYlNCOiTFm8uxEqp1JB44mO/KLwIUP7khLYPu";
+    String passWord = "Driver123!";
 
     /**
      * Test's that log In connects to Database, logs a user in, stores username and generally successful login.
