@@ -124,11 +124,9 @@ public class OrderManager {
                 if (!(temp = DB.getData()).equals("null")) {
                     endDateTime = LocalDateTime.parse(temp, formatter);
                 }
-                System.out.println("Adding order item");
+
                 order.getOrderItems().add(new OrderItem(orderItemID, laundryItemID, orderID, isWashed, startDateTime, endDateTime));
-
             }
-
         }
     }
 }
