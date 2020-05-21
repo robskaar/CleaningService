@@ -20,7 +20,7 @@ import javafx.stage.Stage;
  * @Date 11-05-2020
  **/
 
- public class Controller_Application {
+public class Controller_Application {
     @FXML Button closeBtn;
     @FXML Button maximizeBtn;
     @FXML Button minimizeBtn;
@@ -37,7 +37,7 @@ import javafx.stage.Stage;
 
     @FXML
     private void emulateAs(ActionEvent actionEvent) {
-        clearFields((Pane)userName.getParent());
+
         if (actionEvent.getSource() == emulateAsCostumer) {
             changeScene(logInSceneCostumer);
             currentEmulator = Emulator.Costumer;
@@ -55,7 +55,19 @@ import javafx.stage.Stage;
             changeScene(logInSceneLaundryCentral);
             currentEmulator = Emulator.LaundryCentral;
         }
-}
+        try {
+            clearFields((Pane) userName.getParent());
+
+        }
+        catch (NullPointerException nex){
+            /* this exception happens when you go from a emulation specific system and want to emulate something else.
+            * is non critical and only affect this due to a nulpointer when it cant find the fields changing.
+            * it should just clear textfields from login screens, so when on login screen, choosing costumer and type
+            * username and password, then emulate as something else it clears the fields.
+            */
+        }
+    }
+
     // Fields
     private static boolean isFullScreen;
     public static Scene currentScene;
@@ -99,7 +111,6 @@ import javafx.stage.Stage;
     }
 
 
-
     protected static void changeScene(Scene scene) {
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(isFullScreen);
@@ -118,7 +129,8 @@ import javafx.stage.Stage;
         if (primaryStage.isFullScreen()) {
             primaryStage.setFullScreen(false);
             isFullScreen = false;
-        } else {
+        }
+        else {
             primaryStage.setIconified(true);
         }
     }
@@ -169,8 +181,6 @@ import javafx.stage.Stage;
             userName.setText("Incorrect Credentials");
             passWord.setText("Incorrect Credentials");
         }
-    }
-
     }
 
     public void changeScene() {

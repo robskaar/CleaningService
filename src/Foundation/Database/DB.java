@@ -53,7 +53,6 @@ public class DB {
                  resource = DB.class.getResource("customer.properties");
                 break;
             case Driver:
-                System.out.println("im here");
                  resource = DB.class.getResource("driver.properties");
                 break;
             case Laundry_Assistant:
