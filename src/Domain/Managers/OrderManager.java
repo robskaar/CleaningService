@@ -3,6 +3,8 @@ package Domain.Managers;
 import Domain.Order.Order;
 import Domain.Order.OrderItem;
 import Foundation.Database.DB;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -27,11 +29,12 @@ public class OrderManager {
      * @param routeID Id of the route where driver needs to pick-up/deliver orders
      * @return Returns array list with orders from the route
      */
-    public static ArrayList<Order> getRouteOrders(int routeID) {
+    public static ObservableList<Order> getRouteOrders(int routeID, int status) {
 
-        DB.selectSQL("SELECT * FROM getRouteOrder(" + routeID + ")");
+        DB.selectSQL("SELECT * FROM getRouteOrder(" + routeID + "," + status + ")");
 
-        return convertResultSetToArrayList();
+        return FXCollections.observableArrayList(convertResultSetToArrayList());
+
     }
 
     public static ArrayList<Order> getCentralOrders() {
@@ -77,8 +80,8 @@ public class OrderManager {
                     endDate = LocalDateTime.parse(temp, formatter);
                 }
 
-                String status = DB.getData();
                 int deliveryPointID = Integer.parseInt(DB.getData());
+                String status = DB.getData();
 
                 // Adds the order to the array list
                 orders.add(new Order(orderID, startDate, endDate, status, deliveryPointID, customerID));
@@ -107,9 +110,11 @@ public class OrderManager {
         LocalDateTime endDateTime = null;
 
         for (Order order : orders) {
+            
             DB.selectSQL("SELECT * FROM getOrderItem(" + order.getID() + ")");
 
-            if (!(temp = DB.getData()).equals("|ND|")) {
+            while (!(temp = DB.getData()).equals("|ND|")) {
+
                 orderItemID = Integer.parseInt(temp);
                 laundryItemID = Integer.parseInt(DB.getData());
                 orderID = Integer.parseInt(DB.getData());
@@ -119,8 +124,11 @@ public class OrderManager {
                 if (!(temp = DB.getData()).equals("null")) {
                     endDateTime = LocalDateTime.parse(temp, formatter);
                 }
+                System.out.println("Adding order item");
                 order.getOrderItems().add(new OrderItem(orderItemID, laundryItemID, orderID, isWashed, startDateTime, endDateTime));
+
             }
+
         }
     }
 }

@@ -20,7 +20,7 @@ import javafx.stage.Stage;
  * @Date 11-05-2020
  **/
 
-public class Controller_Application {
+ public class Controller_Application {
     @FXML Button closeBtn;
     @FXML Button maximizeBtn;
     @FXML Button minimizeBtn;
@@ -99,6 +99,7 @@ public class Controller_Application {
     }
 
 
+
     protected static void changeScene(Scene scene) {
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(isFullScreen);
@@ -117,8 +118,7 @@ public class Controller_Application {
         if (primaryStage.isFullScreen()) {
             primaryStage.setFullScreen(false);
             isFullScreen = false;
-        }
-        else {
+        } else {
             primaryStage.setIconified(true);
         }
     }
@@ -171,6 +171,7 @@ public class Controller_Application {
         }
     }
 
+    }
 
     public void changeScene() {
         changeScene(Controller_Application.registerScene);
