@@ -7,16 +7,12 @@ import Services.Themes.ThemeControl;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * @Author Robert Skaar
@@ -36,24 +32,46 @@ public class Controller_Application {
     @FXML public Button registerButton;
     @FXML private TextField userName;
     @FXML private PasswordField passWord;
-    @FXML private Label emulationType;
+    @FXML public Label emulationType;
+
+
+    @FXML
+    private void emulateAs(ActionEvent actionEvent) {
+        clearFields((Pane)userName.getParent());
+        if (actionEvent.getSource() == emulateAsCostumer) {
+            changeScene(logInSceneCostumer);
+            currentEmulator = Emulator.Costumer;
+
+        }
+        else if (actionEvent.getSource() == emulateAsDeliveryPoint) {
+            changeScene(logInSceneDeliveryPoint);
+            currentEmulator = Emulator.DeliveryPoint;
+        }
+        else if (actionEvent.getSource() == emulateAsDriver) {
+            changeScene(logInSceneDriver);
+            currentEmulator = Emulator.Driver;
+        }
+        else if (actionEvent.getSource() == emulateAsLaundryCentral) {
+            changeScene(logInSceneLaundryCentral);
+            currentEmulator = Emulator.LaundryCentral;
+        }
+}
     // Fields
     private static boolean isFullScreen;
-    public static FXMLLoader fxmlLoader;
-    public static Parent parent;
     public static Scene currentScene;
     public static Stage primaryStage;
     public static Emulator currentEmulator = null;
 
     //Scenes
-    public static Scene logInScene;
+    public static Scene logInSceneCostumer;
+    public static Scene logInSceneLaundryCentral;
+    public static Scene logInSceneDeliveryPoint;
+    public static Scene logInSceneDriver;
     public static Scene registerScene;
     public static Scene costumerScene;
     public static Scene deliveryPointScene;
     public static Scene laundryScene;
     public static Scene driverScene;
-    public static Scene defaultScene;
-
 
     public void changeThemeDark() {
         ThemeControl.currentTheme = ThemeControl.DARK;
@@ -120,31 +138,6 @@ public class Controller_Application {
         return primaryStage;
     }
 
-    public void emulateAs(ActionEvent actionEvent) {
-        changeScene(logInScene);
-        if (actionEvent.getSource() == emulateAsCostumer) {
-            currentEmulator = Emulator.Costumer;
-            registerButton.setDisable(false);
-            emulationType.setText(" Costumer");
-        }
-        else {
-            if (actionEvent.getSource() == emulateAsDeliveryPoint) {
-                currentEmulator = Emulator.DeliveryPoint;
-                emulationType.setText(" Delivery Point");
-            }
-            else if (actionEvent.getSource() == emulateAsDriver) {
-                currentEmulator = Emulator.Driver;
-                emulationType.setText(" Driver");
-            }
-            else if (actionEvent.getSource() == emulateAsLaundryCentral) {
-                currentEmulator = Emulator.LaundryCentral;
-                emulationType.setText(" Costumer");
-            }
-            registerButton.setDisable(true);
-        }
-    }
-
-
     public void logIn() {
         String pass_word = passWord.getText();
         String user_name = userName.getText();
@@ -179,9 +172,9 @@ public class Controller_Application {
     }
 
 
-
     public void changeScene() {
         changeScene(Controller_Application.registerScene);
         clearFields((Pane) userName.getParent());
     }
+
 }

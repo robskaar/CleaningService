@@ -10,7 +10,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Callback;
 
 
 /**
@@ -24,28 +23,25 @@ import javafx.util.Callback;
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Callback<Class<?>, Object> controllerFactory = new Callback<>() {
-            Controller_Application a = new Controller_Application();
-
-            @Override
-            public Object call(Class<?> type) {
-                if (type == Controller_Application.class) {
-                    return a;
-                }
-                return null;
-            }
-        };
-
         //initial stage setup
         Controller_Application.primaryStage = primaryStage;
 
-        // Scene created for Log In
-        FXMLLoader logInLoader = new FXMLLoader(getClass().getResource("/UI/General/loginScene.fxml"));
-        FXMLLoader defaultLoader = new FXMLLoader(getClass().getResource("/UI/General/defaultScene.fxml"));
-        defaultLoader.setControllerFactory(controllerFactory);
-        logInLoader.setControllerFactory(controllerFactory);
-        Parent logInParent = logInLoader.load();
-        Controller_Application.logInScene = new Scene(logInParent, 600, 600);
+        // Scenes for different log ins
+        FXMLLoader logInLoaderCostumer = new FXMLLoader(getClass().getResource("/UI/Costumer/loginSceneCostumer.fxml"));
+        Parent logInParentCostumer = logInLoaderCostumer.load();
+        Controller_Application.logInSceneCostumer = new Scene(logInParentCostumer, 600, 600);
+
+        FXMLLoader logInLoaderDriver = new FXMLLoader(getClass().getResource("/UI/Driver/loginSceneDriver.fxml"));
+        Parent logInParentDriver = logInLoaderDriver.load();
+        Controller_Application.logInSceneDriver = new Scene(logInParentDriver, 600, 600);
+
+        FXMLLoader logInLoaderLaundryCentral = new FXMLLoader(getClass().getResource("/UI/LaundryCentral/loginSceneLaundryCentral.fxml"));
+        Parent logInParentLaundryCentral = logInLoaderLaundryCentral.load();
+        Controller_Application.logInSceneLaundryCentral = new Scene(logInParentLaundryCentral, 600, 600);
+
+        FXMLLoader logInLoaderDeliveryPoint = new FXMLLoader(getClass().getResource("/UI/DeliveryPoint/loginSceneDeliveryPoint.fxml"));
+        Parent logInParentDeliveryPoint = logInLoaderDeliveryPoint.load();
+        Controller_Application.logInSceneDeliveryPoint = new Scene(logInParentDeliveryPoint, 600, 600);
 
 
         // Scene created for Register
@@ -77,13 +73,14 @@ import javafx.util.Callback;
 
         //sets initial theme for the application
         ThemeControl.currentTheme = ThemeControl.DEFAULT;
-        Controller_Application.logInScene.getStylesheets().add(ThemeControl.currentTheme.getTheme());
+        Controller_Application.currentScene = Controller_Application.logInSceneCostumer;
+        Controller_Application.logInSceneCostumer.getStylesheets().add(ThemeControl.currentTheme.getTheme());
         Controller_Application.currentEmulator=Emulator.Costumer;
 
 
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setTitle("Project");
-        primaryStage.setScene(Controller_Application.logInScene);
+        primaryStage.setScene(Controller_Application.currentScene);
         primaryStage.show();
 
         // helper class to resize window as setting the primaryStage init style to transparent / undecorated will remove resize options

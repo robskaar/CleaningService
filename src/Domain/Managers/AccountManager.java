@@ -17,7 +17,7 @@ import java.time.LocalDate;
 
 public final class AccountManager {
 
-    public static String currentUser;
+    private static String currentUser;
     public static Boolean isLoggedIn = false;
     public static Role currentRole = null;
 
@@ -26,7 +26,11 @@ public final class AccountManager {
 
     }
 
-    public static void register(String userName, String password, String firstName, String lastName, String emailAddress, String phoneNumber, LocalDate dateOfBirth,int isTemporary) {
+    public static String getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void register(String userName, String password, String firstName, String lastName, String emailAddress, String phoneNumber, LocalDate dateOfBirth, int isTemporary) {
         try {
             CallableStatement cstmt;
             Connection con = DB.getConnection();
