@@ -1,5 +1,9 @@
 package Domain.Order;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.control.CheckBox;
+
 import java.time.LocalDateTime;
 
 public class OrderItem {
@@ -10,6 +14,7 @@ public class OrderItem {
     private int laundryItemID;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+    private CheckBox checkBox;
 
     public OrderItem(int ID, int laundryItemID, int orderID, boolean isWashed, LocalDateTime startDateTime, LocalDateTime endDateTime){
         this.isWashed = isWashed;
@@ -18,6 +23,7 @@ public class OrderItem {
         this.orderID = orderID;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
+        this.checkBox = new CheckBox();
     }
 
     public void updateStatus(boolean status){
@@ -36,6 +42,15 @@ public class OrderItem {
 
     public int getID() {
         return ID;
+    }
+
+
+    public CheckBox getCheckBox() {
+        return checkBox;
+    }
+
+    public boolean isChecked(){
+        return this.checkBox.isSelected();
     }
 
 

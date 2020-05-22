@@ -28,7 +28,7 @@ public class Order {
     }
 
     public void updateStatus(String status) {
-
+        this.status = status;
     }
 
     /**
@@ -40,12 +40,19 @@ public class Order {
     }
 
     public ArrayList<OrderItem> getOrderItems() {
-        System.out.println("Arraylist size" + items.size());
         return this.items;
     }
 
     public int getID() {
         return ID;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     @Override
