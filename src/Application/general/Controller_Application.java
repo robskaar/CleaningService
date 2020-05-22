@@ -195,5 +195,22 @@ public class Controller_Application {
         changeScene(Controller_Application.registerScene);
         clearFields((Pane) userName.getParent());
     }
+    public void logOff() {
+        switch (currentEmulator){
+            case LaundryCentral:
+                changeScene(logInSceneLaundryCentral);
+                break;
+            case DeliveryPoint:
+                changeScene(logInSceneDeliveryPoint);
+                break;
+            case Costumer:
+                changeScene(logInSceneCostumer);
+                break;
+            case Driver:
+                changeScene(logInSceneDriver);
+                break;
+        }
+        AccountManager.logOff();
+    }
 
 }

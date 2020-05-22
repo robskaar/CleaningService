@@ -20,7 +20,7 @@
     -fx-background-color: lightgrey;
 }
 .separator > .line{
-    -fx-border-color: lightgrey;
+    -fx-border-color: rgba(211, 211, 211, 0.84);
     -fx-border-width: 2;
 }
 
@@ -111,4 +111,7 @@
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
     -fx-background-position: center;
+}
+#DisplayPane{
+    -fx-background-color: white;
 }

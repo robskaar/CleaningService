@@ -21,7 +21,9 @@
     -fx-border-color: #0a0a0a;
     -fx-border-width: 2;
 }
-
+#DisplayPane{
+    -fx-background-color: #5c5c5c;
+}
 
 #closeBtn {
     -fx-effect: dropshadow(three-pass-box,black,0.25,0,0,0);

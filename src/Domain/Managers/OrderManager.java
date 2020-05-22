@@ -37,9 +37,11 @@ public class OrderManager {
 
     }
 
-    public static ArrayList<Order> getCentralOrders() {
+    public static ObservableList<Order> getCentralOrders(int statusId) {
 
-        return new ArrayList<>();
+        DB.selectSQL("SELECT * FROM getCentralOrder(" +statusId+ ")");
+
+        return FXCollections.observableArrayList(convertResultSetToArrayList());
     }
 
     public static void updateOrderDB(Order order) {
@@ -68,7 +70,8 @@ public class OrderManager {
             data = DB.getData();
             if (data.equals("|ND|")) {
                 break;
-            } else {
+            }
+            else {
 
                 int orderID = Integer.parseInt(data);
                 int customerID = Integer.parseInt(DB.getData());
@@ -87,7 +90,8 @@ public class OrderManager {
                 orders.add(new Order(orderID, startDate, endDate, status, deliveryPointID, customerID));
             }
 
-        } while (true);
+        }
+        while (true);
 
         addOrderItems(orders);
 
@@ -110,7 +114,7 @@ public class OrderManager {
         LocalDateTime endDateTime = null;
 
         for (Order order : orders) {
-            
+
             DB.selectSQL("SELECT * FROM getOrderItem(" + order.getID() + ")");
 
             while (!(temp = DB.getData()).equals("|ND|")) {
@@ -125,7 +129,8 @@ public class OrderManager {
                     endDateTime = LocalDateTime.parse(temp, formatter);
                 }
                 System.out.println("Adding order item");
-                order.getOrderItems().add(new OrderItem(orderItemID, laundryItemID, orderID, isWashed, startDateTime, endDateTime));
+                order.getOrderItems().add(
+                        new OrderItem(orderItemID, laundryItemID, orderID, isWashed, startDateTime, endDateTime));
 
             }
 
