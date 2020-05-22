@@ -64,11 +64,15 @@ import javafx.stage.StageStyle;
 //        FXMLLoader deliveryPointLoader = new FXMLLoader(getClass().getResource("/UI/DeliveryPoint/deliveryPoint.fxml"));
 //        Parent deliveryPointParent = deliveryPointLoader.load();
 //        Controller_Application.deliveryPointScene = new Scene(deliveryPointParent, 600, 600);
-//
-//        // scene created for loggedIn
-//        FXMLLoader laundryLoader = new FXMLLoader(getClass().getResource("/UI/LaundryCentral/laundry.fxml"));
-//        Parent laundryParent = laundryLoader.load();
-//        Controller_Application.laundryScene = new Scene(laundryParent, 600, 600);
+
+        // scene created for LaundryScene
+        FXMLLoader laundryLoader = new FXMLLoader(getClass().getResource("/UI/LaundryCentral/laundryAssistant.fxml"));
+        Parent laundryParent = laundryLoader.load();
+        Controller_Application.laundryAssistantScene = new Scene(laundryParent, 600, 600);
+
+        FXMLLoader laundryManagerLoader = new FXMLLoader(getClass().getResource("/UI/LaundryCentral/laundryManager.fxml"));
+        Parent laundryManagerParent = laundryManagerLoader.load();
+        Controller_Application.laundryManagerScene = new Scene(laundryManagerParent, 600, 600);
 
 
         //sets initial theme for the application

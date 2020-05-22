@@ -1,5 +1,6 @@
 package Application.general;
 
+import Domain.Enums.Role;
 import Domain.Managers.AccountManager;
 import Domain.Enums.Emulator;
 import Services.Resizer.ResizeHelper;
@@ -21,6 +22,7 @@ import javafx.stage.Stage;
  **/
 
 public class Controller_Application {
+
     @FXML Button closeBtn;
     @FXML Button maximizeBtn;
     @FXML Button minimizeBtn;
@@ -82,8 +84,9 @@ public class Controller_Application {
     public static Scene registerScene;
     public static Scene costumerScene;
     public static Scene deliveryPointScene;
-    public static Scene laundryScene;
+    public static Scene laundryAssistantScene;
     public static Scene driverScene;
+    public static Scene laundryManagerScene;
 
     public void changeThemeDark() {
         ThemeControl.currentTheme = ThemeControl.DARK;
@@ -161,8 +164,13 @@ public class Controller_Application {
                     changeScene(driverScene);
                     break;
                 case LaundryCentral:
-                    currentScene = laundryScene;
-                    changeScene(laundryScene);
+                    currentScene = laundryAssistantScene;
+                    if (AccountManager.currentRole.equals(Role.Laundry_Manager)){
+                        changeScene(laundryManagerScene);
+                    }else if (AccountManager.currentRole.equals(Role.Laundry_Assistant)){
+                        changeScene(laundryAssistantScene);
+                    }
+
                     break;
                 case Costumer:
                     currentScene = costumerScene;

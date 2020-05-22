@@ -23,7 +23,7 @@ public class PasswordTest {
     public void testPassword(){
         System.out.println("Testing if hashing and checking hash of password methods work");
         System.out.println();
-        String passWord = "test";
+        String passWord = "LaundryManager123!";
         String hashedPassword = Password.hashPassword(passWord);
         System.out.println(hashedPassword);
         assertTrue(Password.checkPassword(passWord, hashedPassword));
