@@ -47,7 +47,7 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
             Button button = new Button(String.valueOf(order.getID()));
             button.setMinWidth(10);
             button.setMinHeight(10);
-          inboundTilePane.getChildren().add(button);
+            inboundTilePane.getChildren().add(button);
 
         }
 
