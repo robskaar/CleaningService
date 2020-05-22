@@ -53,7 +53,6 @@ public class Controller_Driver extends Controller_Application implements Initial
             };
 
             cell.setOnMouseClicked(mouseEvent -> {
-                System.out.println("mouse event");
                 selectedRow = cell.getTableRow();
             });
             return cell;
@@ -70,21 +69,30 @@ public class Controller_Driver extends Controller_Application implements Initial
         columnConfirm.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
     }
 
+    /**
+     * When driver selects and order, this function sets all relevant order items to display
+     */
     public void selectOrder(){
         ObservableList<OrderItem> orderItems = FXCollections.observableArrayList(orderTable.getSelectionModel().getSelectedItem().getOrderItems());
         itemTable.setItems(orderItems);
     }
 
+    /**
+     * Checks if the driver has confirmed all order items, before confirming the order
+     */
     public void isAllItemsConfirmed(){
         boolean result = true;
-        for (OrderItem oi : orderTable.getSelectionModel().getSelectedItem().getOrderItems()){
-            if(!oi.isChecked()) result = false;
+        Order order = orderTable.getSelectionModel().getSelectedItem();
+
+        for (OrderItem orderItem : order.getOrderItems()){
+            if(!orderItem.isChecked()) result = false;
         }
 
         if(selectedRow != null && result){
             selectedRow.getStyleClass().add("confirmedOrder");
+            order.updateStatus("5");
+            OrderManager.updateOrderDB(order);
         }
-
     }
 
 

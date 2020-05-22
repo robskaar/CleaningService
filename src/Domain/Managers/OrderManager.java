@@ -6,6 +6,9 @@ import Foundation.Database.DB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -44,7 +47,28 @@ public class OrderManager {
 
     public static void updateOrderDB(Order order) {
 
+        CallableStatement cstmt;
 
+        try{
+            cstmt = DB.getConnection().prepareCall("{call CleaningService.dbo.updateOrder(?,?,?)}");
+            cstmt.setInt(1,Integer.parseInt(order.getStatus()));
+
+            if(order.getEndDate() != null){
+                cstmt.setDate(2,java.sql.Date.valueOf(order.getEndDate().toLocalDate()));
+            }
+            else{
+                cstmt.setDate(2,null);
+            }
+
+            cstmt.setInt(3,order.getID());
+
+            cstmt.execute();
+            cstmt.close();
+            DB.getConnection().close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**
