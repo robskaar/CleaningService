@@ -16,5 +16,8 @@
 
 .confirmedOrder{
     -fx-background-color: Green;
+}
+
+.confirmedOrder .table-cell{
     -fx-text-fill: white;
 }

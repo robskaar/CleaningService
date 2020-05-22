@@ -28,7 +28,7 @@ public class Order {
     }
 
     public void updateStatus(String status) {
-
+        this.status = status;
     }
 
     /**
@@ -45,6 +45,14 @@ public class Order {
 
     public int getID() {
         return ID;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     @Override
