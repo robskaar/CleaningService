@@ -2,6 +2,19 @@
     -fx-background-color: blue;
 }
 
+.HBox_middle{
+    -fx-background-color: red;
+}
+
 .HBox_bottom{
     -fx-background-color: green;
+}
+
+.columnConfirm{
+    -fx-alignment: center;
+}
+
+.confirmedOrder{
+    -fx-background-color: Green;
+    -fx-text-fill: white;
 }
