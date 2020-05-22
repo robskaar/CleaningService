@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="860.0" prefWidth="1020.0" stylesheets="@../../Foundation/Resources/CSS/Driver/Driver.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Driver.Controller_Driver">
+    <top>
+
+        <VBox prefHeight="35.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <children>
+                <HBox fx:id="toolBar" prefHeight="16.0" prefWidth="600.0">
+                    <children>
+                        <ToolBar prefHeight="38.0" prefWidth="142.0">
+                            <items>
+                                <MenuButton fx:id="settingsBtn" minHeight="16.0" minWidth="16.0" mnemonicParsing="false">
+                                    <items>
+                                        <Menu mnemonicParsing="false" text="Themes">
+                                            <items>
+                                                <MenuItem fx:id="defaultThemeBtn" mnemonicParsing="false" onAction="#changeThemeDefault" text="Default" />
+                                                <MenuItem fx:id="darkThemeBtn" mnemonicParsing="false" onAction="#changeThemeDark" text="Dark" />
+                                            </items>
+                                        </Menu>
+                                        <Menu fx:id="emulatorMenu" mnemonicParsing="false" text="Emulator">
+                                            <items>
+                                                <MenuItem fx:id="emulateAsCostumer" mnemonicParsing="false" onAction="#emulateAs" text="Costumer" />
+                                                <MenuItem fx:id="emulateAsDriver" mnemonicParsing="false" onAction="#emulateAs" text="Driver" />
+                                                <MenuItem fx:id="emulateAsDeliveryPoint" mnemonicParsing="false" onAction="#emulateAs" text="Delivery Point" />
+                                                <MenuItem fx:id="emulateAsLaundryCentral" mnemonicParsing="false" onAction="#emulateAs" text="Laundry Central" />
+                                            </items>
+                                        </Menu>
+                                    </items>
+                                </MenuButton>
+                                <Button fx:id="closeBtn" minHeight="16.0" minWidth="16.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="16.0" prefWidth="16.0" />
+                                <Button fx:id="minimizeBtn" minHeight="16.0" minWidth="16.0" mnemonicParsing="false" onAction="#minimizeWindow" />
+                                <Button fx:id="maximizeBtn" alignment="CENTER" contentDisplay="CENTER" minHeight="16.0" minWidth="16.0" mnemonicParsing="false" onAction="#maximizeWindow" />
+                            </items>
+                        </ToolBar>
+                        <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="35.0" prefWidth="164.0" text="Emulating as:" />
+                        <Label fx:id="emulationType" contentDisplay="CENTER" prefHeight="35.0" prefWidth="115.0" text=" Driver" HBox.hgrow="ALWAYS" />
+                    </children>
+                </HBox>
+                <Separator prefWidth="600.0" />
+            </children>
+
+        </VBox>
+    </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="820.0" fitWidth="1100.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Foundation/Resources/Icons/Driver/ipad.png" />
+               </image>
+            </ImageView>
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="626.0" prefWidth="832.0" AnchorPane.leftAnchor="94.0" AnchorPane.topAnchor="97.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" styleClass="HBox_top">
+                     <children>
+                        <Button mnemonicParsing="false" text="Start Route" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="832.0" spacing="80.0" styleClass="HBox_bottom" VBox.vgrow="ALWAYS">
+                     <children>
+                        <TableView fx:id="orderTable" onMouseClicked="#cellClick" prefHeight="566.0" prefWidth="300.0">
+                          <columns>
+                            <TableColumn fx:id="columnOrderID" editable="false" minWidth="50.0" prefWidth="50.0" resizable="false" text="Order" />
+                          </columns>
+                        </TableView>
+                        <TableView fx:id="itemTable" prefHeight="566.0" prefWidth="300.0">
+                          <columns>
+                            <TableColumn fx:id="columnItemID" prefWidth="75.0" text="Item" />
+                          </columns>
+                        </TableView>
+                     </children>
+                     <padding>
+                        <Insets bottom="50.0" top="50.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </center>
+
+</BorderPane>

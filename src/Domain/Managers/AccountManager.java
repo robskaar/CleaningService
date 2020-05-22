@@ -93,14 +93,21 @@ public final class AccountManager {
             }
             boolean results = cstmt.execute();
             String passHash = cstmt.getString(2);
-            roleName = cstmt.getString(3);
+            if ( Controller_Application.currentEmulator == Emulator.LaundryCentral){
+                roleName = cstmt.getString(3);
+            }
+            if ( Controller_Application.currentEmulator == Emulator.LaundryCentral) {
+                roleName = cstmt.getString(3);
+
+                if (roleName.equalsIgnoreCase("Laundry Manager")) {
+                    currentRole = Role.Laundry_Manager;
+                }
+                else {
+                    currentRole = Role.Laundry_Assistant;
+                }
+            }
             cstmt.close();
             con.close();
-            if (roleName.equalsIgnoreCase("Laundry Manager")){
-                currentRole=Role.Laundry_Manager;
-            }else{
-                currentRole=Role.Laundry_Assistant;
-            }
             if (Password.checkPassword(password, passHash)) {
                isLoggedIn = true;
                 currentUser = userName;
