@@ -9,7 +9,6 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -88,14 +87,27 @@
       </HBox>
    </left>
    <center>
-      <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <StackPane id="DisplayPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane id="DisplayPane" fx:id="inboundOrderPane" prefHeight="200.0" prefWidth="200.0">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <TilePane fx:id="inboundTilePane" prefHeight="570.0" prefWidth="460.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <HBox alignment="CENTER" prefHeight="52.0" prefWidth="464.0">
+                     <children>
+                        <Button id="backButton" fx:id="backFromInboundItem" mnemonicParsing="false" onAction="#initInboundList" prefHeight="31.0" prefWidth="36.0" />
+                        <Label fx:id="paneText" alignment="CENTER" contentDisplay="CENTER" prefHeight="42.0" prefWidth="444.0" text="Label" />
+                     </children>
+                  </HBox>
+                  <TilePane fx:id="inboundTilePane" prefHeight="476.0" prefWidth="464.0">
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin></TilePane>
+                  <Button fx:id="washingLabelPrintButton" mnemonicParsing="false" onAction="#printLabel" prefWidth="266.0" text="Print Washing label for all above Laundry items">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </Button>
                </children>
-            </AnchorPane>
-            <AnchorPane id="DisplayPane" fx:id="ongoingOrderPane" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" visible="false" />
+            </VBox>
          </children>
       </StackPane>
    </center>

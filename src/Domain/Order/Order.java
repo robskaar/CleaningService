@@ -16,6 +16,10 @@ public class Order {
     private int customerID;
     private ArrayList<OrderItem> items;
 
+    public int getCustomerID( ) {
+        return customerID;
+    }
+
     public Order(int ID, LocalDateTime startDate, LocalDateTime endDate, String status, int deliveryPointID, int customerID) {
         this.ID = ID;
         this.startDate = startDate;
