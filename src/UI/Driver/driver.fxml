@@ -73,22 +73,28 @@
                         <Button mnemonicParsing="false" text="Start Route" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="832.0" spacing="80.0" styleClass="HBox_bottom" VBox.vgrow="ALWAYS">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="832.0" spacing="80.0" styleClass="HBox_middle" VBox.vgrow="ALWAYS">
                      <children>
-                        <TableView fx:id="orderTable" onMouseClicked="#cellClick" prefHeight="566.0" prefWidth="300.0">
+                        <TableView fx:id="orderTable" onMouseClicked="#selectOrder" prefHeight="566.0" prefWidth="300.0">
                           <columns>
-                            <TableColumn fx:id="columnOrderID" editable="false" minWidth="50.0" prefWidth="50.0" resizable="false" text="Order" />
+                            <TableColumn fx:id="columnOrderID" editable="false" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="Order" />
                           </columns>
                         </TableView>
-                        <TableView fx:id="itemTable" prefHeight="566.0" prefWidth="300.0">
+                        <TableView fx:id="itemTable" editable="true" prefHeight="566.0" prefWidth="300.0">
                           <columns>
-                            <TableColumn fx:id="columnItemID" prefWidth="75.0" text="Item" />
+                            <TableColumn fx:id="columnItemID" editable="false" prefWidth="75.0" sortable="false" text="Item" />
+                              <TableColumn fx:id="columnConfirm" editable="false" prefWidth="75.0" sortable="false" styleClass="columnConfirm" text="Confirm" />
                           </columns>
                         </TableView>
                      </children>
                      <padding>
                         <Insets bottom="50.0" top="50.0" />
                      </padding>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" styleClass="HBox_bottom">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#isAllItemsConfirmed" text="Confirm Order" />
+                     </children>
                   </HBox>
                </children>
             </VBox>
