@@ -32,7 +32,7 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
     @FXML private TilePane inboundTilePane;
     @FXML private Label paneText;
     @FXML private Button washingLabelPrintButton;
-
+    @FXML private Button backFromInboundItem;
     private Order viewingOrder;
 
 
@@ -45,7 +45,8 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
         });
     }
 
-    private void initInboundList( ) {
+    public void initInboundList( ) {
+        backFromInboundItem.setVisible(false);
         inboundTilePane.getChildren().clear();
         washingLabelPrintButton.setVisible(false);
         paneText.setText("All inbound orders");
@@ -71,6 +72,7 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
     }
 
     private void initOrderDetails(Order order) {
+        backFromInboundItem.setVisible(true);
         viewingOrder = order;
         inboundTilePane.getChildren().clear();
         washingLabelPrintButton.setVisible(true);

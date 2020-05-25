@@ -24,6 +24,23 @@
 #DisplayPane{
     -fx-background-color: #5c5c5c;
 }
+#backButton {
+    -fx-pref-width: 20;
+    -fx-pref-height: 20;
+    -fx-background-color: transparent;
+    -fx-background-image: url('../Icons/General/backButton.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
+#backButton:hover{
+    -fx-scale-y: 0.8px;
+    -fx-scale-x: 0.8px;
+    -fx-effect: dropshadow(three-pass-box,black,2,0,0,0);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
 
 #closeBtn {
     -fx-effect: dropshadow(three-pass-box,black,0.25,0,0,0);
