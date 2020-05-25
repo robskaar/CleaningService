@@ -103,7 +103,15 @@
     -fx-background-size: cover;
     -fx-background-position: center;
 }
-
+#backButton {
+    -fx-pref-width: 20;
+    -fx-pref-height: 20;
+    -fx-background-color: transparent;
+    -fx-background-image: url('../Icons/General/backButton.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
 #settingsBtn:hover {
     -fx-scale-y: 0.8px;
     -fx-scale-x: 0.8px;
