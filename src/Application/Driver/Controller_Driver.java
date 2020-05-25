@@ -1,98 +1,209 @@
 package Application.Driver;
 
 import Application.general.Controller_Application;
+import Domain.DeliveryPoint.DeliveryPoint;
 import Domain.Enums.Role;
+import Domain.Managers.DeliveryPointManager;
 import Domain.Managers.OrderManager;
 import Domain.Order.Order;
 import Domain.Order.OrderItem;
 import Foundation.Database.DB;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller_Driver extends Controller_Application implements Initializable {
 
-    @FXML private TableView<Order> orderTable;
-    @FXML private TableColumn<Order,Integer> columnOrderID;
-    @FXML private TableView<OrderItem> itemTable;
-    @FXML private TableColumn<Integer,OrderItem> columnItemID;
-    @FXML private TableColumn<Boolean,OrderItem> columnConfirm;
+    /*
+    FXML components from Central Orders pane
+     */
+    @FXML
+    private VBox centralOrders;
+    @FXML
+    private VBox routeOrders;
+    @FXML
+    private TableView<Order> centralOrderTable;
+    @FXML
+    private TableColumn<Order, Integer> columnOrderID;
+    @FXML
+    private TableView<OrderItem> centralItemTable;
+    @FXML
+    private TableColumn<Integer, OrderItem> columnItemID;
+    @FXML
+    private TableColumn<Boolean, OrderItem> columnConfirm;
 
-    private static TableRow<Order> selectedRow = null;
+    /*
+    FXML components from route orders pane
+     */
+    @FXML
+    private TableView<DeliveryPoint> deliveryPointTable;
+    @FXML
+    private TableColumn<DeliveryPoint, String> columnDeliveryPoint;
+    @FXML
+    private TableView<Order> deliverTable;
+    @FXML
+    private TableColumn<Order, Integer> columnDeliverOrders;
+    @FXML
+    private TableView<Order> pickUpTable;
+    @FXML
+    private TableColumn<Order, Integer> columnPickUp;
+    @FXML
+    private TableView<OrderItem> routeOrderItemsTable;
+    @FXML
+    private TableColumn<Integer, OrderItem> columnOrderItem;
+    @FXML
+    private TableColumn<Boolean, OrderItem> columnConfirmItem;
+
+    private static TableView<Order> currentOrderTable = null;
+    private static Order selectedOrder = null;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DB.setDBPropertiesPath(Role.Driver);
-        initOrderTable();
-        initItemTable();
+        initCentralOrderTable();
+        initCentralItemTable();
     }
 
-    private void initOrderTable(){
+    private void initCentralOrderTable() {
+        centralOrderTable.setPlaceholder(getOnEmptyLabel("No more orders"));
 
-        columnOrderID.prefWidthProperty().bind(orderTable.widthProperty());
+        columnOrderID.prefWidthProperty().bind(centralOrderTable.widthProperty());
         columnOrderID.setCellValueFactory(new PropertyValueFactory<>("ID"));
-        columnOrderID.setCellFactory(column -> {
-            TableCell<Order,Integer> cell = new TableCell<>(){
 
-            @Override
-            protected void updateItem(Integer item, boolean empty) {
-                super.updateItem(item, empty);
-
-                    if (item == null || empty) {
-                        setText(null);
-                    } else {
-                        setText(item.toString());
-                    }
-                }
-            };
-
-            cell.setOnMouseClicked(mouseEvent -> {
-                selectedRow = cell.getTableRow();
-            });
-            return cell;
-        });
-
-        orderTable.setItems(OrderManager.getRouteOrders(1,4));
+        centralOrderTable.setItems(OrderManager.getRouteOrders(1, 4));
+        setSelectListener(centralOrderTable, centralItemTable);
     }
 
-    private void initItemTable(){
-        columnItemID.prefWidthProperty().bind(orderTable.widthProperty().divide(4).multiply(3));
+    private void initCentralItemTable() {
+        centralItemTable.setPlaceholder(getOnEmptyLabel("Select Order"));
+
+        columnItemID.prefWidthProperty().bind(centralOrderTable.widthProperty().divide(4).multiply(3));
         columnItemID.setCellValueFactory(new PropertyValueFactory<>("ID"));
 
-        columnConfirm.prefWidthProperty().bind(orderTable.widthProperty().divide(4));
+        columnConfirm.prefWidthProperty().bind(centralOrderTable.widthProperty().divide(4));
         columnConfirm.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
     }
 
-    /**
-     * When driver selects and order, this function sets all relevant order items to display
-     */
-    public void selectOrder(){
-        ObservableList<OrderItem> orderItems = FXCollections.observableArrayList(orderTable.getSelectionModel().getSelectedItem().getOrderItems());
-        itemTable.setItems(orderItems);
+    private void initDeliveryPointTable() {
+        columnDeliveryPoint.setCellValueFactory(new PropertyValueFactory<>("name"));
+        columnDeliveryPoint.prefWidthProperty().bind(deliveryPointTable.widthProperty());
+        deliveryPointTable.setItems(DeliveryPointManager.getRouteDeliveryPoints(1));
     }
 
-    /**
-     * Checks if the driver has confirmed all order items, before confirming the order
-     */
-    public void isAllItemsConfirmed(){
-        boolean result = true;
-        Order order = orderTable.getSelectionModel().getSelectedItem();
+    private void initRouteOrderTables() {
+        columnDeliverOrders.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        columnDeliverOrders.prefWidthProperty().bind(deliverTable.widthProperty());
+        setSelectListener(deliverTable, routeOrderItemsTable);
 
-        for (OrderItem orderItem : order.getOrderItems()){
-            if(!orderItem.isChecked()) result = false;
+        columnPickUp.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        columnPickUp.prefWidthProperty().bind(pickUpTable.widthProperty());
+        setSelectListener(pickUpTable, routeOrderItemsTable);
+    }
+
+    private void initRouteItemsTable() {
+        columnOrderItem.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        columnConfirmItem.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
+    }
+
+    public void showDeliveryPointOrders() {
+        routeOrderItemsTable.getItems().clear();
+        int ID = Integer.parseInt(deliveryPointTable.getSelectionModel().getSelectedItem().getID());
+        deliverTable.setItems(OrderManager.getDeliveryPointOrders(ID, 5));
+        pickUpTable.setItems(OrderManager.getDeliveryPointOrders(ID, 1));
+    }
+
+    public void confirmOrder() {
+
+        boolean isAllItemsConfirmed = true;
+
+        // Assert that an order has is selected
+        if (selectedOrder != null) {
+
+            // Check if all order items is confirmed
+            for (OrderItem orderItem : selectedOrder.getOrderItems()) {
+                if (!orderItem.isChecked()) isAllItemsConfirmed = false;
+            }
+
+            if (isAllItemsConfirmed) {
+
+                // Upload new order status to database
+                String newStatus = String.valueOf(Integer.parseInt(selectedOrder.getStatus()) + 1);
+                selectedOrder.updateStatus(newStatus);
+                System.out.println(selectedOrder.getStatus());
+                OrderManager.updateOrderDB(selectedOrder);
+
+                // Select next order on list
+                currentOrderTable.requestFocus();
+                currentOrderTable.getSelectionModel().getSelectedIndex();
+                currentOrderTable.getColumns().get(0).getCellObservableValue(1);
+
+            } else {
+                showAlert("Please confirm all items");
+            }
+        } else {
+            showAlert("Please select an order");
         }
 
-        if(selectedRow != null && result){
-            selectedRow.getStyleClass().add("confirmedOrder");
-            order.updateStatus("5");
-            OrderManager.updateOrderDB(order);
+    }
+
+    public void isAllOrdersConfirmed() {
+
+        boolean isAllOrdersConfirmed = true;
+
+        if (!centralOrderTable.getItems().isEmpty()) {
+            for (Order order : centralOrderTable.getItems()) {
+                if (!(order.getStatus().equals("5"))) {
+                    isAllOrdersConfirmed = false;
+                    showAlert("Please confirm all orders");
+                    break;
+                }
+            }
         }
+
+        if (isAllOrdersConfirmed) {
+            changeView();
+        }
+
+    }
+
+    public void showAlert(String text) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Oops");
+        alert.setHeaderText(text);
+        alert.showAndWait();
+    }
+
+    private void changeView() {
+        centralOrders.setVisible(false);
+        routeOrders.setVisible(true);
+
+        initDeliveryPointTable();
+        initRouteOrderTables();
+        initRouteItemsTable();
+    }
+
+    private Label getOnEmptyLabel(String text) {
+        Label onEmptyLabel = new Label(text);
+        onEmptyLabel.getStyleClass().add("onEmptyLabel");
+        return onEmptyLabel;
+    }
+
+    private void setSelectListener(TableView<Order> tableOrder, TableView<OrderItem> tableItem) {
+
+        tableOrder.getSelectionModel().selectedItemProperty().addListener((observableValue, oldOrder, newOrder) -> {
+            if (newOrder != null) {
+                selectedOrder = newOrder;
+                currentOrderTable = tableOrder;
+                tableItem.setItems(FXCollections.observableArrayList(selectedOrder.getOrderItems()));
+            }
+        });
+
     }
 
 

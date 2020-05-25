@@ -1,6 +1,8 @@
 package Domain.Order;
 
 import Foundation.Database.DB;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,6 +18,7 @@ public class Order {
     private int customerID;
     private ArrayList<OrderItem> items;
 
+
     public int getCustomerID( ) {
         return customerID;
     }
@@ -27,7 +30,6 @@ public class Order {
         this.status = status;
         this.deliveryPointID = deliveryPointID;
         this.customerID = customerID;
-
         this.items = new ArrayList<>();
     }
 

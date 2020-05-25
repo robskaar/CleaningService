@@ -1,7 +1,36 @@
+.root{
+    -fx-background-color: transparent;
+}
+
 .HBox_top{
-    -fx-background-color: blue;
+    -fx-background-color: #5D6D7E;
+}
+
+.HBox_middle{
+    -fx-background-color: #99A3A4;
 }
 
 .HBox_bottom{
-    -fx-background-color: green;
+    -fx-background-color: #5D6D7E;
+}
+
+.table-view{
+    -fx-selection-bar: #34495E !important;
+    -fx-selection-bar-non-focused: #34495E !important;
+}
+
+.columnConfirm{
+    -fx-alignment: center;
+}
+
+.confirmedOrder{
+    -fx-background-color: Green;
+}
+
+.confirmedOrder .table-cell{
+    -fx-text-fill: white;
+}
+
+.onEmptyLabel {
+    -fx-font-size: 32;
 }
