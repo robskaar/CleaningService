@@ -9,19 +9,30 @@ import Domain.Managers.OrderManager;
 import Domain.Order.Order;
 import Domain.Order.OrderItem;
 import Foundation.Database.DB;
+import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Popup;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller_Driver extends Controller_Application implements Initializable {
 
+    @FXML private BorderPane root;
     @FXML private Button routeConfirm;
     @FXML private Button centralConfirm;
     /*
@@ -107,22 +118,36 @@ public class Controller_Driver extends Controller_Application implements Initial
         columnDeliverOrders.setCellValueFactory(new PropertyValueFactory<>("ID"));
         columnDeliverOrders.prefWidthProperty().bind(deliverTable.widthProperty());
         setSelectListener(deliverTable, routeOrderItemsTable);
+        deliverTable.setPlaceholder(getOnEmptyLabel("Choose Delivery Point"));
 
         columnPickUp.setCellValueFactory(new PropertyValueFactory<>("ID"));
         columnPickUp.prefWidthProperty().bind(pickUpTable.widthProperty());
         setSelectListener(pickUpTable, routeOrderItemsTable);
+        pickUpTable.setPlaceholder(getOnEmptyLabel("Choose Delivery Point"));
     }
 
     private void initRouteItemsTable() {
         columnOrderItem.setCellValueFactory(new PropertyValueFactory<>("ID"));
         columnConfirmItem.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
+        routeOrderItemsTable.setPlaceholder(getOnEmptyLabel("Choose order"));
     }
 
     public void showDeliveryPointOrders() {
         routeOrderItemsTable.getItems().clear();
         int ID = Integer.parseInt(deliveryPointTable.getSelectionModel().getSelectedItem().getID());
+
+        // Insert data to table views
         deliverTable.setItems(OrderManager.getDeliveryPointOrders(ID, 5));
         pickUpTable.setItems(OrderManager.getDeliveryPointOrders(ID, 1));
+
+        // Set table view text if empty
+        if(deliverTable.getItems().isEmpty()){
+            deliverTable.setPlaceholder(getOnEmptyLabel("No Orders"));
+        }
+        if(pickUpTable.getItems().isEmpty()){
+            pickUpTable.setPlaceholder(getOnEmptyLabel("No Orders"));
+        }
+
     }
 
     public void confirmOrder() {
@@ -144,7 +169,7 @@ public class Controller_Driver extends Controller_Application implements Initial
                 selectedOrder.updateStatus(newStatus);
                 OrderManager.updateOrderDB(selectedOrder);
 
-
+                showMessage("Confirmed", Color.web("#2ECC71"));
                 // Remove confirmed order from the list
                 if(currentOrderTable.equals(centralOrderTable)){
                     centralOrderTable.setItems(OrderManager.getRouteOrders(currentRoute, 4));
@@ -168,10 +193,10 @@ public class Controller_Driver extends Controller_Application implements Initial
 
 
             } else {
-                showAlert("Please confirm all items");
+                showMessage("Please confirm all items",Color.web("#E74C3C"));
             }
         } else {
-            showAlert("Please select an order");
+            showMessage("Please select and order",Color.web("#E74C3C"));
         }
 
     }
@@ -184,7 +209,7 @@ public class Controller_Driver extends Controller_Application implements Initial
             for (Order order : centralOrderTable.getItems()) {
                 if (!(order.getStatus().equals("5"))) {
                     isAllOrdersConfirmed = false;
-                    showAlert("Please confirm all orders");
+                    showMessage("Please confirm all orders",Color.web("#E74C3C"));
                     break;
                 }
             }
@@ -194,13 +219,6 @@ public class Controller_Driver extends Controller_Application implements Initial
             changeView();
         }
 
-    }
-
-    public void showAlert(String text) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Oops");
-        alert.setHeaderText(text);
-        alert.showAndWait();
     }
 
     private void changeView() {
@@ -246,5 +264,36 @@ public class Controller_Driver extends Controller_Application implements Initial
 
     }
 
+    private void showMessage(String message, Color color){
+
+        StackPane stack = new StackPane();
+        stack.setLayoutX(510);
+        stack.setLayoutY(678);
+        stack.setOpacity(0);
+
+        Text text = new Text(message);
+        text.setFont(Font.font(20));
+
+        Rectangle rectangle = new Rectangle(832,40,color);
+
+        stack.getChildren().addAll(rectangle,text);
+        root.getChildren().add(stack);
+
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(500),stack);
+        fadeIn.setFromValue(0);
+        fadeIn.setToValue(1);
+        fadeIn.play();
+
+        fadeIn.setOnFinished(event -> {
+            FadeTransition fadeOut = new FadeTransition(Duration.millis(1500),stack);
+            fadeOut.setFromValue(1);
+            fadeOut.setToValue(0);
+            fadeOut.setDelay(Duration.millis(300));
+            fadeOut.play();
+            fadeOut.setOnFinished(event1 -> {
+                root.getChildren().remove(stack);
+            });
+        });
+    }
 
 }
