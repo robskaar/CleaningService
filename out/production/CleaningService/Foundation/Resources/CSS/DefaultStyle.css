@@ -123,3 +123,11 @@
 #DisplayPane{
     -fx-background-color: white;
 }
+
+.HBox_dark{
+     -fx-background-color: slategrey;
+}
+
+.HBox_light{
+     -fx-background-color: lightgrey;
+}

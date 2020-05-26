@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -61,7 +62,9 @@ public class Controller_Driver extends Controller_Application implements Initial
     private TableColumn<Boolean, OrderItem> columnConfirmItem;
 
     private static TableView<Order> currentOrderTable = null;
+    private static TableView<OrderItem> currentItemsTable = null;
     private static Order selectedOrder = null;
+    private static int currentRoute = 1;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -76,7 +79,7 @@ public class Controller_Driver extends Controller_Application implements Initial
         columnOrderID.prefWidthProperty().bind(centralOrderTable.widthProperty());
         columnOrderID.setCellValueFactory(new PropertyValueFactory<>("ID"));
 
-        centralOrderTable.setItems(OrderManager.getRouteOrders(1, 4));
+        centralOrderTable.setItems(OrderManager.getRouteOrders(currentRoute, 4));
         setSelectListener(centralOrderTable, centralItemTable);
     }
 
@@ -135,13 +138,24 @@ public class Controller_Driver extends Controller_Application implements Initial
                 // Upload new order status to database
                 String newStatus = String.valueOf(Integer.parseInt(selectedOrder.getStatus()) + 1);
                 selectedOrder.updateStatus(newStatus);
-                System.out.println(selectedOrder.getStatus());
                 OrderManager.updateOrderDB(selectedOrder);
+
+
+                // Remove confirmed order from the list
+                if(currentOrderTable.equals(centralOrderTable)){
+                    centralOrderTable.setItems(OrderManager.getRouteOrders(currentRoute, 4));
+                }
+                else{
+                    showDeliveryPointOrders();
+                }
+
+                // Remove order items from list
+                currentItemsTable.getItems().clear();
 
                 // Select next order on list
                 currentOrderTable.requestFocus();
-                currentOrderTable.getSelectionModel().getSelectedIndex();
-                currentOrderTable.getColumns().get(0).getCellObservableValue(1);
+                currentOrderTable.getSelectionModel().select(0);
+
 
             } else {
                 showAlert("Please confirm all items");
@@ -200,6 +214,7 @@ public class Controller_Driver extends Controller_Application implements Initial
             if (newOrder != null) {
                 selectedOrder = newOrder;
                 currentOrderTable = tableOrder;
+                currentItemsTable = tableItem;
                 tableItem.setItems(FXCollections.observableArrayList(selectedOrder.getOrderItems()));
             }
         });
