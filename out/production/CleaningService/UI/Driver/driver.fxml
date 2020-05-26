@@ -16,8 +16,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="860.0" prefWidth="1020.0" stylesheets="@../../Foundation/Resources/CSS/Driver/Driver.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Driver.Controller_Driver">
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="860.0" prefWidth="1020.0" stylesheets="@../../Foundation/Resources/CSS/Driver/Driver.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Driver.Controller_Driver">
     <top>
 
         <VBox prefHeight="35.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -93,7 +94,10 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" styleClass="HBox_dark">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#confirmOrder" text="Confirm Order" />
+                        <Button fx:id="centralConfirm" disable="true" mnemonicParsing="false" onAction="#confirmOrder" prefHeight="100.0" prefWidth="1000.0" text="No orders selected">
+                           <font>
+                              <Font size="19.0" />
+                           </font></Button>
                      </children>
                   </HBox>
                </children>
@@ -133,9 +137,12 @@
                         </TableView>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" styleClass="HBox_dark">
+                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="832.0" styleClass="HBox_dark">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#confirmOrder" text="Confirm Order" />
+                        <Button fx:id="routeConfirm" disable="true" mnemonicParsing="false" onAction="#confirmOrder" prefHeight="100.0" prefWidth="1000.0" text="No orders selected">
+                           <font>
+                              <Font size="19.0" />
+                           </font></Button>
                      </children></HBox>
                </children>
             </VBox>
