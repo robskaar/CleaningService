@@ -93,7 +93,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" styleClass="HBox_dark">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#confirmOrder" text="Confirm Order" />
+                        <Button fx:id="centralConfirm" disable="true" mnemonicParsing="false" onAction="#confirmOrder" prefHeight="100.0" prefWidth="1000.0" text="No orders selected" />
                      </children>
                   </HBox>
                </children>
@@ -133,9 +133,9 @@
                         </TableView>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" styleClass="HBox_dark">
+                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="832.0" styleClass="HBox_dark">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#confirmOrder" text="Confirm Order" />
+                        <Button fx:id="routeConfirm" disable="true" mnemonicParsing="false" onAction="#confirmOrder" prefHeight="100.0" prefWidth="1000.0" text="No orders selected" />
                      </children></HBox>
                </children>
             </VBox>

@@ -3,6 +3,7 @@ package Application.Driver;
 import Application.general.Controller_Application;
 import Domain.DeliveryPoint.DeliveryPoint;
 import Domain.Enums.Role;
+import Domain.Managers.AccountManager;
 import Domain.Managers.DeliveryPointManager;
 import Domain.Managers.OrderManager;
 import Domain.Order.Order;
@@ -21,6 +22,8 @@ import java.util.ResourceBundle;
 
 public class Controller_Driver extends Controller_Application implements Initializable {
 
+    @FXML private Button routeConfirm;
+    @FXML private Button centralConfirm;
     /*
     FXML components from Central Orders pane
      */
@@ -64,11 +67,12 @@ public class Controller_Driver extends Controller_Application implements Initial
     private static TableView<Order> currentOrderTable = null;
     private static TableView<OrderItem> currentItemsTable = null;
     private static Order selectedOrder = null;
-    private static int currentRoute = 1;
+    private static int currentRoute;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DB.setDBPropertiesPath(Role.Driver);
+        currentRoute = 1;
         initCentralOrderTable();
         initCentralItemTable();
     }
@@ -144,9 +148,15 @@ public class Controller_Driver extends Controller_Application implements Initial
                 // Remove confirmed order from the list
                 if(currentOrderTable.equals(centralOrderTable)){
                     centralOrderTable.setItems(OrderManager.getRouteOrders(currentRoute, 4));
+                    // Disable and change text on confirm button
+                    centralConfirm.setDisable(true);
+                    centralConfirm.setText("No orders selected");
                 }
                 else{
                     showDeliveryPointOrders();
+                    // Disable and change text on confirm button
+                    routeConfirm.setDisable(true);
+                    routeConfirm.setText("No orders selected");
                 }
 
                 // Remove order items from list
@@ -216,6 +226,21 @@ public class Controller_Driver extends Controller_Application implements Initial
                 currentOrderTable = tableOrder;
                 currentItemsTable = tableItem;
                 tableItem.setItems(FXCollections.observableArrayList(selectedOrder.getOrderItems()));
+
+                // Setting text on confirm button
+
+                if(tableOrder.equals(centralOrderTable)){
+                    centralConfirm.setDisable(false);
+                    centralConfirm.setText("Confirm pick up of order #" + selectedOrder.getID());
+                }
+                else if(tableOrder.equals(pickUpTable)){
+                    routeConfirm.setDisable(false);
+                    routeConfirm.setText("Confirm pick up of order #" + selectedOrder.getID());
+                }
+                else if(tableOrder.equals(deliverTable)){
+                    routeConfirm.setDisable(false);
+                    routeConfirm.setText("Confirm delivery of order #" + selectedOrder.getID());
+                }
             }
         });
 
