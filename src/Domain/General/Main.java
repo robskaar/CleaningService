@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -58,7 +59,7 @@ import javafx.stage.StageStyle;
         // scene created for Driver
         FXMLLoader driverLoader = new FXMLLoader(getClass().getResource("/UI/Driver/driver.fxml"));
         Parent driverParent = driverLoader.load();
-        Controller_Application.driverScene = new Scene(driverParent, 1020, 860);
+        Controller_Application.driverScene = new Scene(driverParent, 1020, 860,Color.TRANSPARENT);
 
 //        // scene created for DeliveryPoint
 //        FXMLLoader deliveryPointLoader = new FXMLLoader(getClass().getResource("/UI/DeliveryPoint/deliveryPoint.fxml"));

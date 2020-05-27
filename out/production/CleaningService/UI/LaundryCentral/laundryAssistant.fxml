@@ -93,11 +93,14 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="52.0" prefWidth="464.0">
                      <children>
-                        <Button id="backButton" fx:id="backButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="36.0" />
+                        <Button id="backButton" fx:id="backFromInboundItem" mnemonicParsing="false" onAction="#initInboundList" prefHeight="31.0" prefWidth="36.0" />
                         <Label fx:id="paneText" alignment="CENTER" contentDisplay="CENTER" prefHeight="42.0" prefWidth="444.0" text="Label" />
                      </children>
                   </HBox>
-                  <TilePane fx:id="inboundTilePane" prefHeight="476.0" prefWidth="464.0" />
+                  <TilePane fx:id="inboundTilePane" prefHeight="476.0" prefWidth="464.0">
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin></TilePane>
                   <Button fx:id="washingLabelPrintButton" mnemonicParsing="false" onAction="#printLabel" prefWidth="266.0" text="Print Washing label for all above Laundry items">
                      <VBox.margin>
                         <Insets bottom="20.0" />

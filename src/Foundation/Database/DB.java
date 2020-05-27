@@ -33,7 +33,7 @@ public class DB {
     private static String databaseName;
     private static String userName;
     private static String password;
-    private static final String NOMOREDATA = "|ND|";
+    public static final String NOMOREDATA = "|ND|";
     private static int numberOfColumns;
     private static int currentColumnNumber = 1;
     private static  Path dbPropertiesPath = null;

@@ -118,3 +118,12 @@
     -fx-background-size: cover;
     -fx-background-position: center;
 }
+
+
+.HBox_dark{
+    -fx-background-color: #0A0A0A;
+}
+
+.HBox_light{
+    -fx-background-color: #191919;
+}

@@ -40,6 +40,14 @@ public class OrderManager {
 
     }
 
+    public static ObservableList<Order> getDeliveryPointOrders(int deliveryPointID, int status) {
+
+        DB.selectSQL("SELECT * FROM getDeliveryPointOrder(" + deliveryPointID + "," + status + ")");
+
+        return FXCollections.observableArrayList(convertResultSetToArrayList());
+
+    }
+
     public static ObservableList<Order> getCentralOrders(int statusId) {
 
         DB.selectSQL("SELECT * FROM getCentralOrder(" +statusId+ ")");

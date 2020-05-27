@@ -1,13 +1,10 @@
-.HBox_top{
-    -fx-background-color: blue;
+.root{
+    -fx-background-color: transparent;
 }
 
-.HBox_middle{
-    -fx-background-color: red;
-}
-
-.HBox_bottom{
-    -fx-background-color: green;
+.table-view{
+    -fx-selection-bar: #34495E !important;
+    -fx-selection-bar-non-focused: #34495E !important;
 }
 
 .columnConfirm{
@@ -20,4 +17,8 @@
 
 .confirmedOrder .table-cell{
     -fx-text-fill: white;
+}
+
+.onEmptyLabel {
+    -fx-font-size: 16;
 }
