@@ -181,9 +181,54 @@
     -fx-background-color: #D8D5DB;
 }
 
-.HBox_dark{
-    -fx-background-color: #484750;
-}
-.HBox_light{
+/* CSS for driver */
+.driverHBox{
     -fx-background-color: #B0D7FF;
+    -fx-border-color: #B0D7FF;
 }
+.driverVBox{
+    -fx-background-color: #B0D7FF;
+    -fx-border-color: #B0D7FF;
+}
+.driverButton{
+    -fx-background-color: #34495E ;
+    -fx-text-fill: white;
+}
+.driverButton:hover{
+    -fx-background-color: #283747;
+}
+.driverTable{
+    -fx-background-color: #EBF5FB;
+    -fx-border-color: #17202A;
+    -fx-text-fill: white;
+    -fx-padding: 0;
+}
+.driverTable .table-cell{
+    -fx-text-fill: black;
+}
+.driverTable .column-header {
+    -fx-background-color: #34495E;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+.driverTable .column-header .label{
+    -fx-text-fill: white;
+}
+.driverTable .table-row-cell{
+    -fx-background-color: #D6EAF8 ;
+}
+.driverTable .table-row-cell:odd{
+    -fx-background-color: #EBF5FB  ;
+}
+.driverTable .table-row-cell:selected{
+    -fx-background-color: #16A085 ;
+}
+.driverTable .scroll-bar:vertical, .driverTable.scroll-bar:vertical .track, .driverTable.scroll-bar:vertical .track-background,
+.driverTable .scroll-bar:horizontal, .driverTable.scroll-bar:horizontal .track, .driverTable.scroll-bar:horizontal .track-background{
+     -fx-background-color: #34495E;
+ }
+.driverTable .scroll-bar:horizontal .thumb, .driverTable .scroll-bar:vertical{
+    -fx-background-color: #283747 ;
+}
+
+

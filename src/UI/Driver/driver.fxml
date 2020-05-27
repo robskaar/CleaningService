@@ -67,20 +67,20 @@
                   <Image url="@../../Foundation/Resources/Icons/Driver/ipad.png" />
                </image>
             </ImageView>
-            <VBox fx:id="centralOrders" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="626.0" prefWidth="832.0" AnchorPane.leftAnchor="94.0" AnchorPane.topAnchor="97.0">
+            <VBox fx:id="centralOrders" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="832.0" styleClass="driverVBox" AnchorPane.leftAnchor="94.0" AnchorPane.topAnchor="97.0">
                <children>
-                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="832.0" styleClass="HBox_dark">
+                  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" styleClass="driverHBox">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#startRoute" prefHeight="1000.0" prefWidth="1000.0" text="Start Route">
+                        <Button mnemonicParsing="false" onAction="#startRoute" prefHeight="1000.0" prefWidth="1000.0" styleClass="driverButton" text="Start Route">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Button>
                      </children>
                   </HBox>
-                  <VBox alignment="CENTER" maxWidth="-Infinity" prefHeight="200.0" prefWidth="832.0" VBox.vgrow="ALWAYS">
+                  <VBox alignment="CENTER" maxWidth="-Infinity" prefHeight="200.0" prefWidth="832.0" styleClass="driverVBox" VBox.vgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" style="-fx-border-color: transparent;" styleClass="HBox_light">
+                        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" styleClass="driverHBox">
                            <children>
                               <Label alignment="CENTER" minWidth="-Infinity" prefHeight="30.0" text="Pick up orders from the laundry central" textFill="WHITE">
                                  <font>
@@ -92,17 +92,17 @@
                               <Insets bottom="10.0" top="10.0" />
                            </padding>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="832.0" spacing="80.0" style="-fx-border-color: transparent;" styleClass="HBox_light" VBox.vgrow="ALWAYS">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="832.0" spacing="80.0" styleClass="HBox_light" VBox.vgrow="ALWAYS">
                            <children>
-                              <TableView fx:id="centralOrderTable" prefHeight="566.0" prefWidth="300.0">
+                              <TableView fx:id="centralOrderTable" prefHeight="566.0" prefWidth="300.0" styleClass="driverTable">
                                 <columns>
-                                  <TableColumn fx:id="columnOrderID" editable="false" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" text="Order" />
+                                  <TableColumn fx:id="columnOrderID" editable="false" minWidth="50.0" prefWidth="300.0" resizable="false" sortable="false" text="Order" />
                                 </columns>
                               </TableView>
-                              <TableView fx:id="centralItemTable" editable="true" prefHeight="566.0" prefWidth="300.0">
+                              <TableView fx:id="centralItemTable" editable="true" prefHeight="566.0" prefWidth="300.0" styleClass="driverTable">
                                 <columns>
-                                  <TableColumn fx:id="columnItemID" editable="false" prefWidth="75.0" sortable="false" text="Item" />
-                                    <TableColumn fx:id="columnConfirm" editable="false" prefWidth="75.0" sortable="false" styleClass="columnConfirm" text="Confirm" />
+                                  <TableColumn fx:id="columnItemID" editable="false" prefWidth="225.0" resizable="false" sortable="false" text="Item" />
+                                    <TableColumn fx:id="columnConfirm" editable="false" prefWidth="75.0" resizable="false" sortable="false" styleClass="columnConfirm" text="Confirm" />
                                 </columns>
                               </TableView>
                            </children>
@@ -112,9 +112,9 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" styleClass="HBox_dark">
+                  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" styleClass="driverHBox">
                      <children>
-                        <Button fx:id="centralConfirm" disable="true" mnemonicParsing="false" onAction="#confirmOrder" prefHeight="100.0" prefWidth="1000.0" text="No orders selected">
+                        <Button fx:id="centralConfirm" disable="true" mnemonicParsing="false" onAction="#confirmOrder" prefHeight="100.0" prefWidth="1000.0" styleClass="driverButton" text="No orders selected">
                            <font>
                               <Font size="19.0" />
                            </font></Button>
@@ -122,19 +122,19 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox fx:id="routeOrders" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="626.0" prefWidth="832.0" visible="false" AnchorPane.leftAnchor="94.0" AnchorPane.topAnchor="97.0">
+            <VBox fx:id="routeOrders" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="625.0" prefWidth="832.0" visible="false" AnchorPane.leftAnchor="94.0" AnchorPane.topAnchor="97.0">
                <children>
-                  <HBox alignment="CENTER" minHeight="-Infinity" prefHeight="60.0" prefWidth="200.0" styleClass="HBox_dark">
+                  <HBox alignment="CENTER" minHeight="-Infinity" prefHeight="60.0" prefWidth="200.0" styleClass="driverHBox">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#endRoute" prefHeight="100.0" prefWidth="1000.0" text="End route">
+                        <Button mnemonicParsing="false" onAction="#endRoute" prefHeight="100.0" prefWidth="1000.0" styleClass="driverButton" text="End route">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="20.0" />
                            </font>
                         </Button>
                      </children></HBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+                  <VBox prefHeight="200.0" prefWidth="100.0" styleClass="driverVBox" VBox.vgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" style="-fx-border-color: transparent;" styleClass="HBox_light">
+                        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" styleClass="driverHBox">
                            <children>
                               <Label fx:id="routeLabel" alignment="CENTER" minWidth="-Infinity" prefHeight="30.0" text="Route" textFill="WHITE">
                                  <font>
@@ -146,44 +146,44 @@
                               <Insets bottom="10.0" top="10.0" />
                            </padding>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="832.0" spacing="30.0" styleClass="HBox_light" VBox.vgrow="ALWAYS">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="832.0" spacing="30.0" styleClass="driverHBox" VBox.vgrow="ALWAYS">
                            <padding>
                               <Insets bottom="50.0" />
                            </padding>
                            <children>
-                              <TableView fx:id="deliveryPointTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="250.0">
+                              <TableView fx:id="deliveryPointTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="250.0" styleClass="driverTable">
                                 <columns>
-                                  <TableColumn fx:id="columnDeliveryPoint" editable="false" prefWidth="253.0" resizable="false" sortable="false" text="Delivery Point" />
-                                    <TableColumn fx:id="columnDeliveryConfirm" prefWidth="75.0" />
+                                  <TableColumn fx:id="columnDeliveryPoint" editable="false" prefWidth="225.0" resizable="false" sortable="false" text="Delivery Point" />
+                                    <TableColumn fx:id="columnDeliveryConfirm" prefWidth="25.0" resizable="false" />
                                 </columns>
                               </TableView>
-                              <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="200.0">
+                              <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="200.0" styleClass="driverVBox">
                                  <children>
-                                    <TableView fx:id="deliverTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0">
+                                    <TableView fx:id="deliverTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" styleClass="driverTable">
                                       <columns>
-                                        <TableColumn fx:id="columnDeliverOrders" editable="false" prefWidth="195.0" resizable="false" sortable="false" text="Deliver" />
+                                        <TableColumn fx:id="columnDeliverOrders" editable="false" prefWidth="200.0" resizable="false" sortable="false" text="Deliver" />
                                       </columns>
                                     </TableView>
-                                    <TableView fx:id="pickUpTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0">
+                                    <TableView fx:id="pickUpTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" styleClass="driverTable">
                                       <columns>
-                                        <TableColumn fx:id="columnPickUp" editable="false" prefWidth="196.0" resizable="false" sortable="false" text="Pick up" />
+                                        <TableColumn fx:id="columnPickUp" editable="false" prefWidth="200.0" resizable="false" sortable="false" text="Pick up" />
                                       </columns>
                                     </TableView>
                                  </children>
                               </VBox>
-                              <TableView fx:id="routeOrderItemsTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="200.0">
+                              <TableView fx:id="routeOrderItemsTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="200.0" styleClass="driverTable">
                                 <columns>
-                                  <TableColumn fx:id="columnOrderItem" editable="false" prefWidth="131.0" resizable="false" sortable="false" text="Item" />
-                                  <TableColumn fx:id="columnConfirmItem" editable="false" prefWidth="68.0" resizable="false" sortable="false" styleClass="columnConfirm" text="Confirm" />
+                                  <TableColumn fx:id="columnOrderItem" editable="false" prefWidth="140.0" resizable="false" sortable="false" text="Item" />
+                                  <TableColumn fx:id="columnConfirmItem" editable="false" prefWidth="60.0" resizable="false" sortable="false" styleClass="columnConfirm" text="Confirm" />
                                 </columns>
                               </TableView>
                            </children>
                         </HBox>
                      </children>
                   </VBox>
-                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="832.0" styleClass="HBox_dark">
+                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="832.0" styleClass="driverHBox">
                      <children>
-                        <Button fx:id="routeConfirm" disable="true" mnemonicParsing="false" onAction="#confirmOrder" prefHeight="100.0" prefWidth="1000.0" text="No orders selected">
+                        <Button fx:id="routeConfirm" disable="true" mnemonicParsing="false" onAction="#confirmOrder" prefHeight="100.0" prefWidth="1000.0" styleClass="driverButton" text="No orders selected">
                            <font>
                               <Font size="19.0" />
                            </font></Button>

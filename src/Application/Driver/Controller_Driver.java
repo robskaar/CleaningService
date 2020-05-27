@@ -105,8 +105,7 @@ public class Controller_Driver extends Controller_Application implements Initial
      * Sets up order table for the laundry central
      */
     private void initCentralOrderTable() {
-        // Set column width to fill entire table and set property for observable object
-        columnOrderID.prefWidthProperty().bind(centralOrderTable.widthProperty());
+        // set property for observable object
         columnOrderID.setCellValueFactory(new PropertyValueFactory<>("ID"));
 
         // Fetch orders from database and display
@@ -128,11 +127,8 @@ public class Controller_Driver extends Controller_Application implements Initial
         // Make table rows unselectable
         centralItemTable.setSelectionModel(null);
 
-        // Set object property and column width
-        columnItemID.prefWidthProperty().bind(centralOrderTable.widthProperty().divide(4).multiply(3));
+        // Set object property
         columnItemID.setCellValueFactory(new PropertyValueFactory<>("ID"));
-
-        columnConfirm.prefWidthProperty().bind(centralOrderTable.widthProperty().divide(4));
         columnConfirm.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
     }
 
@@ -141,12 +137,9 @@ public class Controller_Driver extends Controller_Application implements Initial
      */
     private void initDeliveryPointTable() {
 
-        // Sets up columns property for observable object and column width
+        // Sets up columns property for observable object
         columnDeliveryPoint.setCellValueFactory(new PropertyValueFactory<>("name"));
-        columnDeliveryPoint.prefWidthProperty().bind(deliveryPointTable.widthProperty().divide(10).multiply(9));
-
         columnDeliveryConfirm.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
-        columnDeliveryConfirm.prefWidthProperty().bind(deliveryPointTable.widthProperty().divide(10));
 
         // Fetch delivery points from current route from database
         deliveryPointTable.setItems(DeliveryPointManager.getRouteDeliveryPoints(currentRoute));
@@ -404,8 +397,8 @@ public class Controller_Driver extends Controller_Application implements Initial
 
         // The stack makes it possible to add text on top of a rectangle
         StackPane stack = new StackPane();
-        stack.setLayoutX(510);
-        stack.setLayoutY(678);
+        stack.setLayoutX(511);
+        stack.setLayoutY(677);
         stack.setOpacity(0);
 
         // The text to be displayed
@@ -413,7 +406,7 @@ public class Controller_Driver extends Controller_Application implements Initial
         text.setFont(Font.font(20));
 
         // The pop up box
-        Rectangle rectangle = new Rectangle(832, 40, color);
+        Rectangle rectangle = new Rectangle(825, 35, color);
 
         stack.getChildren().addAll(rectangle, text);
         root.getChildren().add(stack);

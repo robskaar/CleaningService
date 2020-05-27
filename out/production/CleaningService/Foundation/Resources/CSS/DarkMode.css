@@ -168,3 +168,14 @@
 .date-picker > .arrow-button {
     -fx-padding: 5px;
 }
+
+.HBox_dark{
+    -fx-background-color: #000000;
+}
+.HBox_light{
+    -fx-background-color: #484545 ;
+    -fx-border-color: transparent;
+}
+.driverButton{
+    -fx-background-color: #2A2727;
+}

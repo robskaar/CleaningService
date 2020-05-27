@@ -2,11 +2,6 @@
     -fx-background-color: transparent;
 }
 
-.table-view{
-    -fx-selection-bar: #34495E !important;
-    -fx-selection-bar-non-focused: #34495E !important;
-}
-
 .columnConfirm{
     -fx-alignment: center;
 }

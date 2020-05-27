@@ -170,8 +170,12 @@
 }
 
 .HBox_dark{
-    -fx-background-color: #403d3b;
+    -fx-background-color: #000000;
 }
 .HBox_light{
-    -fx-background-color: #7E7F83;
+    -fx-background-color: #484545 ;
+    -fx-border-color: transparent;
+}
+.driverButton{
+    -fx-background-color: #2A2727;
 }
