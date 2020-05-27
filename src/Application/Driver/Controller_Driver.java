@@ -96,7 +96,7 @@ public class Controller_Driver extends Controller_Application implements Initial
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DB.setDBPropertiesPath(Role.Driver);
-        currentRoute = 1;
+        currentRoute = AccountManager.getCurrentRoute();
         initCentralOrderTable();
         initCentralItemTable();
     }
@@ -312,7 +312,7 @@ public class Controller_Driver extends Controller_Application implements Initial
 
         // Log off if all delivery points is confirmed
         if (isAllDeliveryPointsConfirmed) {
-            AccountManager.logOff();
+            logOff();
         }
     }
 
