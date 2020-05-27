@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
@@ -71,7 +72,7 @@
                         <Insets left="4.0" top="40.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="ongoingOrderButton" alignment="CENTER" mnemonicParsing="false" prefWidth="129.0" text="Ongoing Orders">
+                  <Button fx:id="ongoingOrderButton" alignment="CENTER" mnemonicParsing="false" onAction="#initOngoingList" prefWidth="129.0" text="Ongoing Orders">
                      <VBox.margin>
                         <Insets left="4.0" top="10.0" />
                      </VBox.margin>
@@ -89,7 +90,39 @@
    <center>
       <StackPane id="DisplayPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+            <VBox fx:id="ongoingVbox" alignment="CENTER" prefHeight="577.0" prefWidth="464.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="36.0" prefWidth="464.0">
+                     <children>
+                        <Label fx:id="paneText1" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="461.0" text="Currently Washing Orders" />
+                     </children>
+                  </HBox>
+                  <ScrollPane prefHeight="301.0" prefWidth="464.0" VBox.vgrow="ALWAYS">
+                     <content>
+                        <TilePane fx:id="washingTilePane" hgap="10.0" prefHeight="290.0" prefWidth="460.0" vgap="5.0">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </TilePane>
+                     </content>
+                  </ScrollPane>
+                  <HBox alignment="CENTER" prefHeight="36.0" prefWidth="464.0">
+                     <children>
+                        <Label fx:id="paneText2" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="462.0" text="Orders Ready to be picked up" />
+                     </children>
+                  </HBox>
+                  <ScrollPane prefHeight="233.0" prefWidth="464.0" VBox.vgrow="ALWAYS">
+                     <content>
+                        <TilePane fx:id="readyToPickUpTilePane" hgap="10.0" prefHeight="222.0" prefWidth="460.0" vgap="5.0">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </TilePane>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+            <VBox fx:id="inboundVbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" visible="false">
                <children>
                   <HBox alignment="CENTER" prefHeight="52.0" prefWidth="464.0">
                      <children>
@@ -97,10 +130,14 @@
                         <Label fx:id="paneText" alignment="CENTER" contentDisplay="CENTER" prefHeight="42.0" prefWidth="444.0" text="Label" />
                      </children>
                   </HBox>
-                  <TilePane fx:id="inboundTilePane" prefHeight="476.0" prefWidth="464.0">
+                  <TilePane fx:id="inboundTilePane" hgap="10.0" prefHeight="519.0" prefWidth="464.0" vgap="5.0">
                      <VBox.margin>
-                        <Insets left="5.0" />
-                     </VBox.margin></TilePane>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </TilePane>
                   <Button fx:id="washingLabelPrintButton" mnemonicParsing="false" onAction="#printLabel" prefWidth="266.0" text="Print Washing label for all above Laundry items">
                      <VBox.margin>
                         <Insets bottom="20.0" />

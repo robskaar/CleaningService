@@ -6,23 +6,25 @@
  **/
 
 .root {
-    -fx-background-color: #191919;
+    -fx-background-color: #484641;
+    -fx-focus-color: transparent ;
+    -fx-faint-focus-color: transparent ;
 }
 *{
-    -fx-base: #0a0a0a;
+    -fx-base: #403d3b;
 }
 .tool-bar{
     -fx-background-color: transparent;
 }
 #toolBar{
-    -fx-background-color: #141414;
+    -fx-background-color: #403d3b;
 }
 .separator *.line{
-    -fx-border-color: #0a0a0a;
+    -fx-border-color: #35332d;
     -fx-border-width: 2;
 }
 #DisplayPane{
-    -fx-background-color: #5c5c5c;
+    -fx-background-color: #7E7F83;
 }
 #backButton {
     -fx-pref-width: 20;
@@ -119,11 +121,50 @@
     -fx-background-position: center;
 }
 
-
-.HBox_dark{
-    -fx-background-color: #0A0A0A;
+.button {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 2, 0, 0, 0);
+    -fx-background-color : #403d3b;
+    -fx-text-fill        : #CFD0D2;
 }
 
-.HBox_light{
-    -fx-background-color: #191919;
+.button:hover {
+    -fx-background-color : #35332d;
+}
+.label{
+     -fx-text-fill: #CFD0D2 ;
+ }
+.menu-item{
+    -fx-background-color: #403d3b;
+}
+.menu-item:hover{
+    -fx-background-color: #7E7F83;
+}
+.menu-button{
+    -fx-background-color: #403d3b;
+}
+.menu{
+    -fx-background-color: #403d3b;
+}
+.context-menu{
+    -fx-background-color: #403d3b;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+.scroll-pane {
+    -fx-background-color: #7E7F83;
+}
+.text-field{
+    -fx-background-color: #97999C;
+    -fx-text-fill: #e4e5e7;
+    -fx-prompt-text-fill: #e4e5e7 ;
+}
+
+.date-picker > .text-field{
+    -fx-background-insets: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+}
+.date-picker > .arrow-button {
+    -fx-padding: 5px;
 }

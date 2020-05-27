@@ -13,7 +13,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,6 +35,10 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
     @FXML private Label paneText;
     @FXML private Button washingLabelPrintButton;
     @FXML private Button backFromInboundItem;
+    @FXML private VBox ongoingVbox;
+    @FXML private VBox inboundVbox;
+    @FXML private TilePane washingTilePane;
+    @FXML private TilePane  readyToPickUpTilePane;
     private Order viewingOrder;
 
 
@@ -46,6 +52,8 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
     }
 
     public void initInboundList( ) {
+        ongoingVbox.setVisible(false);
+        inboundVbox.setVisible(true);
         backFromInboundItem.setVisible(false);
         inboundTilePane.getChildren().clear();
         washingLabelPrintButton.setVisible(false);
@@ -63,12 +71,35 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
         }
     }
 
-    private void initOngoingList( ) {
+    public void initOngoingList( ) {
+        washingTilePane.getChildren().clear();
+        inboundVbox.setVisible(false);
+        ongoingVbox.setVisible(true);
         ObservableList<Order> ongoingOrders = OrderManager.getCentralOrders(3);
+        for (Order order: ongoingOrders) {
+            Button button = new Button(String.valueOf(order.getID()));
+            button.setMinWidth(50);
+            button.setMinHeight(30);
+            washingTilePane.getChildren().add(button);
+            button.setOnAction(e -> {
+                initOrderDetails(order);
+            });
+        }
+initOutBoundList();
     }
 
-    private void initOutBoundList( ) {
+    public void initOutBoundList( ) {
+        readyToPickUpTilePane.getChildren().clear();
         ObservableList<Order> outboundOrders = OrderManager.getCentralOrders(4);
+        for (Order order: outboundOrders) {
+            Button button = new Button(String.valueOf(order.getID()));
+            button.setMinWidth(50);
+            button.setMinHeight(30);
+            readyToPickUpTilePane.getChildren().add(button);
+            button.setOnAction(e -> {
+                initOrderDetails(order);
+            });
+        }
     }
 
     private void initOrderDetails(Order order) {

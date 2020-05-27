@@ -32,6 +32,7 @@ public final class AccountManager {
 
     public static void register(String userName, String password, String firstName, String lastName, String emailAddress, String phoneNumber, LocalDate dateOfBirth, int isTemporary) {
         try {
+            DB.setDBPropertiesPath(Role.Costumer);
             CallableStatement cstmt;
             Connection con = DB.getConnection();
             cstmt = con.prepareCall("{call CleaningService.dbo.create_user(?,?,?,?,?,?,?,?)}");
@@ -123,8 +124,8 @@ public final class AccountManager {
                 }
                 return isLoggedIn;
             }
-            catch (SQLException ex) {
-                ex.printStackTrace();
+            catch (SQLException | IllegalArgumentException ex) {
+                ex.getMessage();
                 return isLoggedIn;
             }
         }
