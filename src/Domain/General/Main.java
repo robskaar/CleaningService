@@ -25,55 +25,12 @@ import javafx.stage.StageStyle;
 
         //initial stage setup
         Controller_Application.primaryStage = primaryStage;
-
-        // Scenes for different log ins
         FXMLLoader logInLoaderCostumer = new FXMLLoader(getClass().getResource("/UI/Costumer/loginSceneCostumer.fxml"));
         Parent logInParentCostumer = logInLoaderCostumer.load();
         Controller_Application.logInSceneCostumer = new Scene(logInParentCostumer, 600, 600);
-
-        FXMLLoader logInLoaderDriver = new FXMLLoader(getClass().getResource("/UI/Driver/loginSceneDriver.fxml"));
-        Parent logInParentDriver = logInLoaderDriver.load();
-        Controller_Application.logInSceneDriver = new Scene(logInParentDriver, 600, 600);
-
-        FXMLLoader logInLoaderLaundryCentral = new FXMLLoader(getClass().getResource("/UI/LaundryCentral/loginSceneLaundryCentral.fxml"));
-        Parent logInParentLaundryCentral = logInLoaderLaundryCentral.load();
-        Controller_Application.logInSceneLaundryCentral = new Scene(logInParentLaundryCentral, 600, 600);
-
-        FXMLLoader logInLoaderDeliveryPoint = new FXMLLoader(getClass().getResource("/UI/DeliveryPoint/loginSceneDeliveryPoint.fxml"));
-        Parent logInParentDeliveryPoint = logInLoaderDeliveryPoint.load();
-        Controller_Application.logInSceneDeliveryPoint = new Scene(logInParentDeliveryPoint, 600, 600);
-
-
-        // Scene created for Register
         FXMLLoader registerLoader = new FXMLLoader(getClass().getResource("/UI/Costumer/registerScene.fxml"));
         Parent registerParent = registerLoader.load();
         Controller_Application.registerScene = new Scene(registerParent, 600, 600);
-
-
-        // scene created for Costumer
-        FXMLLoader costumerLoader = new FXMLLoader(getClass().getResource("/UI/Costumer/costumer.fxml"));
-        Parent costumerParent = costumerLoader.load();
-        Controller_Application.costumerScene = new Scene(costumerParent, 600, 600);
-
-        // scene created for Driver
-        FXMLLoader driverLoader = new FXMLLoader(getClass().getResource("/UI/Driver/driver.fxml"));
-        Parent driverParent = driverLoader.load();
-        Controller_Application.driverScene = new Scene(driverParent, 1020, 860);
-
-//        // scene created for DeliveryPoint
-//        FXMLLoader deliveryPointLoader = new FXMLLoader(getClass().getResource("/UI/DeliveryPoint/deliveryPoint.fxml"));
-//        Parent deliveryPointParent = deliveryPointLoader.load();
-//        Controller_Application.deliveryPointScene = new Scene(deliveryPointParent, 600, 600);
-
-        // scene created for LaundryScene
-        FXMLLoader laundryLoader = new FXMLLoader(getClass().getResource("/UI/LaundryCentral/laundryAssistant.fxml"));
-        Parent laundryParent = laundryLoader.load();
-        Controller_Application.laundryAssistantScene = new Scene(laundryParent, 600, 600);
-
-        FXMLLoader laundryManagerLoader = new FXMLLoader(getClass().getResource("/UI/LaundryCentral/laundryManager.fxml"));
-        Parent laundryManagerParent = laundryManagerLoader.load();
-        Controller_Application.laundryManagerScene = new Scene(laundryManagerParent, 600, 600);
-
 
         //sets initial theme for the application
         ThemeControl.currentTheme = ThemeControl.DEFAULT;
