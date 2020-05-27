@@ -10,6 +10,8 @@ import Domain.Order.Order;
 import Domain.Order.OrderItem;
 import Foundation.Database.DB;
 import javafx.animation.FadeTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,9 +34,12 @@ import java.util.ResourceBundle;
 
 public class Controller_Driver extends Controller_Application implements Initializable {
 
-    @FXML private BorderPane root;
-    @FXML private Button routeConfirm;
-    @FXML private Button centralConfirm;
+    @FXML
+    private BorderPane root;
+    @FXML
+    private Button routeConfirm;
+    @FXML
+    private Button centralConfirm;
     /*
     FXML components from Central Orders pane
      */
@@ -61,6 +66,8 @@ public class Controller_Driver extends Controller_Application implements Initial
     @FXML
     private TableColumn<DeliveryPoint, String> columnDeliveryPoint;
     @FXML
+    private TableColumn<Boolean, DeliveryPoint> columnDeliveryConfirm;
+    @FXML
     private TableView<Order> deliverTable;
     @FXML
     private TableColumn<Order, Integer> columnDeliverOrders;
@@ -74,6 +81,8 @@ public class Controller_Driver extends Controller_Application implements Initial
     private TableColumn<Integer, OrderItem> columnOrderItem;
     @FXML
     private TableColumn<Boolean, OrderItem> columnConfirmItem;
+    @FXML
+    private Label routeLabel;
 
     private static TableView<Order> currentOrderTable = null;
     private static TableView<OrderItem> currentItemsTable = null;
@@ -100,6 +109,7 @@ public class Controller_Driver extends Controller_Application implements Initial
 
     private void initCentralItemTable() {
         centralItemTable.setPlaceholder(getOnEmptyLabel("Select Order"));
+        centralItemTable.setSelectionModel(null);
 
         columnItemID.prefWidthProperty().bind(centralOrderTable.widthProperty().divide(4).multiply(3));
         columnItemID.setCellValueFactory(new PropertyValueFactory<>("ID"));
@@ -110,8 +120,21 @@ public class Controller_Driver extends Controller_Application implements Initial
 
     private void initDeliveryPointTable() {
         columnDeliveryPoint.setCellValueFactory(new PropertyValueFactory<>("name"));
-        columnDeliveryPoint.prefWidthProperty().bind(deliveryPointTable.widthProperty());
+        columnDeliveryPoint.prefWidthProperty().bind(deliveryPointTable.widthProperty().divide(10).multiply(9));
+
+        columnDeliveryConfirm.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
+        columnDeliveryConfirm.prefWidthProperty().bind(deliveryPointTable.widthProperty().divide(10));
+
         deliveryPointTable.setItems(DeliveryPointManager.getRouteDeliveryPoints(1));
+        deliveryPointTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldDeliveryPoint, newDeliveryPoint) -> {
+
+            showDeliveryPointOrders();
+
+            if (pickUpTable.getItems().isEmpty() && deliverTable.getItems().isEmpty()) {
+                newDeliveryPoint.confirmAllOrdersDone();
+            }
+        });
+
     }
 
     private void initRouteOrderTables() {
@@ -127,6 +150,7 @@ public class Controller_Driver extends Controller_Application implements Initial
     }
 
     private void initRouteItemsTable() {
+        routeOrderItemsTable.setSelectionModel(null);
         columnOrderItem.setCellValueFactory(new PropertyValueFactory<>("ID"));
         columnConfirmItem.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
         routeOrderItemsTable.setPlaceholder(getOnEmptyLabel("Choose order"));
@@ -141,10 +165,10 @@ public class Controller_Driver extends Controller_Application implements Initial
         pickUpTable.setItems(OrderManager.getDeliveryPointOrders(ID, 1));
 
         // Set table view text if empty
-        if(deliverTable.getItems().isEmpty()){
+        if (deliverTable.getItems().isEmpty()) {
             deliverTable.setPlaceholder(getOnEmptyLabel("No Orders"));
         }
-        if(pickUpTable.getItems().isEmpty()){
+        if (pickUpTable.getItems().isEmpty()) {
             pickUpTable.setPlaceholder(getOnEmptyLabel("No Orders"));
         }
 
@@ -171,17 +195,18 @@ public class Controller_Driver extends Controller_Application implements Initial
 
                 showMessage("Confirmed", Color.web("#2ECC71"));
                 // Remove confirmed order from the list
-                if(currentOrderTable.equals(centralOrderTable)){
+                if (currentOrderTable.equals(centralOrderTable)) {
                     centralOrderTable.setItems(OrderManager.getRouteOrders(currentRoute, 4));
                     // Disable and change text on confirm button
                     centralConfirm.setDisable(true);
                     centralConfirm.setText("No orders selected");
-                }
-                else{
+                } else {
                     showDeliveryPointOrders();
                     // Disable and change text on confirm button
                     routeConfirm.setDisable(true);
                     routeConfirm.setText("No orders selected");
+                    // Check if all orders from delivery point is confirmed
+                    isDeliveryPointDone();
                 }
 
                 // Remove order items from list
@@ -193,16 +218,22 @@ public class Controller_Driver extends Controller_Application implements Initial
 
 
             } else {
-                showMessage("Please confirm all items",Color.web("#E74C3C"));
+                showMessage("Please confirm all items", Color.web("#E74C3C"));
             }
         } else {
-            showMessage("Please select and order",Color.web("#E74C3C"));
+            showMessage("Please select and order", Color.web("#E74C3C"));
         }
 
     }
 
-    public void isAllOrdersConfirmed() {
+    public void startRoute() {
 
+        if (centralOrderTable.getItems().isEmpty()) {
+            changeView();
+        } else {
+            showMessage("Please confirm all orders", Color.web("#E74C3C"));
+        }
+        /*
         boolean isAllOrdersConfirmed = true;
 
         if (!centralOrderTable.getItems().isEmpty()) {
@@ -219,11 +250,36 @@ public class Controller_Driver extends Controller_Application implements Initial
             changeView();
         }
 
+         */
+
+    }
+
+    public void endRoute() {
+        boolean isAllDeliveryPointsConfirmed = true;
+
+        for(DeliveryPoint dp : deliveryPointTable.getItems()){
+            if(!dp.getCheckBox().isSelected()){
+                isAllDeliveryPointsConfirmed = false;
+                showMessage("Please confirm all orders", Color.web("#E74C3C"));
+                break;
+            }
+        }
+
+        if(isAllDeliveryPointsConfirmed){
+            AccountManager.logOff();
+        }
+    }
+
+    private void isDeliveryPointDone() {
+        if (pickUpTable.getItems().isEmpty() && deliverTable.getItems().isEmpty()) {
+            deliveryPointTable.getSelectionModel().getSelectedItem().confirmAllOrdersDone();
+        }
     }
 
     private void changeView() {
         centralOrders.setVisible(false);
         routeOrders.setVisible(true);
+        routeLabel.setText("Showing orders from route: " + currentRoute);
 
         initDeliveryPointTable();
         initRouteOrderTables();
@@ -239,6 +295,7 @@ public class Controller_Driver extends Controller_Application implements Initial
     private void setSelectListener(TableView<Order> tableOrder, TableView<OrderItem> tableItem) {
 
         tableOrder.getSelectionModel().selectedItemProperty().addListener((observableValue, oldOrder, newOrder) -> {
+
             if (newOrder != null) {
                 selectedOrder = newOrder;
                 currentOrderTable = tableOrder;
@@ -247,15 +304,15 @@ public class Controller_Driver extends Controller_Application implements Initial
 
                 // Setting text on confirm button
 
-                if(tableOrder.equals(centralOrderTable)){
+                if (tableOrder.equals(centralOrderTable)) {
                     centralConfirm.setDisable(false);
                     centralConfirm.setText("Confirm pick up of order #" + selectedOrder.getID());
-                }
-                else if(tableOrder.equals(pickUpTable)){
+                } else if (tableOrder.equals(pickUpTable)) {
+                    deliverTable.getSelectionModel().clearSelection();
                     routeConfirm.setDisable(false);
                     routeConfirm.setText("Confirm pick up of order #" + selectedOrder.getID());
-                }
-                else if(tableOrder.equals(deliverTable)){
+                } else if (tableOrder.equals(deliverTable)) {
+                    pickUpTable.getSelectionModel().clearSelection();
                     routeConfirm.setDisable(false);
                     routeConfirm.setText("Confirm delivery of order #" + selectedOrder.getID());
                 }
@@ -264,7 +321,7 @@ public class Controller_Driver extends Controller_Application implements Initial
 
     }
 
-    private void showMessage(String message, Color color){
+    private void showMessage(String message, Color color) {
 
         StackPane stack = new StackPane();
         stack.setLayoutX(510);
@@ -274,18 +331,18 @@ public class Controller_Driver extends Controller_Application implements Initial
         Text text = new Text(message);
         text.setFont(Font.font(20));
 
-        Rectangle rectangle = new Rectangle(832,40,color);
+        Rectangle rectangle = new Rectangle(832, 40, color);
 
-        stack.getChildren().addAll(rectangle,text);
+        stack.getChildren().addAll(rectangle, text);
         root.getChildren().add(stack);
 
-        FadeTransition fadeIn = new FadeTransition(Duration.millis(500),stack);
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(500), stack);
         fadeIn.setFromValue(0);
         fadeIn.setToValue(1);
         fadeIn.play();
 
         fadeIn.setOnFinished(event -> {
-            FadeTransition fadeOut = new FadeTransition(Duration.millis(1500),stack);
+            FadeTransition fadeOut = new FadeTransition(Duration.millis(1500), stack);
             fadeOut.setFromValue(1);
             fadeOut.setToValue(0);
             fadeOut.setDelay(Duration.millis(300));
