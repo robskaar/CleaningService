@@ -180,3 +180,10 @@
 .context-menu{
     -fx-background-color: #D8D5DB;
 }
+
+.HBox_dark{
+    -fx-background-color: #484750;
+}
+.HBox_light{
+    -fx-background-color: #B0D7FF;
+}

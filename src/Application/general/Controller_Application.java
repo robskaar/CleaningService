@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -207,7 +208,7 @@ public class Controller_Application {
                 case Driver:
                     FXMLLoader driverLoader = new FXMLLoader(getClass().getResource("/UI/Driver/driver.fxml"));
                     Parent driverParent = driverLoader.load();
-                    Controller_Application.driverScene = new Scene(driverParent, 1020, 860);
+                    Controller_Application.driverScene = new Scene(driverParent, 1020, 860, Color.TRANSPARENT);
                     break;
                 case Costumer:
                     FXMLLoader costumerLoader = new FXMLLoader(getClass().getResource("/UI/Costumer/costumer.fxml"));

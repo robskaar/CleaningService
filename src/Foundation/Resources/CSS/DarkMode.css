@@ -168,3 +168,10 @@
 .date-picker > .arrow-button {
     -fx-padding: 5px;
 }
+
+.HBox_dark{
+    -fx-background-color: #403d3b;
+}
+.HBox_light{
+    -fx-background-color: #7E7F83;
+}
