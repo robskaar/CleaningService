@@ -1,8 +1,10 @@
 package Domain.Managers;
 
+import Domain.LaundryItems.Item;
 import Domain.Order.Order;
 import Domain.Order.OrderItem;
 import Foundation.Database.DB;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -23,9 +25,33 @@ public class OrderManager {
         return new ArrayList<>();
     }
 
-    public static ArrayList<Order> getCustomerOrders(int customerID) {
+    public static ArrayList<Order> getCustomerOrders(String customerName) {
+        System.out.println("DEBUGGING customername: " + customerName);
+        int orderID;
+        int statusID;
+        String status;
+        DB.selectSQL("SELECT * FROM getCostumerOrder('" + customerName + "')");
 
-        return new ArrayList<>();
+
+        // Stores all orders from result set
+        ArrayList<Order> orders = new ArrayList<>();
+        // Temporary value used to check for null before parsing
+        String temp;
+        // Data uses to assert that there is more data
+        String data = DB.getData();
+
+        while (!data.equals("|ND|") || DB.isPendingData()) {
+            orderID = Integer.parseInt(data);
+            status = DB.getData();
+            statusID = Integer.parseInt(DB.getData());
+
+            // Adds the order to the array list
+            orders.add(new Order(status, orderID, statusID));
+            //assigning the data at the end to ensure the correct order.
+            data = DB.getData();
+        }
+
+        return orders;
     }
 
     /**
@@ -42,7 +68,7 @@ public class OrderManager {
 
     public static ObservableList<Order> getCentralOrders(int statusId) {
 
-        DB.selectSQL("SELECT * FROM getCentralOrder(" +statusId+ ")");
+        DB.selectSQL("SELECT * FROM getCentralOrder(" + statusId + ")");
 
         return FXCollections.observableArrayList(convertResultSetToArrayList());
     }
@@ -51,24 +77,22 @@ public class OrderManager {
 
         CallableStatement cstmt;
 
-        try{
+        try {
             cstmt = DB.getConnection().prepareCall("{call CleaningService.dbo.updateOrder(?,?,?)}");
-            cstmt.setInt(1,Integer.parseInt(order.getStatus()));
+            cstmt.setInt(1, Integer.parseInt(order.getStatus()));
 
-            if(order.getEndDate() != null){
-                cstmt.setDate(2,java.sql.Date.valueOf(order.getEndDate().toLocalDate()));
-            }
-            else{
-                cstmt.setDate(2,null);
+            if (order.getEndDate() != null) {
+                cstmt.setDate(2, java.sql.Date.valueOf(order.getEndDate().toLocalDate()));
+            } else {
+                cstmt.setDate(2, null);
             }
 
-            cstmt.setInt(3,order.getID());
+            cstmt.setInt(3, order.getID());
 
             cstmt.execute();
             cstmt.close();
             DB.getConnection().close();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -94,8 +118,7 @@ public class OrderManager {
             data = DB.getData();
             if (data.equals("|ND|")) {
                 break;
-            }
-            else {
+            } else {
 
                 int orderID = Integer.parseInt(data);
                 int customerID = Integer.parseInt(DB.getData());

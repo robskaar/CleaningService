@@ -112,6 +112,21 @@
     -fx-background-size: cover;
     -fx-background-position: center;
 }
-#DisplayPane{
+
+#DisplayPane {
     -fx-background-color: white;
+}
+
+.backButton {
+    -fx-background-color: transparent;
+    -fx-background-image: url('/Foundation/Resources/PhoneEmulator/left-arrow.png');
+    -fx-background-size: 23;
+    -fx-background-repeat: no-repeat;
+}
+
+.backButton:hover {
+    -fx-background-color: grey;
+    -fx-border-style: solid;
+    -fx-border-color: grey;
+
 }

@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -54,6 +55,7 @@ import javafx.stage.StageStyle;
         FXMLLoader costumerLoader = new FXMLLoader(getClass().getResource("/UI/Costumer/costumer.fxml"));
         Parent costumerParent = costumerLoader.load();
         Controller_Application.costumerScene = new Scene(costumerParent, 600, 600);
+        Controller_Application.costumerScene.setFill(Color.TRANSPARENT);
 
         // scene created for Driver
         FXMLLoader driverLoader = new FXMLLoader(getClass().getResource("/UI/Driver/driver.fxml"));
@@ -66,13 +68,13 @@ import javafx.stage.StageStyle;
 //        Controller_Application.deliveryPointScene = new Scene(deliveryPointParent, 600, 600);
 
         // scene created for LaundryScene
-        FXMLLoader laundryLoader = new FXMLLoader(getClass().getResource("/UI/LaundryCentral/laundryAssistant.fxml"));
+       /* FXMLLoader laundryLoader = new FXMLLoader(getClass().getResource("/UI/LaundryCentral/laundryAssistant.fxml"));
         Parent laundryParent = laundryLoader.load();
         Controller_Application.laundryAssistantScene = new Scene(laundryParent, 600, 600);
 
         FXMLLoader laundryManagerLoader = new FXMLLoader(getClass().getResource("/UI/LaundryCentral/laundryManager.fxml"));
         Parent laundryManagerParent = laundryManagerLoader.load();
-        Controller_Application.laundryManagerScene = new Scene(laundryManagerParent, 600, 600);
+        Controller_Application.laundryManagerScene = new Scene(laundryManagerParent, 600, 600);*/
 
 
         //sets initial theme for the application

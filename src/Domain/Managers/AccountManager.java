@@ -31,7 +31,9 @@ public final class AccountManager {
     }
 
     public static void register(String userName, String password, String firstName, String lastName, String emailAddress, String phoneNumber, LocalDate dateOfBirth, int isTemporary) {
+        System.out.println(currentRole);
         try {
+            DB.setDBPropertiesPath(Role.Costumer);
             CallableStatement cstmt;
             Connection con = DB.getConnection();
             cstmt = con.prepareCall("{call CleaningService.dbo.create_user(?,?,?,?,?,?,?,?)}");

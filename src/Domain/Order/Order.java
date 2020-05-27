@@ -12,6 +12,7 @@ public class Order {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String status;
+    private int statusID;
     private int deliveryPointID;
     private int customerID;
     private ArrayList<OrderItem> items;
@@ -23,6 +24,14 @@ public class Order {
         this.status = status;
         this.deliveryPointID = deliveryPointID;
         this.customerID = customerID;
+
+        this.items = new ArrayList<>();
+    }
+
+    public Order(String status, int orderID, int statusID) {
+        this.status = status;
+        this.ID = orderID;
+        this.statusID = statusID;
 
         this.items = new ArrayList<>();
     }
@@ -60,4 +69,9 @@ public class Order {
         return "OrderID: " + this.ID + " Start date: " + this.startDate + " End date " + this.endDate +
                 " Status: " + this.status + " DeliveryPointID " + this.deliveryPointID + " CustomerID " + this.customerID;
     }
+
+    public int getStatusID() {
+        return statusID;
+    }
+
 }

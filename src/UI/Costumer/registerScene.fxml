@@ -14,30 +14,21 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Label?>
 <BorderPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Costumer.Controller_RegisterScene">
    <top>
-
-      <VBox prefHeight="35.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <HBox fx:id="toolBar" prefHeight="16.0" prefWidth="600.0">
-               <children>
-                  <ToolBar prefHeight="38.0" prefWidth="142.0">
-                     <items>
-                        <MenuButton fx:id="settingsBtn" minHeight="16.0" minWidth="16.0" mnemonicParsing="false">
-                           <items>
-                              <Menu mnemonicParsing="false" text="Themes">
-                                 <items>
-                                    <MenuItem fx:id="defaultThemeBtn" mnemonicParsing="false" onAction="#changeThemeDefault" text="Default" />
+      <VBox prefHeight="74.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+          <children>
+              <HBox fx:id="toolBar" prefHeight="16.0" prefWidth="600.0">
+                  <children>
+                      <ToolBar prefHeight="38.0" prefWidth="142.0">
+                          <items>
+                              <MenuButton fx:id="settingsBtn" minHeight="16.0" minWidth="16.0" mnemonicParsing="false">
+                                  <items>
+                                      <Menu mnemonicParsing="false" text="Themes">
+                                          <items>
+                                              <MenuItem fx:id="defaultThemeBtn" mnemonicParsing="false"
+                                                        onAction="#changeThemeDefault" text="Default"/>
                                     <MenuItem fx:id="darkThemeBtn" mnemonicParsing="false" onAction="#changeThemeDark" text="Dark" />
-                                 </items>
-                              </Menu>
-                              <Menu fx:id="emulatorMenu" mnemonicParsing="false" text="Emulator">
-                                 <items>
-                                    <MenuItem fx:id="emulateAsCostumer" mnemonicParsing="false" onAction="#emulateAs" text="Costumer" />
-                                    <MenuItem fx:id="emulateAsDriver" mnemonicParsing="false" onAction="#emulateAs" text="Driver" />
-                                    <MenuItem fx:id="emulateAsDeliveryPoint" mnemonicParsing="false" onAction="#emulateAs" text="Delivery Point" />
-                                    <MenuItem fx:id="emulateAsLaundryCentral" mnemonicParsing="false" onAction="#emulateAs" text="Laundry Central" />
                                  </items>
                               </Menu>
                            </items>
@@ -47,13 +38,10 @@
                         <Button fx:id="maximizeBtn" alignment="CENTER" contentDisplay="CENTER" minHeight="16.0" minWidth="16.0" mnemonicParsing="false" onAction="#maximizeWindow" />
                      </items>
                   </ToolBar>
-                  <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="35.0" prefWidth="164.0" text="Emulating as:" />
-                  <Label fx:id="emulationType" contentDisplay="CENTER" prefHeight="35.0" prefWidth="115.0" text=" Costumer" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <Separator prefWidth="600.0" />
          </children>
-
       </VBox>
    </top>
    <center>

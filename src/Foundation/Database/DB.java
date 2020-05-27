@@ -281,15 +281,15 @@ public class DB {
             if (rows > 0) {
                 return true;
             }
-        }
-        catch (RuntimeException | SQLException e) {
+        } catch (RuntimeException | SQLException e) {
             System.err.println(e.getMessage());
-        }
-        finally {
+        } finally {
             disconnect();
         }
         return false;
     }
 
-
+    public static boolean isPendingData() {
+        return pendingData;
+    }
 }
