@@ -21,20 +21,28 @@ public class DeliveryPointManager {
         // Stores all delivery from result set
         ArrayList<DeliveryPoint> deliveryPoints = new ArrayList<>();
 
-        // Data uses to assert that there is more data
-        String data;
+        String ID;
+        String name;
+        String address;
+        String zipCode;
+        String email;
+        String phone;
+        String routeID;
 
-        do {
-            data = DB.getData();
-            if (data.equals("|ND|")) {
-                break;
-            }
-            else {
-                deliveryPoints.add(new DeliveryPoint(data,DB.getData(),DB.getData(),DB.getData(),DB.getData(),DB.getData(),DB.getData()));
-            }
+        ID = DB.getData();
 
+        while(!ID.equals(DB.NOMOREDATA)){
+            name = DB.getData();
+            address = DB.getData();
+            zipCode = DB.getData();
+            email = DB.getData();
+            phone = DB.getData();
+            routeID = DB.getData();
+
+            deliveryPoints.add(new DeliveryPoint(ID,name,address,zipCode,email,phone,routeID));
+
+            ID = DB.getData();
         }
-        while (true);
 
         return deliveryPoints;
     }
