@@ -6,14 +6,6 @@
     -fx-alignment: center;
 }
 
-.confirmedOrder{
-    -fx-background-color: Green;
-}
-
-.confirmedOrder .table-cell{
-    -fx-text-fill: white;
-}
-
 .onEmptyLabel {
     -fx-font-size: 16;
 }
