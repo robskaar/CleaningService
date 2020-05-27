@@ -41,6 +41,10 @@ public class Order {
         return DB.getData();
     }
 
+    public int getCustomerID() {
+        return customerID;
+    }
+
     public ArrayList<OrderItem> getOrderItems() {
         return this.items;
     }
