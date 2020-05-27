@@ -40,8 +40,12 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
     @FXML private TilePane washingTilePane;
     @FXML private TilePane  readyToPickUpTilePane;
     private Order viewingOrder;
-
-
+    private int buttonWidth = 50;
+    private int buttonHeigth= 30;
+    private  int inboundOrderID = 2;
+    private  int ongoingOrderID = 3;
+    private int outboundOrderID = 4;
+    
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DB.setDBPropertiesPath(Role.Laundry_Assistant);
@@ -58,7 +62,7 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
         inboundTilePane.getChildren().clear();
         washingLabelPrintButton.setVisible(false);
         paneText.setText("All inbound orders");
-        ObservableList<Order> inboundOrders = OrderManager.getCentralOrders(2);
+        ObservableList<Order> inboundOrders = OrderManager.getCentralOrders(inboundOrderID);
         int i = 0;
         for (Order order : inboundOrders) {
             Button button = new Button(String.valueOf(order.getID()));
@@ -75,22 +79,18 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
         washingTilePane.getChildren().clear();
         inboundVbox.setVisible(false);
         ongoingVbox.setVisible(true);
-        ObservableList<Order> ongoingOrders = OrderManager.getCentralOrders(3);
-        for (Order order: ongoingOrders) {
-            Button button = new Button(String.valueOf(order.getID()));
-            button.setMinWidth(50);
-            button.setMinHeight(30);
-            washingTilePane.getChildren().add(button);
-            button.setOnAction(e -> {
-                initOrderDetails(order);
-            });
-        }
-initOutBoundList();
+        ObservableList<Order> ongoingOrders = OrderManager.getCentralOrders(ongoingOrderID);
+        iterateOrders(ongoingOrders, washingTilePane);
+        initOutBoundList();
     }
 
     public void initOutBoundList( ) {
         readyToPickUpTilePane.getChildren().clear();
-        ObservableList<Order> outboundOrders = OrderManager.getCentralOrders(4);
+        ObservableList<Order> outboundOrders = OrderManager.getCentralOrders(outboundOrderID);
+        iterateOrders(outboundOrders, readyToPickUpTilePane);
+    }
+
+    private void iterateOrders(ObservableList<Order> outboundOrders, TilePane readyToPickUpTilePane) {
         for (Order order: outboundOrders) {
             Button button = new Button(String.valueOf(order.getID()));
             button.setMinWidth(50);
@@ -110,8 +110,8 @@ initOutBoundList();
         paneText.setText("Laundry items in order: #" + order.getID());
         for (OrderItem orderItem : order.getOrderItems()) {
             Button button = new Button(String.valueOf(orderItem.getID()));
-            button.setMinWidth(50);
-            button.setMinHeight(50);
+            button.setMinWidth(buttonWidth);
+            button.setMinHeight(buttonHeigth);
             inboundTilePane.getChildren().add(button);
 
         }
