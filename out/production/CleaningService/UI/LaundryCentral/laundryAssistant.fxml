@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.LaundryCentral.Controller_LaundryAssistant">
    <top>
@@ -62,7 +63,7 @@
          <children>
             <VBox alignment="CENTER" prefHeight="562.0" prefWidth="129.0">
                <children>
-                  <TextField>
+                  <TextField fx:id="searchField" alignment="CENTER" onAction="#searchForOrder" promptText="Find order by ID">
                      <VBox.margin>
                         <Insets left="4.0" top="20.0" />
                      </VBox.margin>
@@ -90,7 +91,45 @@
    <center>
       <StackPane id="DisplayPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox fx:id="ongoingVbox" alignment="CENTER" prefHeight="577.0" prefWidth="464.0">
+            <VBox fx:id="ongoingOrderItemVbox" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" visible="false">
+               <children>
+                  <HBox alignment="TOP_CENTER" prefHeight="47.0" prefWidth="460.0" spacing="10.0">
+                     <children>
+                        <Label fx:id="orderIDLabel" text="Label">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="orderStatusLabel" text="Label">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="10.0" top="10.0" />
+                     </padding>
+                  </HBox>
+                  <ScrollPane prefHeight="469.0" prefWidth="464.0">
+                     <content>
+                        <TilePane fx:id="orderItemsTilePane" alignment="CENTER" prefColumns="3" prefHeight="456.0" prefWidth="455.0" vgap="5.0">
+                           <padding>
+                              <Insets left="50.0" right="50.0" />
+                           </padding>
+                        </TilePane>
+                     </content>
+                  </ScrollPane>
+                  <VBox alignment="CENTER" prefHeight="72.0" prefWidth="464.0">
+                     <children>
+                        <Button fx:id="confirmDoneOrder" mnemonicParsing="false" text="Set order ready for driver pickup" />
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+            <VBox fx:id="ongoingVbox" alignment="CENTER" prefHeight="577.0" prefWidth="464.0" visible="false">
                <children>
                   <HBox alignment="CENTER" prefHeight="36.0" prefWidth="464.0">
                      <children>
@@ -122,7 +161,7 @@
                   </ScrollPane>
                </children>
             </VBox>
-            <VBox fx:id="inboundVbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" visible="false">
+            <VBox fx:id="inboundVbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="52.0" prefWidth="464.0">
                      <children>
