@@ -10,23 +10,18 @@ import Domain.Order.Order;
 import Domain.Order.OrderItem;
 import Foundation.Database.DB;
 import javafx.animation.FadeTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Popup;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -242,8 +237,8 @@ public class Controller_Driver extends Controller_Application implements Initial
             if (isAllItemsConfirmed) {
 
                 // Upload new order status to database
-                String newStatus = String.valueOf(Integer.parseInt(selectedOrder.getStatus()) + 1);
-                selectedOrder.updateStatus(newStatus);
+                int newStatus = selectedOrder.getStatusID() + 1;
+                selectedOrder.setStatus(newStatus);
                 OrderManager.updateOrderDB(selectedOrder);
 
                 // Show message that order has been confirmed

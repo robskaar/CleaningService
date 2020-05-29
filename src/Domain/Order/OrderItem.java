@@ -37,7 +37,7 @@ public class OrderItem {
     }
 
     public boolean isWashed() {
-        return isWashed;
+        return this.isWashed;
     }
 
     public int getID() {

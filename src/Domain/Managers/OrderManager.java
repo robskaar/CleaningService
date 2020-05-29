@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class OrderManager {
     // Used to format SQL DateTime to Java LocalDateTime
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
 
-    public static ArrayList<Order> getAllOrders() {
+    public static ArrayList<Order> getAllOrders( ) {
 
         return new ArrayList<>();
     }
@@ -26,6 +26,32 @@ public class OrderManager {
     public static ArrayList<Order> getCustomerOrders(int customerID) {
 
         return new ArrayList<>();
+    }
+
+    public static void setWashStatusInDB(OrderItem orderItem){
+        try{
+            Connection con = DB.getConnection();
+            CallableStatement cstmt = con.prepareCall("{call CleaningService.dbo.setWashedStatus(?)}");
+            cstmt.setInt(1, orderItem.getID());
+            boolean results = cstmt.execute();
+            cstmt.close();
+            con.close();
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+
+
+    }
+
+    public static boolean getWashStatusFromDB(OrderItem orderItem) {
+        DB.selectSQL("SELECT * FROM getWashedStatus(" + orderItem.getID() + ")");
+        int washed = Integer.parseInt(DB.getData());
+        if (washed == 0) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
     /**
@@ -40,6 +66,16 @@ public class OrderManager {
 
     }
 
+    /**
+     *
+     * @param orderID -- order ID to search for
+     * @return - returns array list with order from the search
+     */
+    public static ObservableList<Order> getSearchOrder(int orderID) {
+        DB.selectSQL("SELECT * FROM getSearchOrder(" +orderID+")");
+        return FXCollections.observableArrayList(convertResultSetToArrayList());
+    }
+
     public static ObservableList<Order> getDeliveryPointOrders(int deliveryPointID, int status) {
 
         DB.selectSQL("SELECT * FROM getDeliveryPointOrder(" + deliveryPointID + "," + status + ")");
@@ -50,7 +86,7 @@ public class OrderManager {
 
     public static ObservableList<Order> getCentralOrders(int statusId) {
 
-        DB.selectSQL("SELECT * FROM getCentralOrder(" +statusId+ ")");
+        DB.selectSQL("SELECT * FROM getCentralOrder(" + statusId + ")");
 
         return FXCollections.observableArrayList(convertResultSetToArrayList());
     }
@@ -59,24 +95,24 @@ public class OrderManager {
 
         CallableStatement cstmt;
 
-        try{
+        try {
             cstmt = DB.getConnection().prepareCall("{call CleaningService.dbo.updateOrder(?,?,?)}");
-            cstmt.setInt(1,Integer.parseInt(order.getStatus()));
+            cstmt.setInt(1, order.getStatusID());
 
-            if(order.getEndDate() != null){
-                cstmt.setDate(2,java.sql.Date.valueOf(order.getEndDate().toLocalDate()));
+            if (order.getEndDate() != null) {
+                cstmt.setDate(2, java.sql.Date.valueOf(order.getEndDate().toLocalDate()));
             }
-            else{
-                cstmt.setDate(2,null);
+            else {
+                cstmt.setDate(2, null);
             }
 
-            cstmt.setInt(3,order.getID());
+            cstmt.setInt(3, order.getID());
 
             cstmt.execute();
             cstmt.close();
             DB.getConnection().close();
         }
-        catch (Exception e){
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -89,7 +125,7 @@ public class OrderManager {
      *
      * @return Returns an array list with orders
      */
-    private static ArrayList<Order> convertResultSetToArrayList() {
+    private static ArrayList<Order> convertResultSetToArrayList( ) {
 
         // Stores all orders from result set
         ArrayList<Order> orders = new ArrayList<>();
@@ -116,10 +152,10 @@ public class OrderManager {
                 }
 
                 int deliveryPointID = Integer.parseInt(DB.getData());
-                String status = DB.getData();
+                int statusID = Integer.parseInt(DB.getData());
 
                 // Adds the order to the array list
-                orders.add(new Order(orderID, startDate, endDate, status, deliveryPointID, customerID));
+                orders.add(new Order(orderID, startDate, endDate, statusID, deliveryPointID, customerID));
             }
 
         }
@@ -161,7 +197,8 @@ public class OrderManager {
                     endDateTime = LocalDateTime.parse(temp, formatter);
                 }
 
-                order.getOrderItems().add(new OrderItem(orderItemID, laundryItemID, orderID, isWashed, startDateTime, endDateTime));
+                order.getOrderItems().add(
+                        new OrderItem(orderItemID, laundryItemID, orderID, isWashed, startDateTime, endDateTime));
             }
         }
     }
