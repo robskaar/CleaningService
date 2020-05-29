@@ -168,3 +168,67 @@
 .date-picker > .arrow-button {
     -fx-padding: 5px;
 }
+
+/* CSS for driver */
+
+/* Defining colors*/
+*{
+    -c1 : #16A085;
+    -c2 : #273746;
+    -c3 : #283747;
+    -c4 : #161618;
+    -c5 : #000000;
+    -c6 : #17202A;
+    -c7 : #FDFEFE;
+    -c8 : #34495E;
+    -c9 : #FDFEFE;
+}
+
+.driverHBox{
+    -fx-background-color: -c2;
+    -fx-border-color: -c2;
+}
+.driverVBox{
+    -fx-background-color: -c2;
+    -fx-border-color: -c2;
+}
+.driverButton{
+    -fx-background-color: -c4;
+    -fx-text-fill: -c7;
+}
+.driverButton:hover{
+    -fx-background-color: -c5;
+}
+.driverTable{
+    -fx-background-color: -c8;
+    -fx-border-color: -c6;
+    -fx-text-fill: -c7;
+    -fx-padding: 0;
+}
+.driverTable .table-cell{
+    -fx-text-fill: -c9;
+}
+.driverTable .column-header {
+    -fx-background-color: -c4;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+.driverTable .column-header .label{
+    -fx-text-fill: -c7;
+}
+.driverTable .table-row-cell{
+    -fx-background-color: -c3;
+}
+.driverTable .table-row-cell:odd{
+    -fx-background-color: -c8;
+}
+.driverTable .table-row-cell:selected{
+    -fx-background-color: -c1 ;
+}
+.driverTable .scroll-bar:vertical, .driverTable.scroll-bar:vertical .track, .driverTable.scroll-bar:vertical .track-background,
+.driverTable .scroll-bar:horizontal, .driverTable.scroll-bar:horizontal .track, .driverTable.scroll-bar:horizontal .track-background{
+    -fx-background-color: -c4;
+}
+.driverTable .scroll-bar:horizontal .thumb, .driverTable .scroll-bar:vertical{
+    -fx-background-color: -c5;
+}

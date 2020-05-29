@@ -26,6 +26,11 @@ public final class AccountManager {
 
     }
 
+    public static int getCurrentRoute(){
+        DB.selectSQL("SELECT * FROM getDriverRoute('" + currentUser + "')");
+        return Integer.parseInt(DB.getData());
+    }
+
     public static String getCurrentUser( ) {
         return currentUser;
     }
