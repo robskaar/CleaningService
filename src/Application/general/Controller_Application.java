@@ -166,6 +166,11 @@ public class Controller_Application {
         String pass_word = passWord.getText();
         String user_name = userName.getText();
 
+        if(currentEmulator.equals(Emulator.Driver)){
+            user_name = "Driver";
+            pass_word = "Driver123!";
+        }
+
         if (AccountManager.logIn(user_name, pass_word)) {
             fxmlLoader(currentEmulator, AccountManager.currentRole);
             switch (Controller_Application.currentEmulator) {
