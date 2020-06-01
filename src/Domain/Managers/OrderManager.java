@@ -1,6 +1,6 @@
 package Domain.Managers;
 
-import Domain.LaundryItems.Item;
+import Domain.LaundryItems.LaundryItems;
 import Domain.Order.Order;
 import Domain.Order.OrderItem;
 import Foundation.Database.DB;
@@ -26,7 +26,6 @@ public class OrderManager {
     }
 
     public static ArrayList<Order> getCustomerOrders(String customerName) {
-        System.out.println("DEBUGGING customername: " + customerName);
         int orderID;
         int statusID;
         String status;
@@ -54,7 +53,7 @@ public class OrderManager {
         return orders;
     }
 
-    public static void createOrder(int customerID, int orderStatusID, ObservableList<Item> items) throws SQLException {
+    public static void createOrder(int customerID, int orderStatusID, ObservableList<LaundryItems> laundryItems) throws SQLException {
 
         int orderID = 0;
         try {
@@ -73,20 +72,19 @@ public class OrderManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        createOrderItems(items, orderID);
+        createOrderItems(laundryItems, orderID);
     }
 
-    private static void createOrderItems(ObservableList<Item> items, int orderID) throws SQLException {
-        System.out.println("CreateOrderItems Reached");
+    private static void createOrderItems(ObservableList<LaundryItems> laundryItems, int orderID) throws SQLException {
+
         CallableStatement cstmt;
         Connection con = DB.getConnection();
-        for (Item item : items
+        for (LaundryItems laundryItem : laundryItems
         ) {
-            System.out.println("CreateOrderItems Loop Reached");
             try {
                 cstmt = con.prepareCall("{call CleaningService.dbo.createOrderItem(?,?,?)}");
                 cstmt.setInt(1, orderID);
-                cstmt.setInt(2, item.getLaundryItemID());
+                cstmt.setInt(2, laundryItem.getLaundryItemID());
                 cstmt.setBoolean(3, false);
                 cstmt.execute();
                 cstmt.close();

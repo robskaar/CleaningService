@@ -1,6 +1,6 @@
 package Domain.Managers;
 
-import Domain.LaundryItems.Item;
+import Domain.LaundryItems.LaundryItems;
 import Foundation.Database.DB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,17 +9,17 @@ import java.util.ArrayList;
 
 public class ItemsManager {
 
-    public static ObservableList<Item> getItems() {
+    public static ObservableList<LaundryItems> getItems() {
         DB.selectSQL("Select * FROM getLaundryItems()");
         return FXCollections.observableArrayList(convertResultSetToArrayList(false));
     }
 
-    public static ObservableList<Item> getorderLaundryItems(int orderID) {
+    public static ObservableList<LaundryItems> getorderLaundryItems(int orderID) {
         DB.selectSQL("SELECT * FROM getLaundryOrderItems(" + orderID + ")");
         return FXCollections.observableArrayList(convertResultSetToArrayList(true));
     }
 
-    private static ArrayList<Item> convertResultSetToArrayList(boolean hasOrderItemID) {
+    private static ArrayList<LaundryItems> convertResultSetToArrayList(boolean hasOrderItemID) {
         int laundryItemID;
         int price;
         int orderItemID;
@@ -27,7 +27,7 @@ public class ItemsManager {
         String itemName;
 
         // Stores all orders from result set
-        ArrayList<Item> Orders = new ArrayList<>();
+        ArrayList<LaundryItems> Orders = new ArrayList<>();
         // Temporary value used to check for null before parsing
         String temp;
         // Data uses to assert that there is more data
@@ -41,9 +41,9 @@ public class ItemsManager {
             handlingDuration = Integer.parseInt(DB.getData());
             if (hasOrderItemID) {
                 orderItemID = Integer.parseInt(DB.getData());
-                Orders.add(new Item(laundryItemID, itemName, price, handlingDuration, orderItemID));
+                Orders.add(new LaundryItems(laundryItemID, itemName, price, handlingDuration, orderItemID));
             } else {
-                Orders.add(new Item(laundryItemID, itemName, price, handlingDuration));
+                Orders.add(new LaundryItems(laundryItemID, itemName, price, handlingDuration));
             }
             //assigning the data at the end to ensure the correct order.
             data = DB.getData();

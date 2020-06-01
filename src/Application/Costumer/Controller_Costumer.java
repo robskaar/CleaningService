@@ -1,7 +1,7 @@
 package Application.Costumer;
 
 import Application.general.Controller_Application;
-import Domain.LaundryItems.Item;
+import Domain.LaundryItems.LaundryItems;
 import Domain.Managers.AccountManager;
 import Domain.Managers.ItemsManager;
 import Domain.Managers.OrderManager;
@@ -102,9 +102,9 @@ public class Controller_Costumer extends Controller_Application implements Initi
 
     }
 
-    private ObservableList<Item> addedItems = FXCollections.observableArrayList();
-    private ArrayList<Item> removedItems = new ArrayList<>();
-    private IntegerBinding listSize = Bindings.size(addedItems);
+    private ObservableList<LaundryItems> addedLaundryItems = FXCollections.observableArrayList();
+    private ArrayList<LaundryItems> removedLaundryItems = new ArrayList<>();
+    private IntegerBinding listSize = Bindings.size(addedLaundryItems);
     private BooleanBinding listPopulated = listSize.greaterThan(0);
     private ArrayList<ItemBox> itemBoxes = new ArrayList<>();
     private static final int pendingStatusID = 8;
@@ -119,16 +119,14 @@ public class Controller_Costumer extends Controller_Application implements Initi
 
     public void showItems() {
         itemView.toFront();
-        System.out.println(itemBoxes.size());
 
         if (itemBoxes.size() == 0) {
-            for (Item item : ItemsManager.getItems()
+            for (LaundryItems laundryItems : ItemsManager.getItems()
             ) {
-                System.out.println(item.getName());
-                ItemBox itemBox = new ItemBox(item);
+                ItemBox itemBox = new ItemBox(laundryItems);
                 itemBox.setAddButton();
                 itemBox.getButton().setOnMouseClicked(mouseEvent -> {
-                    addedItems.add(item);
+                    addedLaundryItems.add(laundryItems);
 
                 });
                 itemBoxes.add(itemBox);
@@ -153,13 +151,12 @@ public class Controller_Costumer extends Controller_Application implements Initi
             goBack();
         });
 
-        for (Item item : ItemsManager.getorderLaundryItems(orderID)
+        for (LaundryItems laundryItems : ItemsManager.getorderLaundryItems(orderID)
         ) {
-            System.out.println(item.getName());
-            ItemBox itemBox = new ItemBox(item);
+            ItemBox itemBox = new ItemBox(laundryItems);
             itemBox.setRemoveButton();
             itemBox.getButton().setOnMouseClicked(mouseEvent -> {
-                removedItems.add(item);
+                removedLaundryItems.add(laundryItems);
                 orderVBox.getChildren().remove(itemBox);
 
             });
@@ -171,7 +168,7 @@ public class Controller_Costumer extends Controller_Application implements Initi
     public void showCart() {
         confirmOrderPane.toFront();
         deleteButton.setOnMouseClicked(mouseEvent -> {
-            addedItems.clear();
+            addedLaundryItems.clear();
             goBack();
         });
         confirmOrders.setOnMouseClicked(mouseEvent -> {
@@ -181,12 +178,12 @@ public class Controller_Costumer extends Controller_Application implements Initi
                 e.printStackTrace();
             }
         });
-        for (Item item : addedItems
+        for (LaundryItems laundryItems : addedLaundryItems
         ) {
-            ItemBox itemBox = new ItemBox(item);
+            ItemBox itemBox = new ItemBox(laundryItems);
             itemBox.setRemoveButton();
             itemBox.getButton().setOnMouseClicked(mouseEvent -> {
-                addedItems.remove(item);
+                addedLaundryItems.remove(laundryItems);
                 orderVBox.getChildren().remove(itemBox);
             });
             orderVBox.getChildren().add(itemBox);
@@ -194,7 +191,7 @@ public class Controller_Costumer extends Controller_Application implements Initi
     }
 
     public void logOff() {
-        addedItems.clear();
+        addedLaundryItems.clear();
         super.logOff();
     }
 
@@ -205,9 +202,9 @@ public class Controller_Costumer extends Controller_Application implements Initi
 
     public void createOrders() throws SQLException {
         //8 is the StatusID in our database for premade orders
-        OrderManager.createOrder(AccountManager.currentCostumerID, pendingStatusID, addedItems);
-        System.out.println("Order added with " + addedItems.size() + " Items");
-        addedItems.clear();
+        OrderManager.createOrder(AccountManager.currentCostumerID, pendingStatusID, addedLaundryItems);
+        System.out.println("Order added with " + addedLaundryItems.size() + " Items");
+        addedLaundryItems.clear();
         goBack();
     }
 
@@ -247,9 +244,9 @@ public class Controller_Costumer extends Controller_Application implements Initi
     }
 
     private void deleteOrderItems() {
-        for (Item item : removedItems
+        for (LaundryItems laundryItems : removedLaundryItems
         ) {
-            OrderManager.deleteOrderItems(item.getOrderItemID());
+            OrderManager.deleteOrderItems(laundryItems.getOrderItemID());
         }
     }
 }

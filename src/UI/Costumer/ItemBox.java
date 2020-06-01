@@ -1,6 +1,6 @@
 package UI.Costumer;
 
-import Domain.LaundryItems.Item;
+import Domain.LaundryItems.LaundryItems;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,20 +12,20 @@ public class ItemBox extends HBox {
     private Button button;
     private int itemID;
 
-    public ItemBox(Item item) {
+    public ItemBox(LaundryItems laundryItems) {
         this.getStylesheets().add("Foundation/Resources/CSS/Customer.css");
-        button = new Button(item.getName());
+        button = new Button(laundryItems.getName());
         button.getStyleClass().add("AddButton");
         button.setPrefWidth(100);
-        Label duration = new Label(String.valueOf(item.getHandlingDuration()) + " Days");
+        Label duration = new Label(String.valueOf(laundryItems.getHandlingDuration()) + " Days");
         duration.setWrapText(true);
         duration.setTextFill(Color.BLACK);
         duration.setStyle("-fx-text-alignment: center !important;");
-        Label price = new Label(String.valueOf(item.getPrice()));
+        Label price = new Label(String.valueOf(laundryItems.getPrice()));
         price.setPrefWidth(40);
         price.setTextAlignment(TextAlignment.CENTER);
         price.setWrapText(true);
-        this.itemID = item.getLaundryItemID();
+        this.itemID = laundryItems.getLaundryItemID();
         this.getChildren().addAll(duration, button, price);
         this.setAlignment(Pos.CENTER);
         ;

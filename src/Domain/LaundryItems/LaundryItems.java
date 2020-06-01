@@ -1,20 +1,20 @@
 package Domain.LaundryItems;
 
-public class Item {
+public class LaundryItems {
     private int laundryItemID;
     private int handlingDuration;
     private int orderItemID;
     private String name;
     private double price;
 
-    public Item(int laundryItemID, String name, double price, int handlingDuration) {
+    public LaundryItems(int laundryItemID, String name, double price, int handlingDuration) {
         this.laundryItemID = laundryItemID;
         this.name = name;
         this.price = price;
         this.handlingDuration = handlingDuration;
     }
 
-    public Item(int laundryItemID, String name, double price, int handlingDuration, int orderItemID) {
+    public LaundryItems(int laundryItemID, String name, double price, int handlingDuration, int orderItemID) {
         this.laundryItemID = laundryItemID;
         this.name = name;
         this.price = price;
