@@ -37,6 +37,7 @@ public class Order {
 
     public void updateStatus(String status) {
         this.status = status;
+    }
     public void setStatus(int status) {
         this.statusID = status;
     }
@@ -44,7 +45,7 @@ public class Order {
     /**
      * @return Status message of the order
      */
-    public String getStatusMessage() {
+    public String getStatusMessage(){
         DB.selectSQL("SELECT * FROM getOrderStatus(" + this.statusID + ")");
         return DB.getData();
     }
@@ -75,8 +76,7 @@ public class Order {
                " Status: " + this.statusID + " DeliveryPointID " + this.deliveryPointID + " CustomerID " + this.customerID;
     }
 
-    public int getStatusID() {
-        return statusID;
+    public String getStatus() {
+        return status;
     }
-
 }

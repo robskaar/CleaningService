@@ -139,7 +139,6 @@ public final class AccountManager {
 
             }
         }
-    }
 
     public static void logOff(){
         isLoggedIn = false;
