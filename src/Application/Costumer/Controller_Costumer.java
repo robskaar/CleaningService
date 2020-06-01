@@ -1,32 +1,28 @@
 package Application.Costumer;
 
 import Application.general.Controller_Application;
-import Domain.Enums.Role;
 import Domain.LaundryItems.Item;
 import Domain.Managers.AccountManager;
 import Domain.Managers.ItemsManager;
 import Domain.Managers.OrderManager;
 import Domain.Order.Order;
-import Foundation.Database.DB;
 import UI.Costumer.ItemBox;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.IntegerBinding;
-import javafx.beans.binding.StringBinding;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -94,6 +90,12 @@ public class Controller_Costumer extends Controller_Application implements Initi
 
     @FXML
     private VBox orderVBox;
+    @FXML
+    private Button deleteButton;
+
+    @FXML
+    private Button confirmOrders;
+
 
     @Override
     public void changeScene() {
@@ -101,9 +103,12 @@ public class Controller_Costumer extends Controller_Application implements Initi
     }
 
     private ObservableList<Item> addedItems = FXCollections.observableArrayList();
+    private ArrayList<Item> removedItems = new ArrayList<>();
     private IntegerBinding listSize = Bindings.size(addedItems);
     private BooleanBinding listPopulated = listSize.greaterThan(0);
     private ArrayList<ItemBox> itemBoxes = new ArrayList<>();
+    private static final int pendingStatusID = 8;
+
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         costumerMenu.toFront();
@@ -121,6 +126,7 @@ public class Controller_Costumer extends Controller_Application implements Initi
             ) {
                 System.out.println(item.getName());
                 ItemBox itemBox = new ItemBox(item);
+                itemBox.setAddButton();
                 itemBox.getButton().setOnMouseClicked(mouseEvent -> {
                     addedItems.add(item);
 
@@ -128,16 +134,57 @@ public class Controller_Costumer extends Controller_Application implements Initi
                 itemBoxes.add(itemBox);
 
             }
+            itemVbox.getChildren().addAll(itemBoxes);
 
+        }
+    }
+
+    public void showOrderItems(int orderID) {
+        ;
+        confirmOrderPane.toFront();
+        orderVBox.getChildren().clear();
+        deleteButton.setOnMouseClicked(mouseEvent -> {
+            OrderManager.deleteOrder(orderID);
+            goBack();
+        });
+
+        confirmOrders.setOnMouseClicked(mouseEvent -> {
+            deleteOrderItems();
+            goBack();
+        });
+
+        for (Item item : ItemsManager.getorderLaundryItems(orderID)
+        ) {
+            System.out.println(item.getName());
+            ItemBox itemBox = new ItemBox(item);
+            itemBox.setRemoveButton();
+            itemBox.getButton().setOnMouseClicked(mouseEvent -> {
+                removedItems.add(item);
+                orderVBox.getChildren().remove(itemBox);
+
+            });
+            orderVBox.getChildren().add(itemBox);
 
         }
     }
 
     public void showCart() {
         confirmOrderPane.toFront();
+        deleteButton.setOnMouseClicked(mouseEvent -> {
+            addedItems.clear();
+            goBack();
+        });
+        confirmOrders.setOnMouseClicked(mouseEvent -> {
+            try {
+                createOrders();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
         for (Item item : addedItems
         ) {
             ItemBox itemBox = new ItemBox(item);
+            itemBox.setRemoveButton();
             itemBox.getButton().setOnMouseClicked(mouseEvent -> {
                 addedItems.remove(item);
                 orderVBox.getChildren().remove(itemBox);
@@ -156,6 +203,14 @@ public class Controller_Costumer extends Controller_Application implements Initi
         costumerMenu.toFront();
     }
 
+    public void createOrders() throws SQLException {
+        //8 is the StatusID in our database for premade orders
+        OrderManager.createOrder(AccountManager.currentCostumerID, pendingStatusID, addedItems);
+        System.out.println("Order added with " + addedItems.size() + " Items");
+        addedItems.clear();
+        goBack();
+    }
+
     public void showOrderHistory() {
         orderHistoryPane.toFront();
         clearOrderHistory();
@@ -169,9 +224,9 @@ public class Controller_Costumer extends Controller_Application implements Initi
                     previousOrderStatus.getChildren().add(status);
                     previousOrderOrderID.getChildren().add(orderID);
                     break;
-                case 8:
+                case pendingStatusID:
                     status.setOnMouseClicked(mouseEvent -> {
-                        //TODO make Edit order Menu
+                        showOrderItems(order.getID());
                     });
                     onGoingOrderIDPane.getChildren().add(orderID);
                     onGoingStatusPane.getChildren().add(status);
@@ -189,5 +244,12 @@ public class Controller_Costumer extends Controller_Application implements Initi
         previousOrderStatus.getChildren().clear();
         onGoingStatusPane.getChildren().clear();
         onGoingOrderIDPane.getChildren().clear();
+    }
+
+    private void deleteOrderItems() {
+        for (Item item : removedItems
+        ) {
+            OrderManager.deleteOrderItems(item.getOrderItemID());
+        }
     }
 }

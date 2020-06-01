@@ -11,10 +11,20 @@ public class ItemsManager {
 
     public static ObservableList<Item> getItems() {
         DB.selectSQL("Select * FROM getLaundryItems()");
-        return FXCollections.observableArrayList(convertResultSetToArrayList());
+        return FXCollections.observableArrayList(convertResultSetToArrayList(false));
     }
 
-    private static ArrayList<Item> convertResultSetToArrayList() {
+    public static ObservableList<Item> getorderLaundryItems(int orderID) {
+        DB.selectSQL("SELECT * FROM getLaundryOrderItems(" + orderID + ")");
+        return FXCollections.observableArrayList(convertResultSetToArrayList(true));
+    }
+
+    private static ArrayList<Item> convertResultSetToArrayList(boolean hasOrderItemID) {
+        int laundryItemID;
+        int price;
+        int orderItemID;
+        int handlingDuration;
+        String itemName;
 
         // Stores all orders from result set
         ArrayList<Item> Orders = new ArrayList<>();
@@ -25,13 +35,16 @@ public class ItemsManager {
 
         while (!data.equals("|ND|") || DB.isPendingData()) {
 
-            int laundryItemID = Integer.parseInt(data);
-            String itemName = DB.getData();
-            int price = Integer.parseInt(DB.getData());
-            int handlingDuration = Integer.parseInt(DB.getData());
-
-            // Adds the order to the array list
-            Orders.add(new Item(laundryItemID, itemName, price, handlingDuration));
+            laundryItemID = Integer.parseInt(data);
+            itemName = DB.getData();
+            price = Integer.parseInt(DB.getData());
+            handlingDuration = Integer.parseInt(DB.getData());
+            if (hasOrderItemID) {
+                orderItemID = Integer.parseInt(DB.getData());
+                Orders.add(new Item(laundryItemID, itemName, price, handlingDuration, orderItemID));
+            } else {
+                Orders.add(new Item(laundryItemID, itemName, price, handlingDuration));
+            }
             //assigning the data at the end to ensure the correct order.
             data = DB.getData();
         }

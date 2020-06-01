@@ -119,7 +119,7 @@
 
 .backButton {
     -fx-background-color: transparent;
-    -fx-background-image: url('/Foundation/Resources/PhoneEmulator/left-arrow.png');
+    -fx-background-image: url('/Foundation/Resources/Icons/PhoneEmulator/left-arrow.png');
     -fx-background-size: 23;
     -fx-background-repeat: no-repeat;
 }

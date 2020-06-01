@@ -1,7 +1,6 @@
 package Domain.Managers;
 
 import Application.general.Controller_Application;
-import Domain.Enums.Emulator;
 import Domain.Enums.Role;
 import Foundation.Database.DB;
 import Services.Passwordmodifier.Password;
@@ -17,12 +16,13 @@ import java.time.LocalDate;
 
 public final class AccountManager {
 
-    private static String currentUser;
+    public static String currentUser;
+    public static int currentCostumerID;
     public static Boolean isLoggedIn = false;
     public static Role currentRole = null;
 
 
-    private AccountManager (){
+    private AccountManager() {
 
     }
 
@@ -44,7 +44,7 @@ public final class AccountManager {
             cstmt.setString(5, emailAddress);
             cstmt.setString(6, phoneNumber);
             cstmt.setDate(7, Date.valueOf(dateOfBirth));
-            cstmt.setInt(8,isTemporary);
+            cstmt.setInt(8, isTemporary);
             boolean results = cstmt.execute();
             cstmt.close();
             con.close();
@@ -57,12 +57,12 @@ public final class AccountManager {
         try {
             CallableStatement cstmt;
             Connection con = null;
-            switch (Controller_Application.currentEmulator){
+            switch (Controller_Application.currentEmulator) {
                 case Costumer:
                     currentRole = Role.Costumer;
                     DB.setDBPropertiesPath(currentRole);
                     con = DB.getConnection();
-                    cstmt = con.prepareCall("{call CleaningService.dbo.logInCostumer(?,?)}");
+                    cstmt = con.prepareCall("{call CleaningService.dbo.logInCostumer(?,?,?)}");
                     break;
                 case Driver:
                     currentRole = Role.Driver;
@@ -90,28 +90,35 @@ public final class AccountManager {
             String roleName = null;
             cstmt.setString(1, userName);
             cstmt.registerOutParameter(2, Types.VARCHAR);
-            if ( Controller_Application.currentEmulator == Emulator.LaundryCentral){
-                cstmt.registerOutParameter(3,Types.VARCHAR);
-            }
-            boolean results = cstmt.execute();
-            String passHash = cstmt.getString(2);
-            if ( Controller_Application.currentEmulator == Emulator.LaundryCentral){
-                roleName = cstmt.getString(3);
-            }
-            if ( Controller_Application.currentEmulator == Emulator.LaundryCentral) {
-                roleName = cstmt.getString(3);
 
-                if (roleName.equalsIgnoreCase("Laundry Manager")) {
-                    currentRole = Role.Laundry_Manager;
-                }
-                else {
-                    currentRole = Role.Laundry_Assistant;
-                }
+            switch (Controller_Application.currentEmulator) {
+                case LaundryCentral:
+                    cstmt.registerOutParameter(3, Types.VARCHAR);
+                    break;
+                case Costumer:
+                    cstmt.registerOutParameter(3, Types.INTEGER);
+                    break;
             }
+
+            cstmt.execute();
+            String passHash = cstmt.getString(2);
+            switch (Controller_Application.currentEmulator) {
+                case LaundryCentral:
+                    roleName = cstmt.getString(3);
+                    if (roleName.equalsIgnoreCase("Laundry Manager")) {
+                        currentRole = Role.Laundry_Manager;
+                    } else {
+                        currentRole = Role.Laundry_Assistant;
+                    }
+                    break;
+                case Costumer:
+                    currentCostumerID = cstmt.getInt(3);
+            }
+
             cstmt.close();
             con.close();
             if (Password.checkPassword(password, passHash)) {
-               isLoggedIn = true;
+                isLoggedIn = true;
                 currentUser = userName;
             } else {
                 currentRole = null;
