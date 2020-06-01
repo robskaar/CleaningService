@@ -30,6 +30,7 @@ import java.util.ResourceBundle;
 public class Controller_Driver extends Controller_Application implements Initializable {
 
     @FXML
+
     private BorderPane root;
     /*
     FXML components from Central Orders pane
@@ -44,6 +45,7 @@ public class Controller_Driver extends Controller_Application implements Initial
     private TableColumn<Order, Integer> columnOrderID;
     @FXML
     private TableView<OrderItem> centralItemTable;
+
     @FXML
     private TableColumn<Integer, OrderItem> columnItemID;
     @FXML
@@ -79,6 +81,7 @@ public class Controller_Driver extends Controller_Application implements Initial
     @FXML
     private Button routeConfirm;
 
+
     private static TableView<Order> currentOrderTable = null;
     private static TableView<OrderItem> currentItemsTable = null;
     private static Order selectedOrder = null;
@@ -102,7 +105,6 @@ public class Controller_Driver extends Controller_Application implements Initial
     private void initCentralOrderTable() {
         // set property for observable object
         columnOrderID.setCellValueFactory(new PropertyValueFactory<>("ID"));
-
         // Fetch orders from database and display
         centralOrderTable.setItems(OrderManager.getRouteOrders(currentRoute, AT_CLEANING_CENTRAL_READY_FOR_TRANSIT));
 
@@ -176,6 +178,7 @@ public class Controller_Driver extends Controller_Application implements Initial
     /**
      * Sets of table that view route order items
      */
+
     private void initRouteItemsTable() {
         // Items can not be selected (Only use checkbox)
         routeOrderItemsTable.setSelectionModel(null);
@@ -186,12 +189,14 @@ public class Controller_Driver extends Controller_Application implements Initial
 
         // Sets text to show if table is empty
         setOnEmptyLabel("Choose Order", routeOrderItemsTable);
+
     }
 
     /**
      * Method called when a delivery point is selected
      * Shows all orders from the delivery point
      */
+
     public void showDeliveryPointOrders() {
         routeOrderItemsTable.getItems().clear();
 
@@ -208,6 +213,7 @@ public class Controller_Driver extends Controller_Application implements Initial
         }
         if (pickUpTable.getItems().isEmpty()) {
             setOnEmptyLabel("No Orders", pickUpTable);
+
         }
     }
 
@@ -218,6 +224,7 @@ public class Controller_Driver extends Controller_Application implements Initial
     public void confirmOrder() {
 
         boolean isAllItemsConfirmed = true;
+
 
         // Assert that an order has is selected
         if (selectedOrder != null) {
