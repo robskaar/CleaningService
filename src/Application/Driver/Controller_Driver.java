@@ -6,32 +6,28 @@ import Domain.Enums.Role;
 import Domain.Managers.AccountManager;
 import Domain.Managers.DeliveryPointManager;
 import Domain.Managers.OrderManager;
+import Domain.Map.GoogleMap;
 import Domain.Order.Order;
 import Domain.Order.OrderItem;
 import Foundation.Database.DB;
 import javafx.animation.FadeTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Popup;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Controller_Driver extends Controller_Application implements Initializable {
@@ -96,6 +92,8 @@ public class Controller_Driver extends Controller_Application implements Initial
     private static TableView<OrderItem> currentItemsTable = null;
     private static Order selectedOrder = null;
     private static int currentRoute;
+    private static ArrayList<DeliveryPoint> deliveryPoints;
+    private GoogleMap googleMap;
     // Order statuses
     private static final int AT_DELIVERY_POINT_READY_FOR_TRANSIT = 1;
     private static final int AT_CLEANING_CENTRAL_READY_FOR_TRANSIT = 4;
@@ -150,7 +148,8 @@ public class Controller_Driver extends Controller_Application implements Initial
         columnDeliveryConfirm.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
 
         // Fetch delivery points from current route from database
-        deliveryPointTable.setItems(DeliveryPointManager.getRouteDeliveryPoints(currentRoute));
+        deliveryPoints = DeliveryPointManager.getRouteDeliveryPoints(currentRoute);
+        deliveryPointTable.setItems(FXCollections.observableArrayList(deliveryPoints));
 
         // Sets up listener for when a delivery point is selected
         deliveryPointTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldDeliveryPoint, newDeliveryPoint) -> {
@@ -342,6 +341,7 @@ public class Controller_Driver extends Controller_Application implements Initial
         routeOrders.setVisible(true);
         routeLabel.setText("Showing orders from route: " + currentRoute);
 
+        googleMap = GoogleMap.getMap();
         initDeliveryPointTable();
         initRouteOrderTables();
         initRouteItemsTable();
@@ -445,10 +445,8 @@ public class Controller_Driver extends Controller_Application implements Initial
         stackOrders.setVisible(false);
         stackMap.setVisible(true);
 
-        WebEngine engine = webView.getEngine();
-        URL url = getClass().getResource("/UI/Driver/Map2.html");
-        engine.load(url.toString());
-
+        googleMap.setMarkers(deliveryPoints);
+        stackMap.getChildren().add(googleMap.getMapView());
     }
-
+    
 }
