@@ -22,11 +22,16 @@ public final class AccountManager {
     public static Role currentRole = null;
 
 
-    private AccountManager() {
+    private AccountManager( ) {
 
     }
 
-    public static String getCurrentUser() {
+    public static int getCurrentRoute(){
+        DB.selectSQL("SELECT * FROM getDriverRoute('" + currentUser + "')");
+        return Integer.parseInt(DB.getData());
+    }
+
+    public static String getCurrentUser( ) {
         return currentUser;
     }
 
@@ -48,7 +53,8 @@ public final class AccountManager {
             boolean results = cstmt.execute();
             cstmt.close();
             con.close();
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
@@ -123,15 +129,19 @@ public final class AccountManager {
             } else {
                 currentRole = null;
                 isLoggedIn = false;
+
+                }
+                return isLoggedIn;
             }
-            return isLoggedIn;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return isLoggedIn;
+            catch (SQLException | IllegalArgumentException ex) {
+                ex.getMessage();
+                return isLoggedIn;
+
+            }
         }
     }
 
-    public static void logOff() {
+    public static void logOff(){
         isLoggedIn = false;
         currentUser = null;
     }

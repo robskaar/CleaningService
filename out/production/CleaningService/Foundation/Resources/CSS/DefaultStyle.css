@@ -6,22 +6,40 @@
  **/
 
 .root {
-    -fx-background-color: slategrey;
+    -fx-background-color: #B0D7FF;
+    -fx-focus-color: transparent ;
+    -fx-faint-focus-color: transparent ;
 
 }
 *{
-    -fx-base: lightgrey;
+    -fx-base: #D8D5DB;
+}
+.date-picker > .text-field{
+    -fx-background-insets: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+}
+.date-picker > .arrow-button {
+    -fx-padding: 5px;
 }
 
+.text-field{
+    -fx-background-color: #E1F5FE;
+}
 .tool-bar{
     -fx-background-color: transparent;
 }
 #toolBar{
-    -fx-background-color: lightgrey;
+    -fx-background-color: #D8D5DB;
 }
 .separator > .line{
-    -fx-border-color: rgba(211, 211, 211, 0.84);
-    -fx-border-width: 2;
+-fx-border-color: #ADACB5;
+    -fx-border-width: 1.5;
+}
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+.scroll-pane {
+    -fx-background-color: #E1F5FE;
 }
 
 
@@ -103,7 +121,23 @@
     -fx-background-size: cover;
     -fx-background-position: center;
 }
-
+#backButton {
+    -fx-pref-width: 20;
+    -fx-pref-height: 20;
+    -fx-background-color: transparent;
+    -fx-background-image: url('../Icons/General/backButton.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
+#backButton:hover{
+    -fx-scale-y: 0.8px;
+    -fx-scale-x: 0.8px;
+    -fx-effect: dropshadow(three-pass-box,black,2,0,0,0);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
 #settingsBtn:hover {
     -fx-scale-y: 0.8px;
     -fx-scale-x: 0.8px;
@@ -113,5 +147,102 @@
     -fx-background-position: center;
 }
 #DisplayPane{
-    -fx-background-color: white;
+    -fx-background-color: #E1F5FE;
 }
+
+.button {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 2, 0, 0, 0);
+    -fx-background-color : #D8D5DB;
+    -fx-text-fill        : #484750;
+}
+
+.button:hover {
+    -fx-background-color : #ADACB5;
+}
+
+
+
+.label{
+    -fx-text-fill: #484750;
+}
+.menu-item{
+    -fx-background-color: #D8D5DB;
+}
+.menu-item:hover{
+    -fx-background-color: #E1F5FE;
+}
+.menu-button{
+    -fx-background-color: #D8D5DB;
+}
+.menu{
+    -fx-background-color: #D8D5DB;
+}
+.context-menu{
+    -fx-background-color: #D8D5DB;
+}
+
+/* CSS for driver */
+
+/* Defining colors*/
+*{
+    -c1 : #16A085;
+    -c2 : #B0D7FF;
+    -c3 : #D6EAF8;
+    -c4 : #34495E;
+    -c5 : #283747;
+    -c6 : #17202A;
+    -c7 : #FDFEFE;
+    -c8 : #EBF5FB;
+    -c9 : #000000;
+}
+
+.driverHBox{
+    -fx-background-color: -c2;
+    -fx-border-color: -c2;
+}
+.driverVBox{
+    -fx-background-color: -c2;
+    -fx-border-color: -c2;
+}
+.driverButton{
+    -fx-background-color: -c4;
+    -fx-text-fill: -c7;
+}
+.driverButton:hover{
+    -fx-background-color: -c5;
+}
+.driverTable{
+    -fx-background-color: -c8;
+    -fx-border-color: -c6;
+    -fx-text-fill: -c7;
+    -fx-padding: 0;
+}
+.driverTable .table-cell{
+    -fx-text-fill: -c9;
+}
+.driverTable .column-header {
+    -fx-background-color: -c4;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+.driverTable .column-header .label{
+    -fx-text-fill: -c7;
+}
+.driverTable .table-row-cell{
+    -fx-background-color: -c3;
+}
+.driverTable .table-row-cell:odd{
+    -fx-background-color: -c8;
+}
+.driverTable .table-row-cell:selected{
+    -fx-background-color: -c1 ;
+}
+.driverTable .scroll-bar:vertical, .driverTable.scroll-bar:vertical .track, .driverTable.scroll-bar:vertical .track-background,
+.driverTable .scroll-bar:horizontal, .driverTable.scroll-bar:horizontal .track, .driverTable.scroll-bar:horizontal .track-background{
+     -fx-background-color: -c4;
+ }
+.driverTable .scroll-bar:horizontal .thumb, .driverTable .scroll-bar:vertical{
+    -fx-background-color: -c5;
+}
+
+

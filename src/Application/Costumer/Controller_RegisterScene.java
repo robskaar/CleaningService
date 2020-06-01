@@ -4,6 +4,7 @@ import Application.general.Controller_Application;
 import Domain.Managers.AccountManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -50,6 +51,7 @@ public class Controller_RegisterScene extends Controller_Application implements 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Pattern passComplexity = Pattern.compile("((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})");
         passWord.setTooltip(passwordTip);
+        passwordTip.setShowDelay(null);
         passWord.textProperty().addListener(((observableValue, oldVal, newVal) -> {
             Matcher matching = passComplexity.matcher(passWord.getText());
             if (matching.matches()) {
