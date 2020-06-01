@@ -27,11 +27,8 @@
         geoCoder = new google.maps.Geocoder();
     }
 
-    function setMarker(address) {
-        convertToCoordinates(address);
-    }
 
-    function convertToCoordinates(address) {
+    function setMarker(address,storeName) {
 
         geoCoder.geocode({'address': address}, function(results, status) {
 
@@ -40,7 +37,25 @@
                 map.setZoom(10);
                 var marker = new google.maps.Marker({
                     map: map,
-                    position: results[0].geometry.location
+                    position: results[0].geometry.location,
+                    animation: google.maps.Animation.DROP,
+                });
+
+                var infoWindow = new google.maps.InfoWindow({
+                    content: storeName,
+                });
+                marker.addListener('mouseover', function() {
+                    infoWindow.open(map, this);
+                    if (marker.getAnimation() !== null) {
+                        marker.setAnimation(null);
+                    } else {
+                        marker.setAnimation(google.maps.Animation.BOUNCE);
+                    }
+                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                });
+                marker.addListener('mouseout', function() {
+                    marker.setAnimation(null);
+                    infoWindow.close();
                 });
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);

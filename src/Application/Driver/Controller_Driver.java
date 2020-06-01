@@ -86,7 +86,8 @@ public class Controller_Driver extends Controller_Application implements Initial
     @FXML
     private VBox stackMap;
     @FXML
-    private WebView webView;
+    private Button showOrHideMap;
+
 
     private static TableView<Order> currentOrderTable = null;
     private static TableView<OrderItem> currentItemsTable = null;
@@ -342,6 +343,8 @@ public class Controller_Driver extends Controller_Application implements Initial
         routeLabel.setText("Showing orders from route: " + currentRoute);
 
         googleMap = GoogleMap.getMap();
+        stackMap.getChildren().add(googleMap.getMapView());
+
         initDeliveryPointTable();
         initRouteOrderTables();
         initRouteItemsTable();
@@ -441,12 +444,27 @@ public class Controller_Driver extends Controller_Application implements Initial
         });
     }
 
+
     public void showMap(){
+
+        googleMap.setMarkers(deliveryPoints);
         stackOrders.setVisible(false);
         stackMap.setVisible(true);
 
-        googleMap.setMarkers(deliveryPoints);
-        stackMap.getChildren().add(googleMap.getMapView());
+        showOrHideMap.setText("Show Orders");
+        showOrHideMap.setOnAction(event -> {
+            showOrders();
+        });
     }
-    
+
+    public void showOrders(){
+        stackOrders.setVisible(true);
+        stackMap.setVisible(false);
+
+        showOrHideMap.setText("Show Map");
+        showOrHideMap.setOnAction(event -> {
+            showMap();
+        });
+    }
+
 }

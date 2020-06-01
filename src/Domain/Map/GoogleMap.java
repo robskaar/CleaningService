@@ -14,6 +14,7 @@ public class GoogleMap {
     private WebView mapView;
     private WebEngine engine;
     private final String MAP_HTML = "/UI/Driver/Map2.html";
+    private boolean isMarkersSet = false;
 
     private GoogleMap() {
         mapView = new WebView();
@@ -33,11 +34,17 @@ public class GoogleMap {
     }
 
     public void setMarkers(ArrayList<DeliveryPoint> deliveryPoints) {
-        String address;
+        if(!isMarkersSet){
+            String address;
+            String storeName;
 
-        for (DeliveryPoint dp : deliveryPoints) {
-            address = dp.getAddress() + " " + dp.getZipCode();
-            engine.executeScript("setMarker('" + address + "')");
+            for (DeliveryPoint dp : deliveryPoints) {
+                address = dp.getAddress() + " " + dp.getZipCode();
+                storeName = dp.getName();
+                engine.executeScript("setMarker('" + address + "','" + storeName + "')");
+            }
+
+            isMarkersSet = true;
         }
     }
 }

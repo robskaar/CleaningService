@@ -123,22 +123,28 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox fx:id="routeOrders" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="625.0" prefWidth="832.0" visible="false" AnchorPane.leftAnchor="94.0" AnchorPane.topAnchor="97.0">
+            <VBox fx:id="routeOrders" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="625.0" prefWidth="832.0" styleClass="driverVBox" visible="false" AnchorPane.leftAnchor="94.0" AnchorPane.topAnchor="97.0">
                <children>
-                  <HBox alignment="CENTER" minHeight="-Infinity" prefHeight="60.0" prefWidth="200.0" styleClass="driverHBox">
+                  <HBox alignment="CENTER" minHeight="-Infinity" prefHeight="60.0" prefWidth="200.0" spacing="5.0" styleClass="driverHBox">
                      <children>
                         <Button mnemonicParsing="false" onAction="#endRoute" prefHeight="100.0" prefWidth="1000.0" styleClass="driverButton" text="End route">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="20.0" />
                            </font>
                         </Button>
-                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#showMap" prefHeight="100.0" prefWidth="1000.0" styleClass="driverButton" text="Show map">
+                        <Button fx:id="showOrHideMap" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#showMap" prefHeight="100.0" prefWidth="1000.0" styleClass="driverButton" text="Show map">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="20.0" />
                            </font>
                         </Button>
-                     </children></HBox>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     </children>
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding></HBox>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
                         <VBox fx:id="stackOrders" prefHeight="200.0" prefWidth="100.0" styleClass="driverVBox">
                            <children>
