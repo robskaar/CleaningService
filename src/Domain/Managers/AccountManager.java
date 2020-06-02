@@ -1,7 +1,6 @@
 package Domain.Managers;
 
 import Application.general.Controller_Application;
-import Domain.Enums.Emulator;
 import Domain.Enums.Role;
 import Foundation.Database.DB;
 import Services.Passwordmodifier.Password;
@@ -17,7 +16,8 @@ import java.time.LocalDate;
 
 public final class AccountManager {
 
-    private static String currentUser;
+    public static String currentUser;
+    public static int currentCostumerID;
     public static Boolean isLoggedIn = false;
     public static Role currentRole = null;
 
@@ -36,6 +36,7 @@ public final class AccountManager {
     }
 
     public static void register(String userName, String password, String firstName, String lastName, String emailAddress, String phoneNumber, LocalDate dateOfBirth, int isTemporary) {
+        System.out.println(currentRole);
         try {
             DB.setDBPropertiesPath(Role.Costumer);
             CallableStatement cstmt;
@@ -59,82 +60,85 @@ public final class AccountManager {
     }
 
     public static Boolean logIn(String userName, String password) {
-        if (userName.isEmpty() || password.isEmpty()) {
-        return isLoggedIn;
-        }
-        else {
-            try {
-                CallableStatement cstmt;
-                Connection con = null;
-                switch (Controller_Application.currentEmulator) {
-                    case Costumer:
-                        currentRole = Role.Costumer;
-                        DB.setDBPropertiesPath(currentRole);
-                        con = DB.getConnection();
-                        cstmt = con.prepareCall("{call CleaningService.dbo.logInCostumer(?,?)}");
-                        break;
-                    case Driver:
-                        currentRole = Role.Driver;
-                        DB.setDBPropertiesPath(currentRole);
-                        con = DB.getConnection();
-                        cstmt = con.prepareCall("{call CleaningService.dbo.logInDriver(?,?)}");
-                        break;
-                    case DeliveryPoint:
-                        currentRole = Role.Delivery_Point;
-                        DB.setDBPropertiesPath(currentRole);
-                        con = DB.getConnection();
-                        cstmt = con.prepareCall("{call CleaningService.dbo.logInDeliveryPoint(?,?)}");
-                        break;
-                    case LaundryCentral:
-                        currentRole = Role.Laundry_Manager;
-                        DB.setDBPropertiesPath(currentRole);
-                        con = DB.getConnection();
-                        cstmt = con.prepareCall("{call CleaningService.dbo.logInLaundryAccount(?,?,?)}");
-                        break;
-                    default:
-                        DB.setDBPropertiesPath(null);
-                        cstmt = null;
-                        break;
-                }
-                String roleName = null;
-                cstmt.setString(1, userName);
-                cstmt.registerOutParameter(2, Types.VARCHAR);
-                if (Controller_Application.currentEmulator == Emulator.LaundryCentral) {
-                    cstmt.registerOutParameter(3, Types.VARCHAR);
-                }
-                boolean results = cstmt.execute();
-                String passHash = cstmt.getString(2);
-                if (Controller_Application.currentEmulator == Emulator.LaundryCentral) {
-                    roleName = cstmt.getString(3);
-                }
-                if (Controller_Application.currentEmulator == Emulator.LaundryCentral) {
-                    roleName = cstmt.getString(3);
+        try {
+            CallableStatement cstmt;
+            Connection con = null;
+            switch (Controller_Application.currentEmulator) {
+                case Costumer:
+                    currentRole = Role.Costumer;
+                    DB.setDBPropertiesPath(currentRole);
+                    con = DB.getConnection();
+                    cstmt = con.prepareCall("{call CleaningService.dbo.logInCostumer(?,?,?)}");
+                    break;
+                case Driver:
+                    currentRole = Role.Driver;
+                    DB.setDBPropertiesPath(currentRole);
+                    con = DB.getConnection();
+                    cstmt = con.prepareCall("{call CleaningService.dbo.logInDriver(?,?)}");
+                    break;
+                case DeliveryPoint:
+                    currentRole = Role.Delivery_Point;
+                    DB.setDBPropertiesPath(currentRole);
+                    con = DB.getConnection();
+                    cstmt = con.prepareCall("{call CleaningService.dbo.logInDeliveryPoint(?,?)}");
+                    break;
+                case LaundryCentral:
+                    currentRole = Role.Laundry_Manager;
+                    DB.setDBPropertiesPath(currentRole);
+                    con = DB.getConnection();
+                    cstmt = con.prepareCall("{call CleaningService.dbo.logInLaundryAccount(?,?,?)}");
+                    break;
+                default:
+                    DB.setDBPropertiesPath(null);
+                    cstmt = null;
+                    break;
+            }
+            String roleName = null;
+            cstmt.setString(1, userName);
+            cstmt.registerOutParameter(2, Types.VARCHAR);
 
+            switch (Controller_Application.currentEmulator) {
+                case LaundryCentral:
+                    cstmt.registerOutParameter(3, Types.VARCHAR);
+                    break;
+                case Costumer:
+                    cstmt.registerOutParameter(3, Types.INTEGER);
+                    break;
+            }
+
+            cstmt.execute();
+            String passHash = cstmt.getString(2);
+            switch (Controller_Application.currentEmulator) {
+                case LaundryCentral:
+                    roleName = cstmt.getString(3);
                     if (roleName.equalsIgnoreCase("Laundry Manager")) {
                         currentRole = Role.Laundry_Manager;
-                    }
-                    else {
+                    } else {
                         currentRole = Role.Laundry_Assistant;
                     }
-                }
-                cstmt.close();
-                con.close();
-                if (Password.checkPassword(password, passHash)) {
-                    isLoggedIn = true;
-                    currentUser = userName;
-                }
-                else {
-                    currentRole = null;
-                    isLoggedIn = false;
+                    break;
+                case Costumer:
+                    currentCostumerID = cstmt.getInt(3);
+            }
+
+            cstmt.close();
+            con.close();
+            if (Password.checkPassword(password, passHash)) {
+                isLoggedIn = true;
+                currentUser = userName;
+            } else {
+                currentRole = null;
+                isLoggedIn = false;
+
                 }
                 return isLoggedIn;
             }
             catch (SQLException | IllegalArgumentException ex) {
                 ex.getMessage();
                 return isLoggedIn;
+
             }
         }
-    }
 
     public static void logOff(){
         isLoggedIn = false;

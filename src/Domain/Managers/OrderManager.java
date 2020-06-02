@@ -1,5 +1,6 @@
 package Domain.Managers;
 
+import Domain.LaundryItems.Item;
 import Domain.Order.Order;
 import Domain.Order.OrderItem;
 import Foundation.Database.DB;
@@ -9,6 +10,7 @@ import javafx.collections.ObservableList;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -23,9 +25,77 @@ public class OrderManager {
         return new ArrayList<>();
     }
 
-    public static ArrayList<Order> getCustomerOrders(int customerID) {
+    public static ArrayList<Order> getCustomerOrders(String customerName) {
+        System.out.println("DEBUGGING customername: " + customerName);
+        int orderID;
+        int statusID;
+        String status;
+        DB.selectSQL("SELECT * FROM getCostumerOrder('" + customerName + "')");
 
-        return new ArrayList<>();
+
+        // Stores all orders from result set
+        ArrayList<Order> orders = new ArrayList<>();
+        // Temporary value used to check for null before parsing
+        String temp;
+        // Data uses to assert that there is more data
+        String data = DB.getData();
+
+        while (!data.equals("|ND|") || DB.isPendingData()) {
+            orderID = Integer.parseInt(data);
+            status = DB.getData();
+            statusID = Integer.parseInt(DB.getData());
+
+            // Adds the order to the array list
+            orders.add(new Order(status, orderID, statusID));
+            //assigning the data at the end to ensure the correct order.
+            data = DB.getData();
+        }
+
+        return orders;
+    }
+
+    public static void createOrder(int customerID, int orderStatusID, ObservableList<Item> items) throws SQLException {
+
+        int orderID = 0;
+        try {
+            CallableStatement cstmt;
+            Connection con = DB.getConnection();
+            cstmt = con.prepareCall("{call CleaningService.dbo.createOrder(?,?,?)}");
+            cstmt.setInt(1, orderStatusID);
+            cstmt.setInt(2, customerID);
+            cstmt.registerOutParameter(3, Types.INTEGER);
+            cstmt.execute();
+            orderID = cstmt.getInt(3);
+            cstmt.close();
+            con.close();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        createOrderItems(items, orderID);
+    }
+
+    private static void createOrderItems(ObservableList<Item> items, int orderID) throws SQLException {
+        System.out.println("CreateOrderItems Reached");
+        CallableStatement cstmt;
+        Connection con = DB.getConnection();
+        for (Item item : items
+        ) {
+            System.out.println("CreateOrderItems Loop Reached");
+            try {
+                cstmt = con.prepareCall("{call CleaningService.dbo.createOrderItem(?,?,?)}");
+                cstmt.setInt(1, orderID);
+                cstmt.setInt(2, item.getLaundryItemID());
+                cstmt.setBoolean(3, false);
+                cstmt.execute();
+                cstmt.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        con.close();
     }
 
     public static void setWashStatusInDB(OrderItem orderItem){
@@ -91,12 +161,35 @@ public class OrderManager {
         return FXCollections.observableArrayList(convertResultSetToArrayList());
     }
 
+    public static void deleteOrder(int orderID) {
+        try {
+            CallableStatement cstmt = DB.getConnection().prepareCall("{call CleaningService.dbo.deleteOrder(?)}");
+            cstmt.setInt(1, orderID);
+            cstmt.execute();
+            cstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteOrderItems(int orderItemID) {
+        try {
+            CallableStatement cstmt = DB.getConnection().prepareCall("{call CleaningService.dbo.deleteOrderItems(?)}");
+            cstmt.setInt(1, orderItemID);
+            cstmt.execute();
+            cstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void updateOrderDB(Order order) {
 
         CallableStatement cstmt;
 
         try {
             cstmt = DB.getConnection().prepareCall("{call CleaningService.dbo.updateOrder(?,?,?)}");
+ 
             cstmt.setInt(1, order.getStatusID());
 
             if (order.getEndDate() != null) {
@@ -138,8 +231,7 @@ public class OrderManager {
             data = DB.getData();
             if (data.equals("|ND|")) {
                 break;
-            }
-            else {
+            } else {
 
                 int orderID = Integer.parseInt(data);
                 int customerID = Integer.parseInt(DB.getData());
@@ -202,4 +294,5 @@ public class OrderManager {
             }
         }
     }
+
 }

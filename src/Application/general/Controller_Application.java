@@ -213,7 +213,7 @@ public class Controller_Application {
                 case Costumer:
                     FXMLLoader costumerLoader = new FXMLLoader(getClass().getResource("/UI/Costumer/costumer.fxml"));
                     Parent costumerParent = costumerLoader.load();
-                    Controller_Application.costumerScene = new Scene(costumerParent, 600, 600);
+                    Controller_Application.costumerScene = new Scene(costumerParent, 600, 600,Color.TRANSPARENT);
                     break;
                 case DeliveryPoint:
                     //        FXMLLoader deliveryPointLoader = new FXMLLoader(getClass().getResource("/UI/DeliveryPoint/deliveryPoint.fxml"));

@@ -10,6 +10,7 @@ public class Order {
     private int ID;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
+    private String status;
     private int statusID;
     private int deliveryPointID;
     private int customerID;
@@ -26,6 +27,17 @@ public class Order {
         this.items = new ArrayList<>();
     }
 
+    public Order(String status, int orderID, int statusID) {
+        this.status = status;
+        this.ID = orderID;
+        this.statusID = statusID;
+
+        this.items = new ArrayList<>();
+    }
+
+    public void updateStatus(String status) {
+        this.status = status;
+    }
     public void setStatus(int status) {
         this.statusID = status;
     }
@@ -33,7 +45,7 @@ public class Order {
     /**
      * @return Status message of the order
      */
-    public String getStatusMessage() {
+    public String getStatusMessage(){
         DB.selectSQL("SELECT * FROM getOrderStatus(" + this.statusID + ")");
         return DB.getData();
     }
@@ -62,5 +74,9 @@ public class Order {
     public String toString() {
         return "OrderID: " + this.ID + " Start date: " + this.startDate + " End date " + this.endDate +
                " Status: " + this.statusID + " DeliveryPointID " + this.deliveryPointID + " CustomerID " + this.customerID;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

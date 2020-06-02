@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -31,6 +32,7 @@ import javafx.stage.StageStyle;
         FXMLLoader registerLoader = new FXMLLoader(getClass().getResource("/UI/Costumer/registerScene.fxml"));
         Parent registerParent = registerLoader.load();
         Controller_Application.registerScene = new Scene(registerParent, 600, 600);
+
 
         //sets initial theme for the application
         ThemeControl.currentTheme = ThemeControl.DEFAULT;
