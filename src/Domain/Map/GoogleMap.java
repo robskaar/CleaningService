@@ -7,14 +7,19 @@ import javafx.scene.web.WebView;
 
 import java.util.ArrayList;
 
+/**
+ * @Author Jacob Bonefeld
+ * @Project CleaningService
+ * @Date 01.06.2020
+ **/
 
 public class GoogleMap {
 
-    private static GoogleMap googleMap = null;
-    private WebView mapView;
-    private WebEngine engine;
-    private final String MAP_HTML = "/UI/Driver/Map2.html";
-    private boolean isMarkersSet = false;
+    private static GoogleMap googleMap = null;               // Singleton instance of the map
+    private WebView mapView;                                 // The UI node which shows the map
+    private WebEngine engine;                                // Controls the webview
+    private final String MAP_HTML = "/UI/Driver/Map.html";   // Path to html document
+    private boolean isMarkersSet = false;                    // Boolean to ensure markers only get set once
 
     private GoogleMap() {
         mapView = new WebView();
@@ -22,6 +27,9 @@ public class GoogleMap {
         engine.load(getClass().getResource(MAP_HTML).toString());
     }
 
+    /**
+     * @return returns a singleton instance of GoogleMap
+     */
     public static GoogleMap getMap() {
         if (googleMap == null) {
             googleMap = new GoogleMap();
@@ -33,6 +41,10 @@ public class GoogleMap {
         return mapView;
     }
 
+    /**
+     *
+     * @param deliveryPoints Takes an Array list of Delivery points, and display their addresses on the map
+     */
     public void setMarkers(ArrayList<DeliveryPoint> deliveryPoints) {
         if(!isMarkersSet){
             String address;
@@ -47,4 +59,5 @@ public class GoogleMap {
             isMarkersSet = true;
         }
     }
+
 }

@@ -23,12 +23,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.web.WebView;
 import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+/**
+ * @Author Jacob Bonefeld
+ * @Project CleaningService
+ * @Date 18.05.2020
+ **/
 
 public class Controller_Driver extends Controller_Application implements Initializable {
 
@@ -243,7 +248,7 @@ public class Controller_Driver extends Controller_Application implements Initial
             if (isAllItemsConfirmed) {
 
                 // Upload new order status to database
-                String newStatus = String.valueOf(Integer.parseInt(selectedOrder.getStatus()) + 1);
+                int newStatus = selectedOrder.getStatusID() + 1;
                 selectedOrder.updateStatus(newStatus);
                 OrderManager.updateOrderDB(selectedOrder);
 
@@ -444,7 +449,9 @@ public class Controller_Driver extends Controller_Application implements Initial
         });
     }
 
-
+    /**
+     * This method switches view from order overview to map with delivery points
+     */
     public void showMap(){
 
         googleMap.setMarkers(deliveryPoints);
@@ -457,6 +464,9 @@ public class Controller_Driver extends Controller_Application implements Initial
         });
     }
 
+    /**
+     * This method switches view from map to order overview
+     */
     public void showOrders(){
         stackOrders.setVisible(true);
         stackMap.setVisible(false);
@@ -466,5 +476,4 @@ public class Controller_Driver extends Controller_Application implements Initial
             showMap();
         });
     }
-
 }

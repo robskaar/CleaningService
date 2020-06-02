@@ -35,8 +35,8 @@ public class Order {
         this.items = new ArrayList<>();
     }
 
-    public void updateStatus(String status) {
-        this.status = status;
+    public void updateStatus(int status) {
+        this.statusID = status;
     }
 
     public void setStatus(int status) {
