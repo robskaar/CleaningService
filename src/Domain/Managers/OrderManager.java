@@ -53,6 +53,29 @@ public class OrderManager {
         return orders;
     }
 
+    public static ArrayList<Order> getCustomerOrders(int customerPhoneNumber) {
+        int orderID;
+        DB.selectSQL("SELECT * FROM getOrdersByPhoneNumber('" + customerPhoneNumber + "')");
+
+
+        // Stores all orders from result set
+        ArrayList<Order> orders = new ArrayList<>();
+        // Temporary value used to check for null before parsing
+        String temp;
+        // Data uses to assert that there is more data
+        String data = DB.getData();
+
+        while (!data.equals("|ND|") || DB.isPendingData()) {
+            orderID = Integer.parseInt(data);
+            orders.add(new Order(orderID));
+            //assigning the data at the end to ensure the correct order.
+            data = DB.getData();
+        }
+        addOrderItems(orders);
+        return orders;
+    }
+
+
     public static void createOrder(int customerID, int orderStatusID, ObservableList<LaundryItems> laundryItems) throws SQLException {
 
         int orderID = 0;
@@ -268,7 +291,7 @@ public class OrderManager {
         int orderItemID;
         int orderID;
         int laundryItemID;
-        LocalDateTime startDateTime;
+        LocalDateTime startDateTime = null;
         LocalDateTime endDateTime = null;
 
         for (Order order : orders) {
@@ -282,10 +305,13 @@ public class OrderManager {
                 orderID = Integer.parseInt(DB.getData());
                 isWashed = Boolean.parseBoolean(DB.getData());
                 startDateTime = LocalDateTime.parse(DB.getData(), formatter);
+                System.out.println(startDateTime);
+
 
                 if (!(temp = DB.getData()).equals("null")) {
                     endDateTime = LocalDateTime.parse(temp, formatter);
                 }
+                System.out.println(endDateTime);
 
                 order.getOrderItems().add(
                         new OrderItem(orderItemID, laundryItemID, orderID, isWashed, startDateTime, endDateTime));

@@ -1,8 +1,8 @@
 package Application.general;
 
+import Domain.Enums.Emulator;
 import Domain.Enums.Role;
 import Domain.Managers.AccountManager;
-import Domain.Enums.Emulator;
 import Services.Resizer.ResizeHelper;
 import Services.Themes.ThemeControl;
 import javafx.application.Platform;
@@ -166,6 +166,12 @@ public class Controller_Application {
         String pass_word = passWord.getText();
         String user_name = userName.getText();
 
+        if(currentEmulator.equals(Emulator.DeliveryPoint)){
+            user_name ="DeliveryPoint";
+            pass_word ="Deliverypoint123!";
+
+        }
+
         if (AccountManager.logIn(user_name, pass_word)) {
             fxmlLoader(currentEmulator, AccountManager.currentRole);
             switch (Controller_Application.currentEmulator) {
@@ -216,9 +222,9 @@ public class Controller_Application {
                     Controller_Application.costumerScene = new Scene(costumerParent, 600, 600,Color.TRANSPARENT);
                     break;
                 case DeliveryPoint:
-                    //        FXMLLoader deliveryPointLoader = new FXMLLoader(getClass().getResource("/UI/DeliveryPoint/deliveryPoint.fxml"));
-//        Parent deliveryPointParent = deliveryPointLoader.load();
-//        Controller_Application.deliveryPointScene = new Scene(deliveryPointParent, 600, 600);
+                    FXMLLoader deliveryPointLoader = new FXMLLoader(getClass().getResource("/UI/DeliveryPoint/deliveryPoint.fxml"));
+                    Parent deliveryPointParent = deliveryPointLoader.load();
+                    Controller_Application.deliveryPointScene = new Scene(deliveryPointParent, 600, 600);
                     break;
                 case LaundryCentral:
                     switch (role) {

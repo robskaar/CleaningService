@@ -27,6 +27,11 @@ public class Order {
         this.items = new ArrayList<>();
     }
 
+    public Order(int ID) {
+        this.ID = ID;
+        this.items = new ArrayList<>();
+    }
+
     public Order(String status, int orderID, int statusID) {
         this.status = status;
         this.ID = orderID;

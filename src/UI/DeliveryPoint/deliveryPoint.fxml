@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.DeliveryPoint.Controller_DeliveryPoint">
+   <top>
+
+       <VBox prefHeight="29.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+           <children>
+               <HBox fx:id="toolBar" prefHeight="16.0" prefWidth="600.0">
+                   <children>
+                       <ToolBar prefHeight="38.0" prefWidth="142.0">
+                           <items>
+                               <MenuButton fx:id="settingsBtn" minHeight="16.0" minWidth="16.0" mnemonicParsing="false">
+                                   <items>
+                                       <Menu mnemonicParsing="false" text="Themes">
+                                           <items>
+                                               <MenuItem fx:id="defaultThemeBtn" mnemonicParsing="false" onAction="#changeThemeDefault" text="Default" />
+                                               <MenuItem fx:id="darkThemeBtn" mnemonicParsing="false" onAction="#changeThemeDark" text="Dark" />
+                                           </items>
+                                       </Menu>
+                                       <Menu fx:id="emulatorMenu" mnemonicParsing="false" text="Emulator">
+                                           <items>
+                                               <MenuItem fx:id="emulateAsCostumer" mnemonicParsing="false" onAction="#emulateAs" text="Costumer" />
+                                               <MenuItem fx:id="emulateAsDriver" mnemonicParsing="false" onAction="#emulateAs" text="Driver" />
+                                               <MenuItem fx:id="emulateAsDeliveryPoint" mnemonicParsing="false" onAction="#emulateAs" text="Delivery Point" />
+                                               <MenuItem fx:id="emulateAsLaundryCentral" mnemonicParsing="false" onAction="#emulateAs" text="Laundry Central" />
+                                           </items>
+                                       </Menu>
+                                   </items>
+                               </MenuButton>
+                               <Button fx:id="closeBtn" minHeight="16.0" minWidth="16.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="16.0" prefWidth="16.0" />
+                               <Button fx:id="minimizeBtn" minHeight="16.0" minWidth="16.0" mnemonicParsing="false" onAction="#minimizeWindow" />
+                               <Button fx:id="maximizeBtn" alignment="CENTER" contentDisplay="CENTER" minHeight="16.0" minWidth="16.0" mnemonicParsing="false" onAction="#maximizeWindow" />
+                           </items>
+                       </ToolBar>
+                       <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="35.0" prefWidth="164.0" text="Emulating as:" />
+                       <Label fx:id="emulationType" contentDisplay="CENTER" prefHeight="35.0" prefWidth="115.0" text="Shop assistant" HBox.hgrow="ALWAYS" />
+                   </children>
+               </HBox>
+               <Separator prefWidth="600.0" />
+           </children>
+
+       </VBox>
+   </top>
+   <center>
+      <StackPane id="DisplayPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox fx:id="startPane" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white;">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="phoneNumberSearch" prefHeight="46.0" prefWidth="164.0">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Button mnemonicParsing="false" onAction="#searchOnPhoneNumber" text="Search" />
+                     </children>
+                  </HBox>
+                  <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="160.0" text="New Order" />
+               </children>
+            </VBox>
+            <VBox fx:id="orderPane" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white;">
+               <children>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="52.0" prefWidth="600.0">
+                     <children>
+                        <Label text="Label" />
+                        <Button mnemonicParsing="false" text="Return">
+                           <HBox.margin>
+                              <Insets left="20.0" right="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="471.0" prefWidth="600.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="467.0" prefWidth="208.0" style="-fx-background-color: white; -fx-border-color: grey;">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="60.0" prefWidth="166.0">
+                                 <children>
+                                    <Label text="Order ID" />
+                                 </children>
+                              </HBox>
+                              <ScrollPane hbarPolicy="NEVER" prefHeight="366.0" prefWidth="105.0">
+                                 <content>
+                                    <VBox fx:id="orderListPane" alignment="TOP_CENTER" prefHeight="377.0" prefWidth="164.0" spacing="5.0" />
+                                 </content>
+                              </ScrollPane>
+                              <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="28.0" prefWidth="86.0" text="Create New" textAlignment="CENTER">
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" top="10.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="463.0" prefWidth="397.0">
+                           <content>
+                              <VBox fx:id="orderItemsPane" alignment="TOP_CENTER" prefHeight="461.0" prefWidth="307.0" spacing="10.0" style="-fx-border-color: grey;" />
+                           </content>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </ScrollPane>
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="463.0" prefWidth="276.0">
+                           <content>
+                              <VBox fx:id="laundryItemsPane" prefHeight="463.0" prefWidth="160.0" style="-fx-border-color: grey;">
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </VBox>
+                           </content>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </ScrollPane>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="64.0" prefWidth="600.0">
+                     <children>
+                        <Button mnemonicParsing="false" text="Button" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" visible="false">
+               <children>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="52.0" prefWidth="600.0">
+                     <children>
+                        <Label text="Label" />
+                        <Button mnemonicParsing="false" text="Return">
+                           <HBox.margin>
+                              <Insets left="20.0" right="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="471.0" prefWidth="600.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="467.0" prefWidth="208.0">
+                           <children>
+                              <VBox prefHeight="475.0" prefWidth="197.0" />
+                              <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="28.0" prefWidth="86.0" text="Create New" textAlignment="CENTER">
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" top="10.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="467.0" prefWidth="296.0" />
+                        <VBox prefHeight="467.0" prefWidth="211.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="64.0" prefWidth="600.0">
+                     <children>
+                        <Button mnemonicParsing="false" text="Button" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
+   </center>
+</BorderPane>
