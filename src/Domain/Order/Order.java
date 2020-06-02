@@ -35,9 +35,10 @@ public class Order {
         this.items = new ArrayList<>();
     }
 
-    public void updateStatus(String status) {
-        this.status = status;
+    public void updateStatus(int status) {
+        this.statusID = status;
     }
+
     public void setStatus(int status) {
         this.statusID = status;
     }
@@ -45,7 +46,7 @@ public class Order {
     /**
      * @return Status message of the order
      */
-    public String getStatusMessage(){
+    public String getStatusMessage() {
         DB.selectSQL("SELECT * FROM getOrderStatus(" + this.statusID + ")");
         return DB.getData();
     }

@@ -1,5 +1,6 @@
 package Application.general;
 
+import Application.Driver.Controller_Driver;
 import Domain.Enums.Role;
 import Domain.Managers.AccountManager;
 import Domain.Enums.Emulator;
@@ -84,6 +85,7 @@ public class Controller_Application {
     public static Scene currentScene;
     public static Stage primaryStage;
     public static Emulator currentEmulator = null;
+    public static Controller_Driver driverController;
 
     //Scenes
     public static Scene logInSceneCostumer;
@@ -166,6 +168,11 @@ public class Controller_Application {
         String pass_word = passWord.getText();
         String user_name = userName.getText();
 
+        if(currentEmulator.equals(Emulator.Driver)){
+            user_name = "Driver";
+            pass_word = "Driver123!";
+        }
+
         if (AccountManager.logIn(user_name, pass_word)) {
             fxmlLoader(currentEmulator, AccountManager.currentRole);
             switch (Controller_Application.currentEmulator) {
@@ -208,6 +215,7 @@ public class Controller_Application {
                 case Driver:
                     FXMLLoader driverLoader = new FXMLLoader(getClass().getResource("/UI/Driver/driver.fxml"));
                     Parent driverParent = driverLoader.load();
+                    driverController = driverLoader.getController();
                     Controller_Application.driverScene = new Scene(driverParent, 1020, 860, Color.TRANSPARENT);
                     break;
                 case Costumer:
