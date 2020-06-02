@@ -1,7 +1,4 @@
-.AddButton {
-    -fx-background-color: lightgrey;
-}
-
+/*
 .AddButton:hover {
     -fx-background-color: green;
     -fx-background-image: url('/Foundation/Resources/Icons/PhoneEmulator/add.png');
@@ -11,10 +8,16 @@
     -fx-text-fill: transparent;
 }
 
+ */
+
+/*
 .RemoveButton {
     -fx-background-color: lightgrey;
 }
 
+ */
+
+/*
 .RemoveButton:hover {
     -fx-background-color: red;
     -fx-background-image: url('/Foundation/Resources/Icons/PhoneEmulator/minus.png');
@@ -23,3 +26,5 @@
     -fx-background-position: center;
     -fx-text-fill: transparent;
 }
+
+ */
