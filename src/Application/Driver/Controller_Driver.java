@@ -236,7 +236,7 @@ public class Controller_Driver extends Controller_Application implements Initial
 
                 // Show message that order has been confirmed
                 showMessage("Confirmed", Color.web("#2ECC71"));
-
+                
                 // Remove confirmed order from the list
                 if (currentOrderTable.equals(centralOrderTable)) {
                     centralOrderTable.setItems(OrderManager.getRouteOrders(currentRoute, AT_CLEANING_CENTRAL_READY_FOR_TRANSIT));

@@ -169,7 +169,7 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
         backFromInboundItem.setVisible(false);
         inboundTilePane.getChildren().clear();
         washingLabelPrintButton.setVisible(false);
-        paneText.setText("All inbound orders");
+        paneText.setText("Arriving today with Driver");
         ObservableList<Order> inboundOrders = OrderManager.getCentralOrders(inboundOrderID);
         for (Order order : inboundOrders) {
             Button orderButton = new Button(String.valueOf(order.getID()));
