@@ -1,7 +1,7 @@
 package Domain.Order;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
+import Domain.LaundryItems.LaundryItem;
+import Domain.Managers.ItemsManager;
 import javafx.scene.control.CheckBox;
 
 import java.time.LocalDateTime;
@@ -15,6 +15,8 @@ public class OrderItem {
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     private CheckBox checkBox;
+    private LaundryItem laundryItem;
+    private int deliveryDay;
 
     public OrderItem(int ID, int laundryItemID, int orderID, boolean isWashed, LocalDateTime startDateTime, LocalDateTime endDateTime){
         this.isWashed = isWashed;
@@ -24,6 +26,12 @@ public class OrderItem {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.checkBox = new CheckBox();
+    }
+
+    public OrderItem(boolean isWashed, int orderID, int laundryItemID) {
+        this.isWashed = isWashed;
+        this.orderID = orderID;
+        this.laundryItemID = laundryItemID;
     }
 
     public void updateStatus(boolean status){
@@ -53,5 +61,30 @@ public class OrderItem {
         return this.checkBox.isSelected();
     }
 
+    public void updateLaundryItem() {
+        this.laundryItem = ItemsManager.getLaundryItems(this.laundryItemID);
+    }
 
+    public LaundryItem getLaundryItem() {
+        if (laundryItem==null){
+            updateLaundryItem();
+        }
+        return laundryItem;
+    }
+
+    public int getDeliveryDay() {
+        return deliveryDay;
+    }
+
+    public void setDeliveryDay(int deliveryDay) {
+        this.deliveryDay = deliveryDay;
+    }
+
+    public int getLaundryItemID() {
+        return laundryItemID;
+    }
+
+    public LocalDateTime getStartDateTime() {
+        return startDateTime;
+    }
 }

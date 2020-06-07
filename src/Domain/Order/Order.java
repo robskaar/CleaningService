@@ -27,16 +27,26 @@ public class Order {
         this.items = new ArrayList<>();
     }
 
-    public Order(int ID) {
+    public Order(int ID,int statusID) {
         this.ID = ID;
+        this.statusID = statusID;
         this.items = new ArrayList<>();
     }
+
 
     public Order(String status, int orderID, int statusID) {
         this.status = status;
         this.ID = orderID;
         this.statusID = statusID;
 
+        this.items = new ArrayList<>();
+    }
+
+    public Order(LocalDateTime startDate, int statusID, int deliveryPointID, int customerID) {
+        this.startDate = startDate;
+        this.statusID = statusID;
+        this.deliveryPointID = deliveryPointID;
+        this.customerID = customerID;
         this.items = new ArrayList<>();
     }
 
@@ -83,5 +93,18 @@ public class Order {
 
     public String getStatus() {
         return status;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
     }
 }

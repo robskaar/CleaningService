@@ -1,7 +1,7 @@
 package Application.Costumer;
 
 import Application.general.Controller_Application;
-import Domain.LaundryItems.LaundryItems;
+import Domain.LaundryItems.LaundryItem;
 import Domain.Managers.AccountManager;
 import Domain.Managers.ItemsManager;
 import Domain.Managers.OrderManager;
@@ -22,7 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
-import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -102,12 +102,13 @@ public class Controller_Costumer extends Controller_Application implements Initi
 
     }
 
-    private ObservableList<LaundryItems> addedLaundryItems = FXCollections.observableArrayList();
-    private ArrayList<LaundryItems> removedLaundryItems = new ArrayList<>();
+    private ObservableList<LaundryItem> addedLaundryItems = FXCollections.observableArrayList();
+    private ArrayList<LaundryItem> removedLaundryItems = new ArrayList<>();
     private IntegerBinding listSize = Bindings.size(addedLaundryItems);
     private BooleanBinding listPopulated = listSize.greaterThan(0);
     private ArrayList<ItemBox> itemBoxes = new ArrayList<>();
     private static final int pendingStatusID = 8;
+    private static LocalDateTime currentTime;
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -121,12 +122,12 @@ public class Controller_Costumer extends Controller_Application implements Initi
         itemView.toFront();
 
         if (itemBoxes.size() == 0) {
-            for (LaundryItems laundryItems : ItemsManager.getItems()
+            for (LaundryItem laundryItem : ItemsManager.getItems()
             ) {
-                ItemBox itemBox = new ItemBox(laundryItems);
+                ItemBox itemBox = new ItemBox(laundryItem);
                 itemBox.setAddButton();
                 itemBox.getButton().setOnMouseClicked(mouseEvent -> {
-                    addedLaundryItems.add(laundryItems);
+                    addedLaundryItems.add(laundryItem);
 
                 });
                 itemBoxes.add(itemBox);
@@ -151,12 +152,12 @@ public class Controller_Costumer extends Controller_Application implements Initi
             goBack();
         });
 
-        for (LaundryItems laundryItems : ItemsManager.getorderLaundryItems(orderID)
+        for (LaundryItem laundryItem : ItemsManager.getorderLaundryItems(orderID)
         ) {
-            ItemBox itemBox = new ItemBox(laundryItems);
+            ItemBox itemBox = new ItemBox(laundryItem);
             itemBox.setRemoveButton();
             itemBox.getButton().setOnMouseClicked(mouseEvent -> {
-                removedLaundryItems.add(laundryItems);
+                removedLaundryItems.add(laundryItem);
                 orderVBox.getChildren().remove(itemBox);
 
             });
@@ -172,18 +173,15 @@ public class Controller_Costumer extends Controller_Application implements Initi
             goBack();
         });
         confirmOrders.setOnMouseClicked(mouseEvent -> {
-            try {
-                createOrders();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            createOrders();
+
         });
-        for (LaundryItems laundryItems : addedLaundryItems
+        for (LaundryItem laundryItem : addedLaundryItems
         ) {
-            ItemBox itemBox = new ItemBox(laundryItems);
+            ItemBox itemBox = new ItemBox(laundryItem);
             itemBox.setRemoveButton();
             itemBox.getButton().setOnMouseClicked(mouseEvent -> {
-                addedLaundryItems.remove(laundryItems);
+                addedLaundryItems.remove(laundryItem);
                 orderVBox.getChildren().remove(itemBox);
             });
             orderVBox.getChildren().add(itemBox);
@@ -200,7 +198,7 @@ public class Controller_Costumer extends Controller_Application implements Initi
         costumerMenu.toFront();
     }
 
-    public void createOrders() throws SQLException {
+    public void createOrders() {
         //8 is the StatusID in our database for premade orders
         OrderManager.createOrder(AccountManager.currentCostumerID, pendingStatusID, addedLaundryItems);
         System.out.println("Order added with " + addedLaundryItems.size() + " Items");
@@ -244,9 +242,9 @@ public class Controller_Costumer extends Controller_Application implements Initi
     }
 
     private void deleteOrderItems() {
-        for (LaundryItems laundryItems : removedLaundryItems
+        for (LaundryItem laundryItem : removedLaundryItems
         ) {
-            OrderManager.deleteOrderItems(laundryItems.getOrderItemID());
+            OrderManager.deleteOrderItems(laundryItem.getOrderItemID());
         }
     }
 }

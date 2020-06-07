@@ -18,6 +18,7 @@ public final class AccountManager {
 
     public static String currentUser;
     public static int currentCostumerID;
+    public static int currentDeliveryPointID;
     public static Boolean isLoggedIn = false;
     public static Role currentRole = null;
 
@@ -80,7 +81,7 @@ public final class AccountManager {
                     currentRole = Role.Delivery_Point;
                     DB.setDBPropertiesPath(currentRole);
                     con = DB.getConnection();
-                    cstmt = con.prepareCall("{call CleaningService.dbo.logInDeliveryPoint(?,?)}");
+                    cstmt = con.prepareCall("{call CleaningService.dbo.logInDeliveryPoint(?,?,?)}");
                     break;
                 case LaundryCentral:
                     currentRole = Role.Laundry_Manager;
@@ -104,6 +105,9 @@ public final class AccountManager {
                 case Costumer:
                     cstmt.registerOutParameter(3, Types.INTEGER);
                     break;
+                case DeliveryPoint:
+                    cstmt.registerOutParameter(3, Types.INTEGER);
+                    break;
             }
 
             cstmt.execute();
@@ -119,6 +123,9 @@ public final class AccountManager {
                     break;
                 case Costumer:
                     currentCostumerID = cstmt.getInt(3);
+                    break;
+                case DeliveryPoint:
+                    currentDeliveryPointID =cstmt.getInt(3);
             }
 
             cstmt.close();
