@@ -97,7 +97,7 @@ public class Controller_Driver extends Controller_Application implements Initial
     private static TableView<Order> currentOrderTable = null;
     private static TableView<OrderItem> currentItemsTable = null;
     private static Order selectedOrder = null;
-    private static int currentRoute;
+    private static int currentRoute = 1;
     private static ArrayList<DeliveryPoint> deliveryPoints;
     private GoogleMap googleMap;
     // Order statuses

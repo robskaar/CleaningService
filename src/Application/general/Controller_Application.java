@@ -4,6 +4,7 @@ import Application.Driver.Controller_Driver;
 import Domain.Enums.Emulator;
 import Domain.Enums.Role;
 import Domain.Managers.AccountHandler;
+import Foundation.Database.DB;
 import Services.Resizer.ResizeHelper;
 import Services.Themes.ThemeControl;
 import javafx.application.Platform;
@@ -92,6 +93,7 @@ public class Controller_Application {
     public static Scene logInSceneLaundryCentral;
     public static Scene logInSceneDeliveryPoint;
     public static Scene logInSceneDriver;
+    public static Scene registerSceneDriver;
     public static Scene registerScene;
     public static Scene costumerScene;
     public static Scene deliveryPointScene;
@@ -173,8 +175,17 @@ public class Controller_Application {
             fxmlLoader(currentEmulator, AccountHandler.currentRole);
             switch (Controller_Application.currentEmulator) {
                 case Driver:
-                    currentScene = driverScene;
-                    changeScene(driverScene);
+                    if(isRouteAssigned()){
+                        currentScene = driverScene;
+                        changeScene(driverScene);
+                    }
+                    else{
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information");
+                        alert.setHeaderText("No route assigned to this login");
+                        alert.setContentText("Please contact your manager");
+                        alert.showAndWait();
+                    }
                     break;
                 case LaundryCentral:
                     currentScene = laundryAssistantScene;
@@ -249,7 +260,15 @@ public class Controller_Application {
     }
 
     public void changeScene( ) {
-        changeScene(Controller_Application.registerScene);
+
+        switch (Controller_Application.currentEmulator) {
+            case Costumer:
+                changeScene(Controller_Application.registerScene);
+                break;
+            case Driver:
+                changeScene(Controller_Application.registerSceneDriver);
+                break;
+        }
         clearFields((Pane) userName.getParent());
     }
 
@@ -279,6 +298,10 @@ public class Controller_Application {
                     FXMLLoader logInLoaderDriver = new FXMLLoader(getClass().getResource("/UI/Driver/loginSceneDriver.fxml"));
                     Parent logInParentDriver = logInLoaderDriver.load();
                     Controller_Application.logInSceneDriver = new Scene(logInParentDriver, 600, 600);
+
+                    FXMLLoader registerLoaderDriver = new FXMLLoader(getClass().getResource("/UI/Driver/registerSceneDriver.fxml"));
+                    Parent registerDriverParent = registerLoaderDriver.load();
+                    Controller_Application.registerSceneDriver = new Scene(registerDriverParent,600,600);
                     break;
             }
         }catch (IOException ex){
@@ -305,6 +328,19 @@ public class Controller_Application {
                 break;
         }
         AccountHandler.logOff();
+    }
+
+    private boolean isRouteAssigned(){
+
+        DB.selectSQL("SELECT * FROM getDriverRoute('" + AccountHandler.currentUser + "')");
+
+        String data = DB.getData();
+
+        if(data.equals("null")){
+            return false;
+        }
+
+        return true;
     }
 
 }

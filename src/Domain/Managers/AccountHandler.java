@@ -1,6 +1,7 @@
 package Domain.Managers;
 
 import Application.general.Controller_Application;
+import Domain.Enums.Emulator;
 import Domain.Enums.Role;
 import Foundation.Database.DB;
 import Services.Passwordmodifier.Password;
@@ -23,26 +24,28 @@ public final class AccountHandler {
     public static Role currentRole = null;
 
 
-    private AccountHandler( ) {
+    private AccountHandler() {
 
     }
 
-    public static int getCurrentRoute(){
+    public static int getCurrentRoute() {
         DB.selectSQL("SELECT * FROM getDriverRoute('" + currentUser + "')");
         return Integer.parseInt(DB.getData());
     }
 
-    public static String getCurrentUser( ) {
+    public static String getCurrentUser() {
         return currentUser;
     }
 
-    public static void register(String userName, String password, String firstName, String lastName, String emailAddress, String phoneNumber, LocalDate dateOfBirth, int isTemporary) {
+    public static void registerCustomer(String userName, String password, String firstName, String lastName, String emailAddress, String phoneNumber, LocalDate dateOfBirth, int isTemporary) {
         System.out.println(currentRole);
+
         try {
+
             DB.setDBPropertiesPath(Role.Costumer);
-            CallableStatement cstmt;
             Connection con = DB.getConnection();
-            cstmt = con.prepareCall("{call CleaningService.dbo.create_user(?,?,?,?,?,?,?,?)}");
+            CallableStatement cstmt = con.prepareCall("{call CleaningService.dbo.create_user(?,?,?,?,?,?,?,?)}");
+
             cstmt.setString(1, userName);
             cstmt.setString(2, Password.hashPassword(password));
             cstmt.setString(3, firstName);
@@ -51,11 +54,36 @@ public final class AccountHandler {
             cstmt.setString(6, phoneNumber);
             cstmt.setDate(7, Date.valueOf(dateOfBirth));
             cstmt.setInt(8, isTemporary);
+
             boolean results = cstmt.execute();
             cstmt.close();
             con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-        catch (SQLException ex) {
+    }
+
+    public static void registerDriver(String userName, String password, String firstName, String lastName, String emailAddress, String phoneNumber, LocalDate dateOfBirth, int corporateID) {
+
+        try {
+
+            DB.setDBPropertiesPath(Role.Driver);
+            Connection con = DB.getConnection();
+            CallableStatement cstmt = con.prepareCall("{call CleaningService.dbo.create_DriverUser(?,?,?,?,?,?,?,?)}");
+
+            cstmt.setString(1, userName);
+            cstmt.setString(2, Password.hashPassword(password));
+            cstmt.setString(3, firstName);
+            cstmt.setString(4, lastName);
+            cstmt.setString(5, emailAddress);
+            cstmt.setString(6, phoneNumber);
+            cstmt.setDate(7, Date.valueOf(dateOfBirth));
+            cstmt.setInt(8, corporateID);
+
+            boolean results = cstmt.execute();
+            cstmt.close();
+            con.close();
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
@@ -125,7 +153,7 @@ public final class AccountHandler {
                     currentCostumerID = cstmt.getInt(3);
                     break;
                 case DeliveryPoint:
-                    currentDeliveryPointID =cstmt.getInt(3);
+                    currentDeliveryPointID = cstmt.getInt(3);
             }
 
             cstmt.close();
@@ -137,17 +165,16 @@ public final class AccountHandler {
                 currentRole = null;
                 isLoggedIn = false;
 
-                }
-                return isLoggedIn;
             }
-            catch (SQLException | IllegalArgumentException ex) {
-                ex.getMessage();
-                return isLoggedIn;
+            return isLoggedIn;
+        } catch (SQLException | IllegalArgumentException ex) {
+            ex.getMessage();
+            return isLoggedIn;
 
-            }
         }
+    }
 
-    public static void logOff(){
+    public static void logOff() {
         isLoggedIn = false;
         currentUser = null;
     }
