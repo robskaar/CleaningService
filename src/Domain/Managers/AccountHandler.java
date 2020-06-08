@@ -39,10 +39,19 @@ public final class AccountHandler {
     public static void register(String userName, String password, String firstName, String lastName, String emailAddress, String phoneNumber, LocalDate dateOfBirth, int isTemporary) {
         System.out.println(currentRole);
         try {
-            DB.setDBPropertiesPath(Role.Costumer);
-            CallableStatement cstmt;
+            CallableStatement cstmt = null;
             Connection con = DB.getConnection();
-            cstmt = con.prepareCall("{call CleaningService.dbo.create_user(?,?,?,?,?,?,?,?)}");
+            switch (Controller_Application.currentEmulator){
+                case Costumer:
+                    DB.setDBPropertiesPath(Role.Costumer);
+                    cstmt = con.prepareCall("{call CleaningService.dbo.create_user(?,?,?,?,?,?,?,?)}");
+                    break;
+                case Driver:
+                    DB.setDBPropertiesPath(Role.Driver);
+                    cstmt = con.prepareCall("{call CleaningService.dbo.create_DriverUser(?,?,?,?,?,?,?,?)}");
+                    break;
+            }
+
             cstmt.setString(1, userName);
             cstmt.setString(2, Password.hashPassword(password));
             cstmt.setString(3, firstName);

@@ -110,7 +110,10 @@ public class Controller_RegisterScene extends Controller_Application implements 
 
 
     public void changeScene() {
+        /*
         changeScene(Controller_Application.logInSceneCostumer);
         clearFields((Pane) userName.getParent());
+        
+         */
     }
 }
