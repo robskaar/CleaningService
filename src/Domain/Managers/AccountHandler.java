@@ -69,7 +69,7 @@ public final class AccountHandler {
 
             DB.setDBPropertiesPath(Role.Driver);
             Connection con = DB.getConnection();
-            CallableStatement cstmt = con.prepareCall("{call CleaningService.dbo.create_DriverUser(?,?,?,?,?,?,?,?)}");
+            CallableStatement cstmt = con.prepareCall("{call CleaningService.dbo.createDriverUser(?,?,?,?,?,?,?,?)}");
 
             cstmt.setString(1, userName);
             cstmt.setString(2, Password.hashPassword(password));
