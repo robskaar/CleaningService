@@ -150,20 +150,6 @@
     -fx-background-color: white;
 }
 
-.backButton {
-    -fx-background-color: transparent;
-    -fx-background-image: url('/Foundation/Resources/Icons/PhoneEmulator/left-arrow.png');
-    -fx-background-size: 23;
-    -fx-background-repeat: no-repeat;
-}
-
-.backButton:hover {
-    -fx-background-color: grey;
-    -fx-border-style: solid;
-    -fx-border-color: grey;
-
-}
-
 #DisplayPane{
     -fx-background-color: #E1F5FE;
 }
@@ -177,8 +163,6 @@
 .button:hover {
     -fx-background-color : #ADACB5;
 }
-
-
 
 .label{
     -fx-text-fill: #484750;
@@ -212,6 +196,8 @@
     -c7 : #FDFEFE;
     -c8 : #EBF5FB;
     -c9 : #000000;
+    -c10 : #94C7FE;
+    -c11 : #E74A4A;
 }
 
 .driverHBox{
@@ -262,4 +248,59 @@
 .driverTable .scroll-bar:horizontal .thumb, .driverTable .scroll-bar:vertical{
     -fx-background-color: -c5;
 }
+
+/* CSS for customer */
+
+.customerVBox, .customerScroolPane, .customerScroolPane .scroll-bar:vertical,
+.customerScroolPane .scroll-bar:vertical .track, .customerScroolPane .scroll-bar:vertical .track-background{
+    -fx-background-color: -c2 !important;
+}
+
+.customerButton, .customerLabel, .customerHBox, .itemBox, .customerAddButton, .customerRemoveButton{
+    -fx-background-color: -c4;
+    -fx-text-fill: -c8;
+}
+
+.customerScroolPane .scroll-bar:vertical .thumb{
+    -fx-background-color: -c10;
+}
+
+.customerButton:hover, .itemBox:hover{
+    -fx-background-color: -c5 !important;
+}
+
+.customerAddButton:hover{
+    -fx-background-color: -c1;
+    -fx-background-image: url('/Foundation/Resources/Icons/PhoneEmulator/add.png');
+    -fx-background-size: 25;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-text-fill: transparent;
+}
+
+.customerRemoveButton:hover{
+    -fx-background-color: -c11;
+    -fx-background-image: url('/Foundation/Resources/Icons/PhoneEmulator/minus.png');
+    -fx-background-size: 25;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-text-fill: transparent;
+}
+
+.customerBackButton {
+    -fx-background-color: transparent;
+    -fx-background-image: url('/Foundation/Resources/Icons/PhoneEmulator/left-arrow.png');
+    -fx-background-size: 18;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.customerBackButton:hover {
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+    -fx-background-color: transparent;
+}
+
+
+
 

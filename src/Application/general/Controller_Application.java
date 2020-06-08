@@ -1,5 +1,6 @@
 package Application.general;
 
+import Application.Driver.Controller_Driver;
 import Domain.Enums.Emulator;
 import Domain.Enums.Role;
 import Domain.Managers.AccountHandler;
@@ -84,6 +85,7 @@ public class Controller_Application {
     public static Scene currentScene;
     public static Stage primaryStage;
     public static Emulator currentEmulator = null;
+    public static Controller_Driver driverController;
 
     //Scenes
     public static Scene logInSceneCostumer;
@@ -209,6 +211,7 @@ public class Controller_Application {
                 case Driver:
                     FXMLLoader driverLoader = new FXMLLoader(getClass().getResource("/UI/Driver/driver.fxml"));
                     Parent driverParent = driverLoader.load();
+                    driverController = driverLoader.getController();
                     Controller_Application.driverScene = new Scene(driverParent, 1020, 860, Color.TRANSPARENT);
                     break;
                 case Costumer:

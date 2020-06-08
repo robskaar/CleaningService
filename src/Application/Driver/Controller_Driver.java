@@ -6,6 +6,7 @@ import Domain.Enums.Role;
 import Domain.Managers.AccountHandler;
 import Domain.Managers.DeliveryPointHandler;
 import Domain.Managers.OrderHandler;
+import Domain.Map.GoogleMap;
 import Domain.Order.Order;
 import Domain.Order.OrderItem;
 import Foundation.Database.DB;
@@ -13,10 +14,7 @@ import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -28,12 +26,18 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+/**
+ * @Author Jacob Bonefeld
+ * @Project CleaningService
+ * @Date 18.05.2020
+ **/
 
 public class Controller_Driver extends Controller_Application implements Initializable {
 
     @FXML
-
     private BorderPane root;
     /*
     FXML components from Central Orders pane
@@ -48,7 +52,6 @@ public class Controller_Driver extends Controller_Application implements Initial
     private TableColumn<Order, Integer> columnOrderID;
     @FXML
     private TableView<OrderItem> centralItemTable;
-
     @FXML
     private TableColumn<Integer, OrderItem> columnItemID;
     @FXML
@@ -83,12 +86,20 @@ public class Controller_Driver extends Controller_Application implements Initial
     private Label routeLabel;
     @FXML
     private Button routeConfirm;
+    @FXML
+    private VBox stackOrders;
+    @FXML
+    private VBox stackMap;
+    @FXML
+    private Button showOrHideMap;
 
 
     private static TableView<Order> currentOrderTable = null;
     private static TableView<OrderItem> currentItemsTable = null;
     private static Order selectedOrder = null;
     private static int currentRoute;
+    private static ArrayList<DeliveryPoint> deliveryPoints;
+    private GoogleMap googleMap;
     // Order statuses
     private static final int AT_DELIVERY_POINT_READY_FOR_TRANSIT = 1;
     private static final int AT_CLEANING_CENTRAL_READY_FOR_TRANSIT = 4;
@@ -108,6 +119,7 @@ public class Controller_Driver extends Controller_Application implements Initial
     private void initCentralOrderTable() {
         // set property for observable object
         columnOrderID.setCellValueFactory(new PropertyValueFactory<>("ID"));
+
         // Fetch orders from database and display
         centralOrderTable.setItems(OrderHandler.getRouteOrders(currentRoute, AT_CLEANING_CENTRAL_READY_FOR_TRANSIT));
 
@@ -142,7 +154,8 @@ public class Controller_Driver extends Controller_Application implements Initial
         columnDeliveryConfirm.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
 
         // Fetch delivery points from current route from database
-        deliveryPointTable.setItems(DeliveryPointHandler.getRouteDeliveryPoints(currentRoute));
+        deliveryPoints = DeliveryPointHandler.getRouteDeliveryPoints(currentRoute);
+        deliveryPointTable.setItems(FXCollections.observableArrayList(deliveryPoints));
 
         // Sets up listener for when a delivery point is selected
         deliveryPointTable.getSelectionModel().selectedItemProperty().addListener((observableValue, oldDeliveryPoint, newDeliveryPoint) -> {
@@ -181,7 +194,6 @@ public class Controller_Driver extends Controller_Application implements Initial
     /**
      * Sets of table that view route order items
      */
-
     private void initRouteItemsTable() {
         // Items can not be selected (Only use checkbox)
         routeOrderItemsTable.setSelectionModel(null);
@@ -192,14 +204,12 @@ public class Controller_Driver extends Controller_Application implements Initial
 
         // Sets text to show if table is empty
         setOnEmptyLabel("Choose Order", routeOrderItemsTable);
-
     }
 
     /**
      * Method called when a delivery point is selected
      * Shows all orders from the delivery point
      */
-
     public void showDeliveryPointOrders() {
         routeOrderItemsTable.getItems().clear();
 
@@ -216,7 +226,6 @@ public class Controller_Driver extends Controller_Application implements Initial
         }
         if (pickUpTable.getItems().isEmpty()) {
             setOnEmptyLabel("No Orders", pickUpTable);
-
         }
     }
 
@@ -227,7 +236,6 @@ public class Controller_Driver extends Controller_Application implements Initial
     public void confirmOrder() {
 
         boolean isAllItemsConfirmed = true;
-
 
         // Assert that an order has is selected
         if (selectedOrder != null) {
@@ -241,7 +249,7 @@ public class Controller_Driver extends Controller_Application implements Initial
 
                 // Upload new order status to database
                 int newStatus = selectedOrder.getStatusID() + 1;
-                selectedOrder.setStatus(newStatus);
+                selectedOrder.updateStatus(newStatus);
                 OrderHandler.updateOrderDB(selectedOrder);
 
                 // Show message that order has been confirmed
@@ -338,6 +346,9 @@ public class Controller_Driver extends Controller_Application implements Initial
         centralOrders.setVisible(false);
         routeOrders.setVisible(true);
         routeLabel.setText("Showing orders from route: " + currentRoute);
+
+        googleMap = GoogleMap.getMap();
+        stackMap.getChildren().add(googleMap.getMapView());
 
         initDeliveryPointTable();
         initRouteOrderTables();
@@ -438,4 +449,31 @@ public class Controller_Driver extends Controller_Application implements Initial
         });
     }
 
+    /**
+     * This method switches view from order overview to map with delivery points
+     */
+    public void showMap(){
+
+        googleMap.setMarkers(deliveryPoints);
+        stackOrders.setVisible(false);
+        stackMap.setVisible(true);
+
+        showOrHideMap.setText("Show Orders");
+        showOrHideMap.setOnAction(event -> {
+            showOrders();
+        });
+    }
+
+    /**
+     * This method switches view from map to order overview
+     */
+    public void showOrders(){
+        stackOrders.setVisible(true);
+        stackMap.setVisible(false);
+
+        showOrHideMap.setText("Show Map");
+        showOrHideMap.setOnAction(event -> {
+            showMap();
+        });
+    }
 }

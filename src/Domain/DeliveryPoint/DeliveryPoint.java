@@ -33,6 +33,14 @@ public class DeliveryPoint {
         return ID;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
     public CheckBox getCheckBox() {
         return checkBox;
     }

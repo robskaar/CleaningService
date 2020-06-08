@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<?import java.net.*?>
-<BorderPane prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Costumer.Controller_Costumer">
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Costumer.Controller_Costumer">
     <right>
         <VBox alignment="CENTER" prefHeight="601.0" prefWidth="600.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
             <children>
@@ -41,14 +51,14 @@
                         </ImageView>
                         <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="474.0" prefWidth="252.0" style="-fx-background-color: white;">
                             <children>
-                                <VBox fx:id="costumerMenu" alignment="TOP_CENTER" prefHeight="481.0" prefWidth="283.0" style="-fx-background-color: white;">
+                                <VBox fx:id="costumerMenu" alignment="TOP_CENTER" prefHeight="481.0" prefWidth="283.0" style="-fx-background-color: white;" styleClass="customerVBox">
                                     <children>
-                                        <Button mnemonicParsing="false" onAction="#showItems" prefHeight="53.0" prefWidth="175.0" text="New Order">
+                                        <Button mnemonicParsing="false" onAction="#showItems" prefHeight="53.0" prefWidth="175.0" styleClass="customerButton" text="New Order">
                                             <VBox.margin>
                                                 <Insets top="100.0" />
                                             </VBox.margin>
                                         </Button>
-                                        <Button mnemonicParsing="false" onAction="#showOrderHistory" prefHeight="55.0" prefWidth="187.0" text="Order History">
+                                        <Button mnemonicParsing="false" onAction="#showOrderHistory" prefHeight="55.0" prefWidth="175.0" styleClass="customerButton" text="Order History">
                                             <VBox.margin>
                                                 <Insets top="30.0" />
                                             </VBox.margin>
@@ -58,68 +68,63 @@
                                                 <Insets top="130.0" />
                                             </VBox.margin>
                                         </Label>
-                                        <Button mnemonicParsing="false" onAction="#logOff" prefHeight="33.0" prefWidth="79.0" text="Log out">
+                                        <Button mnemonicParsing="false" onAction="#logOff" prefHeight="33.0" prefWidth="79.0" styleClass="customerButton" text="Log out">
                                             <VBox.margin>
                                                 <Insets top="30.0" />
                                             </VBox.margin>
                                         </Button>
                                     </children>
                                 </VBox>
-                                <VBox fx:id="itemView" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="489.0" prefWidth="254.0" style="-fx-background-color: white;" StackPane.alignment="TOP_CENTER">
+                                <VBox fx:id="itemView" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="489.0" prefWidth="254.0" style="-fx-background-color: white;" styleClass="customerVBox" StackPane.alignment="TOP_CENTER">
                                     <children>
-                                        <HBox prefHeight="30.0" prefWidth="254.0" VBox.vgrow="ALWAYS">
+                                        <HBox prefHeight="30.0" prefWidth="254.0" styleClass="customerHBox" VBox.vgrow="ALWAYS">
                                             <children>
-                                                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="28.0" styleClass="backButton">
-                                                    <stylesheets>
-                                                        <URL value="@../../Foundation/Resources/CSS/DefaultStyle.css" />
-                                                        <URL value="@../../Foundation/Resources/CSS/DefaultStyle.css" />
-                                                    </stylesheets>
+                                                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="28.0" styleClass="customerBackButton" stylesheets="@../../Foundation/Resources/CSS/DefaultStyle.css">
                                                     <HBox.margin>
                                                         <Insets left="5.0" />
                                                     </HBox.margin>
                                                 </Button>
-                                                <Label prefHeight="26.0" prefWidth="60.0" text="Time" wrapText="true">
+                                                <Label prefHeight="26.0" prefWidth="60.0" styleClass="customerLabel" text="Time" wrapText="true">
                                                     <HBox.margin>
                                                         <Insets left="5.0" />
                                                     </HBox.margin>
                                                 </Label>
-                                                <Label prefHeight="26.0" prefWidth="75.0" text="Name" />
-                                                <Label prefHeight="26.0" prefWidth="41.0" text="Price" />
+                                                <Label prefHeight="26.0" prefWidth="90.0" styleClass="customerLabel" text="Name" />
+                                                <Label prefHeight="26.0" prefWidth="41.0" styleClass="customerLabel" text="Price" />
                                             </children>
                                         </HBox>
-                                        <ScrollPane hbarPolicy="NEVER" prefHeight="388.0" prefWidth="254.0" style="-fx-background-color: white;">
+                                        <ScrollPane hbarPolicy="NEVER" prefHeight="388.0" prefWidth="254.0" styleClass="customerScroolPane">
                                             <content>
-                                                <VBox fx:id="itemVbox" prefHeight="343.0" prefWidth="256.0" spacing="10.0" style="-fx-background-color: white;" />
+                                                <VBox fx:id="itemVbox" prefHeight="343.0" prefWidth="256.0" spacing="10.0" styleClass="customerVBox" />
                                             </content>
+                                 <padding>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </padding>
                                         </ScrollPane>
-                                        <Button fx:id="addOrderButton" mnemonicParsing="false" onAction="#showCart" prefHeight="81.0" prefWidth="277.0" style="-fx-background-color: Blue; -fx-opacity: 0.8;" textFill="WHITE" />
+                                        <Button fx:id="addOrderButton" mnemonicParsing="false" onAction="#showCart" prefHeight="81.0" prefWidth="254.0" styleClass="itemBox" textFill="WHITE" />
                                     </children>
                                 </VBox>
-                                <VBox fx:id="orderHistoryPane" prefHeight="449.0" prefWidth="252.0" style="-fx-background-color: lightblue;">
+                                <VBox fx:id="orderHistoryPane" prefHeight="449.0" prefWidth="252.0" style="-fx-background-color: lightblue;" styleClass="customerVBox">
                                     <children>
-                                        <HBox prefHeight="9.0" prefWidth="252.0">
+                                        <HBox prefHeight="9.0" prefWidth="252.0" styleClass="customerHBox">
                                             <children>
-                                                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="30.0" styleClass="backButton">
-                                                    <stylesheets>
-                                                        <URL value="@../../Foundation/Resources/CSS/DefaultStyle.css" />
-                                                        <URL value="@../../Foundation/Resources/CSS/DefaultStyle.css" />
-                                                    </stylesheets>
+                                                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="30.0" styleClass="customerBackButton">
                                                     <HBox.margin>
                                                         <Insets />
                                                     </HBox.margin>
                                                 </Button>
                                             </children>
                                         </HBox>
-                                        <VBox prefHeight="538.0" prefWidth="252.0">
+                                        <VBox prefHeight="538.0" prefWidth="252.0" styleClass="customerVBox">
                                             <children>
-                                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="251.0" text="Ongoing Orders" />
+                                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="252.0" styleClass="customerLabel" text="Ongoing Orders" />
                                                 <HBox prefHeight="18.0" prefWidth="252.0" style="-fx-background-color: #cde4ec;">
                                                     <children>
-                                                        <Label prefHeight="17.0" prefWidth="46.0" text="Order" />
-                                                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="167.0" text="Status " />
+                                                        <Label prefHeight="17.0" prefWidth="50.0" styleClass="customerLabel" text="Order" />
+                                                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="202.0" styleClass="customerLabel" text="Status " />
                                                     </children>
                                                 </HBox>
-                                                <ScrollPane hbarPolicy="NEVER" prefHeight="199.0" prefWidth="252.0">
+                                                <ScrollPane hbarPolicy="NEVER" prefHeight="199.0" prefWidth="252.0" styleClass="customerScroolPane">
                                                     <content>
                                                         <VBox fx:id="onGoingOrders" prefHeight="187.0" prefWidth="250.0">
                                                             <children>
@@ -133,16 +138,16 @@
                                                         </VBox>
                                                     </content>
                                                 </ScrollPane>
-                                                <Label alignment="CENTER" prefHeight="17.0" prefWidth="251.0" text="Previous Orders" textAlignment="CENTER" />
+                                                <Label alignment="CENTER" prefHeight="17.0" prefWidth="252.0" styleClass="customerLabel" text="Previous Orders" textAlignment="CENTER" />
                                                 <HBox prefHeight="19.0" prefWidth="252.0" style="-fx-background-color: #cde4ec;">
                                                     <children>
-                                                        <Label prefHeight="17.0" prefWidth="46.0" text="Order" />
-                                                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="166.0" text="Status " />
+                                                        <Label prefHeight="17.0" prefWidth="50.0" styleClass="customerLabel" text="Order" />
+                                                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="202.0" styleClass="customerLabel" text="Status " />
                                                     </children>
                                                 </HBox>
-                                                <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0">
+                                                <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="customerScroolPane">
                                                     <content>
-                                                        <VBox fx:id="previousOrders" prefHeight="189.0" prefWidth="250.0">
+                                                        <VBox fx:id="previousOrders" prefHeight="189.0" prefWidth="250.0" styleClass="customerVBox">
                                                             <children>
                                                                 <HBox prefHeight="188.0" prefWidth="250.0">
                                                                     <children>
@@ -158,35 +163,34 @@
                                         </VBox>
                                     </children>
                                 </VBox>
-                                <VBox fx:id="confirmOrderPane" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white;">
+                                <VBox fx:id="confirmOrderPane" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white;" styleClass="customerVBox">
                                     <children>
-                                        <HBox prefHeight="12.0" prefWidth="252.0">
+                                        <HBox prefHeight="12.0" prefWidth="252.0" styleClass="customerHBox">
                                             <children>
-                                                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="30.0" styleClass="backButton">
-                                                    <stylesheets>
-                                                        <URL value="@../../Foundation/Resources/CSS/DefaultStyle.css" />
-                                                        <URL value="@../../Foundation/Resources/CSS/DefaultStyle.css" />
-                                                    </stylesheets>
+                                                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="30.0" styleClass="customerBackButton">
                                                     <HBox.margin>
                                                         <Insets />
                                                     </HBox.margin>
                                                 </Button>
-                                                <Label prefHeight="29.0" prefWidth="145.0" text="Order ID" textAlignment="CENTER" />
+                                                <Label prefHeight="29.0" prefWidth="145.0" styleClass="customerLabel" text="Order ID" textAlignment="CENTER" />
                                             </children>
                                         </HBox>
-                                        <ScrollPane prefHeight="343.0" prefWidth="252.0">
+                                        <ScrollPane hbarPolicy="NEVER" prefHeight="343.0" prefWidth="252.0" styleClass="customerScroolPane">
                                             <content>
-                                                <VBox fx:id="orderVBox" prefHeight="337.0" prefWidth="249.0" spacing="15.0" />
+                                                <VBox fx:id="orderVBox" prefHeight="337.0" prefWidth="249.0" styleClass="customerVBox" />
                                             </content>
+                                 <padding>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </padding>
                                         </ScrollPane>
                                         <HBox alignment="CENTER" prefHeight="92.0" prefWidth="252.0">
                                             <children>
-                                                <Button fx:id="deleteButton" mnemonicParsing="false" prefHeight="36.0" prefWidth="74.0" text="Delete">
+                                                <Button fx:id="deleteButton" mnemonicParsing="false" prefHeight="36.0" prefWidth="74.0" styleClass="customerButton" text="Delete">
                                                     <HBox.margin>
                                                         <Insets right="20.0" />
                                                     </HBox.margin>
                                                 </Button>
-                                                <Button fx:id="confirmOrders" mnemonicParsing="false" prefHeight="36.0" prefWidth="74.0" text="Confirm" />
+                                                <Button fx:id="confirmOrders" mnemonicParsing="false" prefHeight="36.0" prefWidth="74.0" styleClass="customerButton" text="Confirm" />
                                             </children>
                                         </HBox>
                                     </children>

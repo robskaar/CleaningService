@@ -13,9 +13,7 @@ public class ItemBox extends HBox {
     private int itemID;
 
     public ItemBox(LaundryItem laundryItem) {
-        this.getStylesheets().add("Foundation/Resources/CSS/Customer.css");
         button = new Button(laundryItem.getName());
-        button.getStyleClass().add("AddButton");
         button.setPrefWidth(100);
         Label duration = new Label(String.valueOf(laundryItem.getHandlingDuration()) + " Days");
         duration.setWrapText(true);
@@ -44,10 +42,10 @@ public class ItemBox extends HBox {
     }
 
     public void setAddButton() {
-        button.getStyleClass().add("AddButton");
+        button.getStyleClass().add("customerAddButton");
     }
 
     public void setRemoveButton() {
-        button.getStyleClass().add("RemoveButton");
+        button.getStyleClass().add("customerRemoveButton");
     }
 }
