@@ -191,6 +191,7 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
                 }
                 System.out.println("Order Slip Printing");
                 //An Emailing/SMS can be attached to send the Order confirmation to the customer.
+
             }
         }
         clearPanes();
@@ -307,6 +308,7 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
     }
 
     private boolean hasMultipleDeliveryDays() {
+
         final int DAY_OF_WEEK = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
         //GateKeeper boolean
         boolean alreadyHasDeliveryDay = false;
