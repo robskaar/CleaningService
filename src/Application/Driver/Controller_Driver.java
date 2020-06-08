@@ -3,9 +3,9 @@ package Application.Driver;
 import Application.general.Controller_Application;
 import Domain.DeliveryPoint.DeliveryPoint;
 import Domain.Enums.Role;
-import Domain.Managers.AccountManager;
-import Domain.Managers.DeliveryPointManager;
-import Domain.Managers.OrderManager;
+import Domain.Managers.AccountHandler;
+import Domain.Managers.DeliveryPointHandler;
+import Domain.Managers.OrderHandler;
 import Domain.Map.GoogleMap;
 import Domain.Order.Order;
 import Domain.Order.OrderItem;
@@ -108,7 +108,7 @@ public class Controller_Driver extends Controller_Application implements Initial
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DB.setDBPropertiesPath(Role.Driver);
-        currentRoute = AccountManager.getCurrentRoute();
+        currentRoute = AccountHandler.getCurrentRoute();
         initCentralOrderTable();
         initCentralItemTable();
     }
@@ -121,7 +121,7 @@ public class Controller_Driver extends Controller_Application implements Initial
         columnOrderID.setCellValueFactory(new PropertyValueFactory<>("ID"));
 
         // Fetch orders from database and display
-        centralOrderTable.setItems(OrderManager.getRouteOrders(currentRoute, AT_CLEANING_CENTRAL_READY_FOR_TRANSIT));
+        centralOrderTable.setItems(OrderHandler.getRouteOrders(currentRoute, AT_CLEANING_CENTRAL_READY_FOR_TRANSIT));
 
         // Set text to show if table is empty
         setOnEmptyLabel("No more orders", centralOrderTable);
@@ -154,7 +154,7 @@ public class Controller_Driver extends Controller_Application implements Initial
         columnDeliveryConfirm.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
 
         // Fetch delivery points from current route from database
-        deliveryPoints = DeliveryPointManager.getRouteDeliveryPoints(currentRoute);
+        deliveryPoints = DeliveryPointHandler.getRouteDeliveryPoints(currentRoute);
         deliveryPointTable.setItems(FXCollections.observableArrayList(deliveryPoints));
 
         // Sets up listener for when a delivery point is selected
@@ -217,8 +217,8 @@ public class Controller_Driver extends Controller_Application implements Initial
         int ID = Integer.parseInt(deliveryPointTable.getSelectionModel().getSelectedItem().getID());
 
         // Fetch data from DB and insert in table views
-        deliverTable.setItems(OrderManager.getDeliveryPointOrders(ID, IN_TRANSIT_TO_DELIVERY_POINT));
-        pickUpTable.setItems(OrderManager.getDeliveryPointOrders(ID, AT_DELIVERY_POINT_READY_FOR_TRANSIT));
+        deliverTable.setItems(OrderHandler.getDeliveryPointOrders(ID, IN_TRANSIT_TO_DELIVERY_POINT));
+        pickUpTable.setItems(OrderHandler.getDeliveryPointOrders(ID, AT_DELIVERY_POINT_READY_FOR_TRANSIT));
 
         // Set table view text if empty
         if (deliverTable.getItems().isEmpty()) {
@@ -250,14 +250,14 @@ public class Controller_Driver extends Controller_Application implements Initial
                 // Upload new order status to database
                 int newStatus = selectedOrder.getStatusID() + 1;
                 selectedOrder.updateStatus(newStatus);
-                OrderManager.updateOrderDB(selectedOrder);
+                OrderHandler.updateOrderDB(selectedOrder);
 
                 // Show message that order has been confirmed
                 showMessage("Confirmed", Color.web("#2ECC71"));
 
                 // Remove confirmed order from the list
                 if (currentOrderTable.equals(centralOrderTable)) {
-                    centralOrderTable.setItems(OrderManager.getRouteOrders(currentRoute, AT_CLEANING_CENTRAL_READY_FOR_TRANSIT));
+                    centralOrderTable.setItems(OrderHandler.getRouteOrders(currentRoute, AT_CLEANING_CENTRAL_READY_FOR_TRANSIT));
                     // Disable and change text on confirm button
                     centralConfirm.setDisable(true);
                     centralConfirm.setText("No orders selected");

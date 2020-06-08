@@ -1,10 +1,10 @@
 package Application.Costumer;
 
 import Application.general.Controller_Application;
-import Domain.LaundryItems.Item;
-import Domain.Managers.AccountManager;
-import Domain.Managers.ItemsManager;
-import Domain.Managers.OrderManager;
+import Domain.LaundryItems.LaundryItem;
+import Domain.Managers.AccountHandler;
+import Domain.Managers.ItemsHandler;
+import Domain.Managers.OrderHandler;
 import Domain.Order.Order;
 import UI.Costumer.ItemBox;
 import javafx.beans.binding.Bindings;
@@ -16,44 +16,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
 public class Controller_Costumer extends Controller_Application implements Initializable {
-    @FXML
-    private HBox toolBar;
-
-    @FXML
-    private MenuButton settingsBtn;
-
-    @FXML
-    private MenuItem defaultThemeBtn;
-
-    @FXML
-    private MenuItem darkThemeBtn;
-
-    @FXML
-    private Button closeBtn;
-
-    @FXML
-    private Button minimizeBtn;
-
-    @FXML
-    private Button maximizeBtn;
 
     @FXML
     private VBox costumerMenu;
-
-    @FXML
-    private Label nameLabel;
 
     @FXML
     private VBox itemView;
@@ -67,8 +40,6 @@ public class Controller_Costumer extends Controller_Application implements Initi
     @FXML
     private VBox orderHistoryPane;
 
-    @FXML
-    private VBox onGoingOrders;
 
     @FXML
     private VBox onGoingOrderIDPane;
@@ -76,8 +47,6 @@ public class Controller_Costumer extends Controller_Application implements Initi
     @FXML
     private VBox onGoingStatusPane;
 
-    @FXML
-    private VBox previousOrders;
 
     @FXML
     private VBox previousOrderOrderID;
@@ -102,9 +71,9 @@ public class Controller_Costumer extends Controller_Application implements Initi
 
     }
 
-    private ObservableList<Item> addedItems = FXCollections.observableArrayList();
-    private ArrayList<Item> removedItems = new ArrayList<>();
-    private IntegerBinding listSize = Bindings.size(addedItems);
+    private ObservableList<LaundryItem> addedLaundryItems = FXCollections.observableArrayList();
+    private ArrayList<LaundryItem> removedLaundryItems = new ArrayList<>();
+    private IntegerBinding listSize = Bindings.size(addedLaundryItems);
     private BooleanBinding listPopulated = listSize.greaterThan(0);
     private ArrayList<ItemBox> itemBoxes = new ArrayList<>();
     private static final int pendingStatusID = 8;
@@ -117,20 +86,18 @@ public class Controller_Costumer extends Controller_Application implements Initi
 
     }
 
+    /***
+     * get's all the items from the DB and adds them to the item pane
+     */
     public void showItems() {
         itemView.toFront();
-        System.out.println(itemBoxes.size());
 
         if (itemBoxes.size() == 0) {
-            for (Item item : ItemsManager.getItems()
+            for (LaundryItem laundryItem : ItemsHandler.getItems()
             ) {
-                System.out.println(item.getName());
-                ItemBox itemBox = new ItemBox(item);
+                ItemBox itemBox = new ItemBox(laundryItem);
                 itemBox.setAddButton();
-                itemBox.getButton().setOnMouseClicked(mouseEvent -> {
-                    addedItems.add(item);
-
-                });
+                itemBox.getButton().setOnMouseClicked(mouseEvent -> addedLaundryItems.add(laundryItem));
                 itemBoxes.add(itemBox);
 
             }
@@ -139,12 +106,15 @@ public class Controller_Costumer extends Controller_Application implements Initi
         }
     }
 
+    /***
+     * shows all the order items which is recived from the DB through the Order ID
+     * @param orderID ID of the Order
+     */
     public void showOrderItems(int orderID) {
-        ;
         confirmOrderPane.toFront();
         orderVBox.getChildren().clear();
         deleteButton.setOnMouseClicked(mouseEvent -> {
-            OrderManager.deleteOrder(orderID);
+            OrderHandler.deleteOrder(orderID);
             goBack();
         });
 
@@ -153,13 +123,12 @@ public class Controller_Costumer extends Controller_Application implements Initi
             goBack();
         });
 
-        for (Item item : ItemsManager.getorderLaundryItems(orderID)
+        for (LaundryItem laundryItem : ItemsHandler.getorderLaundryItems(orderID)
         ) {
-            System.out.println(item.getName());
-            ItemBox itemBox = new ItemBox(item);
+            ItemBox itemBox = new ItemBox(laundryItem);
             itemBox.setRemoveButton();
             itemBox.getButton().setOnMouseClicked(mouseEvent -> {
-                removedItems.add(item);
+                removedLaundryItems.add(laundryItem);
                 orderVBox.getChildren().remove(itemBox);
 
             });
@@ -168,53 +137,62 @@ public class Controller_Costumer extends Controller_Application implements Initi
         }
     }
 
+    /***
+     * shows the cart of the customer, which contains added laundryItems
+     */
     public void showCart() {
         confirmOrderPane.toFront();
         deleteButton.setOnMouseClicked(mouseEvent -> {
-            addedItems.clear();
+            addedLaundryItems.clear();
             goBack();
         });
-        confirmOrders.setOnMouseClicked(mouseEvent -> {
-            try {
-                createOrders();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        });
-        for (Item item : addedItems
+        confirmOrders.setOnMouseClicked(mouseEvent -> createOrders());
+        for (LaundryItem laundryItem : addedLaundryItems
         ) {
-            ItemBox itemBox = new ItemBox(item);
+            ItemBox itemBox = new ItemBox(laundryItem);
             itemBox.setRemoveButton();
             itemBox.getButton().setOnMouseClicked(mouseEvent -> {
-                addedItems.remove(item);
+                addedLaundryItems.remove(laundryItem);
                 orderVBox.getChildren().remove(itemBox);
             });
             orderVBox.getChildren().add(itemBox);
         }
     }
 
+    /***
+     * logs the customer off
+     */
     public void logOff() {
-        addedItems.clear();
+        addedLaundryItems.clear();
         super.logOff();
     }
 
+    /***
+     * lets the customer go back to start pane.
+     */
     public void goBack() {
         orderVBox.getChildren().clear();
         costumerMenu.toFront();
     }
 
-    public void createOrders() throws SQLException {
-        //8 is the StatusID in our database for premade orders
-        OrderManager.createOrder(AccountManager.currentCostumerID, pendingStatusID, addedItems);
-        System.out.println("Order added with " + addedItems.size() + " Items");
-        addedItems.clear();
+    /***
+     * create orders with the premade status and adds them to the DB
+     * does a print out in the system for super users being able to see what happends
+     */
+    public void createOrders() {
+        OrderHandler.createOrder(AccountHandler.currentCostumerID, pendingStatusID, addedLaundryItems);
+        System.out.println("Order added with " + addedLaundryItems.size() + " Items");
+        addedLaundryItems.clear();
         goBack();
     }
 
+    /***
+     * shows the order history of the current costumer.
+     */
     public void showOrderHistory() {
         orderHistoryPane.toFront();
         clearOrderHistory();
-        for (Order order : OrderManager.getCustomerOrders(AccountManager.getCurrentUser())
+        for (Order order : OrderHandler.getCustomerOrders(AccountHandler.getCurrentUser())
         ) {
             Label orderID = new Label(String.valueOf(order.getID()));
             Label status = new Label(order.getStatus());
@@ -225,9 +203,7 @@ public class Controller_Costumer extends Controller_Application implements Initi
                     previousOrderOrderID.getChildren().add(orderID);
                     break;
                 case pendingStatusID:
-                    status.setOnMouseClicked(mouseEvent -> {
-                        showOrderItems(order.getID());
-                    });
+                    status.setOnMouseClicked(mouseEvent -> showOrderItems(order.getID()));
                     onGoingOrderIDPane.getChildren().add(orderID);
                     onGoingStatusPane.getChildren().add(status);
                     break;
@@ -247,9 +223,9 @@ public class Controller_Costumer extends Controller_Application implements Initi
     }
 
     private void deleteOrderItems() {
-        for (Item item : removedItems
+        for (LaundryItem laundryItem : removedLaundryItems
         ) {
-            OrderManager.deleteOrderItems(item.getOrderItemID());
+            OrderHandler.deleteOrderItems(laundryItem.getOrderItemID());
         }
     }
 }

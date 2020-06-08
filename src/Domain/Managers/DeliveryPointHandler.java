@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
-public class DeliveryPointManager {
+public class DeliveryPointHandler {
 
     public static ArrayList<DeliveryPoint> getRouteDeliveryPoints(int routeID) {
 

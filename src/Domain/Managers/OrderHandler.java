@@ -1,32 +1,30 @@
 package Domain.Managers;
 
-import Domain.LaundryItems.Item;
+import Domain.LaundryItems.LaundryItem;
 import Domain.Order.Order;
 import Domain.Order.OrderItem;
 import Foundation.Database.DB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Types;
+import java.sql.*;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
-public class OrderManager {
+public class OrderHandler {
 
     // Used to format SQL DateTime to Java LocalDateTime
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
-    public static ArrayList<Order> getAllOrders( ) {
+    public static ArrayList<Order> getAllOrders() {
 
         return new ArrayList<>();
     }
 
     public static ArrayList<Order> getCustomerOrders(String customerName) {
-        System.out.println("DEBUGGING customername: " + customerName);
         int orderID;
         int statusID;
         String status;
@@ -54,9 +52,47 @@ public class OrderManager {
         return orders;
     }
 
-    public static void createOrder(int customerID, int orderStatusID, ObservableList<Item> items) throws SQLException {
+    public static ArrayList<Order> getCustomerOrders(int customerPhoneNumber) {
+        int costumerID;
+        int deliveryPointID = -1;
+        LocalDateTime endDate = null;
+        LocalDateTime startDate = null;
+        int orderID;
+        int statusID;
+        DB.selectSQL("SELECT * FROM getOrdersByPhoneNumber('" + customerPhoneNumber + "')");
 
-        int orderID = 0;
+
+        // Stores all orders from result set
+        ArrayList<Order> orders = new ArrayList<>();
+        // Temporary value used to check for null before parsing
+        String temp;
+        // Data uses to assert that there is more data
+        String data = DB.getData();
+
+        while (!data.equals("|ND|") || DB.isPendingData()) {
+            costumerID = Integer.parseInt(data);
+            if (!(temp = DB.getData()).equals("null")) {
+                deliveryPointID = Integer.parseInt(temp);
+            }
+            if (!(temp = DB.getData()).equals("null")) {
+                endDate = Timestamp.valueOf(temp).toLocalDateTime();
+            }
+            orderID = Integer.parseInt(DB.getData());
+            statusID = Integer.parseInt(DB.getData());
+            if (!(temp = DB.getData()).equals("null")) {
+                startDate = Timestamp.valueOf(temp).toLocalDateTime();
+            }
+            orders.add(new Order(orderID, startDate, endDate, statusID, deliveryPointID, costumerID));
+            data = DB.getData();
+        }
+        addOrderItems(orders);
+        return orders;
+    }
+
+
+    public static void createOrder(int customerID, int orderStatusID, ObservableList<LaundryItem> laundryItems) {
+
+        int orderID = -1;
         try {
             CallableStatement cstmt;
             Connection con = DB.getConnection();
@@ -73,40 +109,93 @@ public class OrderManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        createOrderItems(items, orderID);
+        createOrderItems(laundryItems, orderID);
     }
 
-    private static void createOrderItems(ObservableList<Item> items, int orderID) throws SQLException {
-        System.out.println("CreateOrderItems Reached");
+
+    public static void createOrder(int customerID, int orderStatusID, List<OrderItem> orderItemList, LocalDateTime date, int deliveryPointID) {
+
+        int orderID = -1;
+        try {
+            CallableStatement cstmt;
+            Connection con = DB.getConnection();
+            cstmt = con.prepareCall("{call CleaningService.dbo.createOrderAtDeliveryPoint(?,?,?,?,?)}");
+            cstmt.setInt(1, orderStatusID);
+            cstmt.setInt(2, customerID);
+            cstmt.setTimestamp(3, Timestamp.from(Instant.now()));
+            cstmt.setInt(4, deliveryPointID);
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.execute();
+            orderID = cstmt.getInt(5);
+            cstmt.close();
+            con.close();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        createOrderItems(orderItemList, orderID);
+    }
+
+    public static void createOrderItems(ObservableList<LaundryItem> laundryItems, int orderID) {
+
         CallableStatement cstmt;
-        Connection con = DB.getConnection();
-        for (Item item : items
+        Connection con;
+        for (LaundryItem laundryItem : laundryItems
         ) {
-            System.out.println("CreateOrderItems Loop Reached");
             try {
-                cstmt = con.prepareCall("{call CleaningService.dbo.createOrderItem(?,?,?)}");
+                con = DB.getConnection();
+                cstmt = con.prepareCall("{call CleaningService.dbo.createOrderItem(?,?,?,?)}");
                 cstmt.setInt(1, orderID);
-                cstmt.setInt(2, item.getLaundryItemID());
+                cstmt.setInt(2, laundryItem.getLaundryItemID());
                 cstmt.setBoolean(3, false);
+                cstmt.setTimestamp(4,Timestamp.from(Instant.now()));
                 cstmt.execute();
                 cstmt.close();
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public static void createOrderItems(List<OrderItem> orderItemList, int orderID) {
+
+        CallableStatement cstmt;
+        Connection con;
+        for (OrderItem orderItem : orderItemList
+        ) {
+            try {
+                con = DB.getConnection();
+                cstmt = con.prepareCall("{call CleaningService.dbo.createOrderItem(?,?,?,?)}");
+                cstmt.setInt(1, orderID);
+                cstmt.setInt(2, orderItem.getLaundryItemID());
+                cstmt.setBoolean(3, false);
+                if (orderItem.getStartDateTime() == null) {
+                    cstmt.setTimestamp(4, Timestamp.from(Instant.now()));
+                } else {
+                    cstmt.setTimestamp(4, Timestamp.valueOf(orderItem.getStartDateTime()));
+                }
+                cstmt.execute();
+                cstmt.close();
+                con.close();
 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        con.close();
     }
 
-    public static void setWashStatusInDB(OrderItem orderItem){
-        try{
+    public static void setWashStatusInDB(OrderItem orderItem) {
+        try {
             Connection con = DB.getConnection();
             CallableStatement cstmt = con.prepareCall("{call CleaningService.dbo.setWashedStatus(?)}");
             cstmt.setInt(1, orderItem.getID());
             boolean results = cstmt.execute();
             cstmt.close();
             con.close();
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
 
@@ -118,8 +207,7 @@ public class OrderManager {
         int washed = Integer.parseInt(DB.getData());
         if (washed == 0) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }
@@ -137,12 +225,11 @@ public class OrderManager {
     }
 
     /**
-     *
      * @param orderID -- order ID to search for
      * @return - returns array list with order from the search
      */
     public static ObservableList<Order> getSearchOrder(int orderID) {
-        DB.selectSQL("SELECT * FROM getSearchOrder(" +orderID+")");
+        DB.selectSQL("SELECT * FROM getSearchOrder(" + orderID + ")");
         return FXCollections.observableArrayList(convertResultSetToArrayList());
     }
 
@@ -189,13 +276,12 @@ public class OrderManager {
 
         try {
             cstmt = DB.getConnection().prepareCall("{call CleaningService.dbo.updateOrder(?,?,?)}");
- 
+
             cstmt.setInt(1, order.getStatusID());
 
             if (order.getEndDate() != null) {
-                cstmt.setDate(2, java.sql.Date.valueOf(order.getEndDate().toLocalDate()));
-            }
-            else {
+                cstmt.setTimestamp(2, Timestamp.valueOf(order.getEndDate()));
+            } else {
                 cstmt.setDate(2, null);
             }
 
@@ -204,8 +290,7 @@ public class OrderManager {
             cstmt.execute();
             cstmt.close();
             DB.getConnection().close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -218,7 +303,7 @@ public class OrderManager {
      *
      * @return Returns an array list with orders
      */
-    private static ArrayList<Order> convertResultSetToArrayList( ) {
+    private static ArrayList<Order> convertResultSetToArrayList() {
 
         // Stores all orders from result set
         ArrayList<Order> orders = new ArrayList<>();
@@ -235,12 +320,13 @@ public class OrderManager {
 
                 int orderID = Integer.parseInt(data);
                 int customerID = Integer.parseInt(DB.getData());
-                LocalDateTime startDate = LocalDateTime.parse(DB.getData(), formatter);
+                LocalDateTime startDate;
+                formatter.format(startDate = Timestamp.valueOf(DB.getData()).toLocalDateTime());
                 LocalDateTime endDate = null;
 
                 // Asserts that end date != null
                 if (!(temp = DB.getData()).equals("null")) {
-                    endDate = LocalDateTime.parse(temp, formatter);
+                    formatter.format(endDate = Timestamp.valueOf(temp).toLocalDateTime());
                 }
 
                 int deliveryPointID = Integer.parseInt(DB.getData());
@@ -264,17 +350,15 @@ public class OrderManager {
      * @param orders Array list of the orders you want to add order items to
      */
     private static void addOrderItems(ArrayList<Order> orders) {
-
         String temp;
         boolean isWashed;
         int orderItemID;
         int orderID;
         int laundryItemID;
-        LocalDateTime startDateTime;
+        LocalDateTime startDateTime = null;
         LocalDateTime endDateTime = null;
 
         for (Order order : orders) {
-
             DB.selectSQL("SELECT * FROM getOrderItem(" + order.getID() + ")");
 
             while (!(temp = DB.getData()).equals("|ND|")) {
@@ -283,14 +367,17 @@ public class OrderManager {
                 laundryItemID = Integer.parseInt(DB.getData());
                 orderID = Integer.parseInt(DB.getData());
                 isWashed = Boolean.parseBoolean(DB.getData());
-                startDateTime = LocalDateTime.parse(DB.getData(), formatter);
+                if (!(temp = DB.getData()).equals("null")) {
+                    formatter.format(endDateTime = Timestamp.valueOf(temp).toLocalDateTime());
+                }
 
                 if (!(temp = DB.getData()).equals("null")) {
-                    endDateTime = LocalDateTime.parse(temp, formatter);
+                    formatter.format(endDateTime = Timestamp.valueOf(temp).toLocalDateTime());
                 }
 
                 order.getOrderItems().add(
                         new OrderItem(orderItemID, laundryItemID, orderID, isWashed, startDateTime, endDateTime));
+
             }
         }
     }
