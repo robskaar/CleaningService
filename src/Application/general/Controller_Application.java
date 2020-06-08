@@ -297,11 +297,11 @@ public class Controller_Application {
                 case Driver:
                     FXMLLoader logInLoaderDriver = new FXMLLoader(getClass().getResource("/UI/Driver/loginSceneDriver.fxml"));
                     Parent logInParentDriver = logInLoaderDriver.load();
-                    Controller_Application.logInSceneDriver = new Scene(logInParentDriver, 600, 600);
+                    Controller_Application.logInSceneDriver = new Scene(logInParentDriver, 1020, 860,Color.TRANSPARENT);
 
                     FXMLLoader registerLoaderDriver = new FXMLLoader(getClass().getResource("/UI/Driver/registerSceneDriver.fxml"));
                     Parent registerDriverParent = registerLoaderDriver.load();
-                    Controller_Application.registerSceneDriver = new Scene(registerDriverParent,600,600);
+                    Controller_Application.registerSceneDriver = new Scene(registerDriverParent,1020,860,Color.TRANSPARENT);
                     break;
             }
         }catch (IOException ex){
