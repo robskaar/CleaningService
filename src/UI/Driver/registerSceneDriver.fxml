@@ -75,6 +75,10 @@
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin></DatePicker>
+             <TextField fx:id="corporateID" alignment="CENTER" prefHeight="26.0" prefWidth="155.0" promptText="Corporate ID">
+                 <VBox.margin>
+                     <Insets bottom="10.0" />
+                 </VBox.margin></TextField>
             <HBox alignment="CENTER" prefHeight="43.0" prefWidth="600.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#register" prefHeight="26.0" prefWidth="60.0" text="Register" />

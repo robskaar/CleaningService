@@ -33,6 +33,8 @@ public class Controller_RegisterScene extends Controller_Application implements 
     TextField phoneNumber;
     @FXML
     DatePicker dateOfBirth;
+    @FXML
+    TextField corporateID;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private boolean pwdCriteriasMet = false;
     private Tooltip passwordTip = new Tooltip(
@@ -56,8 +58,7 @@ public class Controller_RegisterScene extends Controller_Application implements 
             if (matching.matches()) {
                 passWord.setStyle("-fx-border-color: green");
                 pwdCriteriasMet = true;
-            }
-            else {
+            } else {
                 passWord.setStyle("-fx-border-color: red");
                 pwdCriteriasMet = false;
             }
@@ -83,26 +84,32 @@ public class Controller_RegisterScene extends Controller_Application implements 
             dateOfBirth.setValue(tempDate);
         }
         if (pwdCriteriasMet && matcher.matches() && userName.getText() != null
-            && firstName.getText() != null && lastName.getText() != null
-            && emailAddress.getText() != null && phoneNumber.getText() != null) {
-            AccountHandler.register(userName.getText(), passWord.getText(), firstName.getText(), lastName.getText(),
-                                    emailAddress.getText(), phoneNumber.getText(), dateOfBirth.getValue(),
-                                    0); //0 is a false bit and 1 is a true in mssql
+                && firstName.getText() != null && lastName.getText() != null
+                && emailAddress.getText() != null && phoneNumber.getText() != null) {
+            switch (Controller_Application.currentEmulator) {
+                case Costumer:
+                    AccountHandler.registerCustomer(userName.getText(), passWord.getText(), firstName.getText(), lastName.getText(),
+                            emailAddress.getText(), phoneNumber.getText(), dateOfBirth.getValue(),
+                            0); //0 is a false bit and 1 is a true in mssql
+                    break;
+                case Driver:
+                    AccountHandler.registerDriver(userName.getText(),passWord.getText(),firstName.getText(),lastName.getText(),
+                            emailAddress.getText(),phoneNumber.getText(),dateOfBirth.getValue(),Integer.parseInt(corporateID.getText()));
+                    break;
+            }
+
             changeScene(); // changes into login scene after successful registration
-        }
-        else {
+        } else {
             if (!pwdCriteriasMet) {
                 passWord.setStyle("-fx-border-color: red");
                 passWord.requestFocus();
-            }
-            else {
+            } else {
                 passWord.setStyle("-fx-border-color: transparent");
             }
             if (!matcher.matches()) {
                 dateOfBirth.setStyle("-fx-border-color: red");
                 dateOfBirth.requestFocus();
-            }
-            else {
+            } else {
                 dateOfBirth.setStyle("-fx-border-color: transparent");
             }
         }
@@ -110,10 +117,15 @@ public class Controller_RegisterScene extends Controller_Application implements 
 
 
     public void changeScene() {
-        /*
-        changeScene(Controller_Application.logInSceneCostumer);
+
+        switch (Controller_Application.currentEmulator) {
+            case Costumer:
+                changeScene(Controller_Application.logInSceneCostumer);
+                break;
+            case Driver:
+                changeScene(Controller_Application.logInSceneDriver);
+                break;
+        }
         clearFields((Pane) userName.getParent());
-        
-         */
     }
 }
