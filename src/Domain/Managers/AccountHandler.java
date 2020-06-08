@@ -44,8 +44,8 @@ public final class AccountHandler {
 
             DB.setDBPropertiesPath(Role.Costumer);
             Connection con = DB.getConnection();
-            CallableStatement cstmt;
-            cstmt = con.prepareCall("{call CleaningService.dbo.createUser(?,?,?,?,?,?,?,?)}");
+            CallableStatement cstmt = con.prepareCall("{call CleaningService.dbo.createUser(?,?,?,?,?,?,?,?)}");
+
             cstmt.setString(1, userName);
             cstmt.setString(2, Password.hashPassword(password));
             cstmt.setString(3, firstName);
@@ -69,7 +69,7 @@ public final class AccountHandler {
 
             DB.setDBPropertiesPath(Role.Driver);
             Connection con = DB.getConnection();
-            CallableStatement cstmt = con.prepareCall("{call CleaningService.dbo.create_DriverUser(?,?,?,?,?,?,?,?)}");
+            CallableStatement cstmt = con.prepareCall("{call CleaningService.dbo.createDriverUser(?,?,?,?,?,?,?,?)}");
 
             cstmt.setString(1, userName);
             cstmt.setString(2, Password.hashPassword(password));
