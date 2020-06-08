@@ -1,4 +1,4 @@
-package Domain.Managers;
+package Domain.Handlers;
 
 import Domain.LaundryItems.LaundryItem;
 import Foundation.Database.DB;

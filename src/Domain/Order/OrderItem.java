@@ -1,7 +1,7 @@
 package Domain.Order;
 
 import Domain.LaundryItems.LaundryItem;
-import Domain.Managers.ItemsHandler;
+import Domain.Handlers.ItemsHandler;
 import javafx.scene.control.CheckBox;
 
 import java.time.LocalDateTime;
