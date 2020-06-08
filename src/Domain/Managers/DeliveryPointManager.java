@@ -1,6 +1,7 @@
 package Domain.Managers;
 
 import Domain.DeliveryPoint.DeliveryPoint;
+import Domain.Order.Order;
 import Foundation.Database.DB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +16,15 @@ public class DeliveryPointManager {
 
         return FXCollections.observableArrayList(convertResultSetToArrayList());
     }
+
+    public static ObservableList<DeliveryPoint> getDeliveryPoints() {
+
+        DB.selectSQL("SELECT * FROM getDeliveryPoints()");
+
+        return FXCollections.observableArrayList(convertResultSetToArrayList());
+    }
+
+
 
     private static ArrayList<DeliveryPoint> convertResultSetToArrayList() {
 

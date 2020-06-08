@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuButton?>
@@ -10,6 +12,7 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -231,7 +234,50 @@
                   <Separator prefWidth="600.0" />
                </children>
             </VBox>
-         </top></BorderPane>
+         </top>
+         <left>
+            <HBox prefHeight="562.0" prefWidth="136.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="562.0" prefWidth="129.0">
+                     <children>
+                        <Label text="Statistics by">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="4.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#addDeliveryPointStatistics" prefWidth="100.0" text="Delivery Point">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="4.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#addDurationStatistics" text="Handling Duration" />
+                        <Button mnemonicParsing="false" onAction="#addLaundryItemStatistics" prefWidth="100.0" text="Laundry Item">
+                           <VBox.margin>
+                              <Insets left="4.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#showManagerMenu" prefWidth="100.0" text="Main menu">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="4.0" top="350.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#logOff" prefWidth="100.0" text="Log out">
+                           <VBox.margin>
+                              <Insets left="4.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </left>
+         <center>
+            <AnchorPane id="DisplayPane" prefHeight="200.0" prefWidth="200.0" stylesheets="@../../Foundation/Resources/CSS/DefaultStyle.css" BorderPane.alignment="CENTER">
+               <children>
+                  <PieChart id="DisplayPane" fx:id="chart" prefHeight="564.0" prefWidth="462.0" />
+               </children>
+            </AnchorPane>
+         </center></BorderPane>
       <BorderPane fx:id="managementPane" prefHeight="200.0" prefWidth="200.0" visible="false">
          <top>
             <VBox prefHeight="29.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -272,8 +318,114 @@
             </VBox>
          </top>
          <left>
-            <HBox prefHeight="562.0" prefWidth="136.0" BorderPane.alignment="CENTER" />
-         </left></BorderPane>
+            <HBox prefHeight="562.0" prefWidth="136.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="562.0" prefWidth="129.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#getItems" prefWidth="100.0" text="Services">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="4.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#getDriversAndRoutes" prefWidth="100.0" text="Assign Driver">
+                           <VBox.margin>
+                              <Insets left="4.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#showManagerMenu" prefWidth="100.0" text="Main menu">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="4.0" top="350.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#logOff" prefWidth="100.0" text="Log out">
+                           <VBox.margin>
+                              <Insets left="4.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </left>
+         <center>
+            <StackPane id="DisplayPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox fx:id="assignDriverVbox" alignment="CENTER" prefHeight="577.0" prefWidth="464.0">
+                     <children>
+                        <HBox alignment="TOP_CENTER" prefHeight="345.0" prefWidth="465.0">
+                           <children>
+                              <Label fx:id="paneText11" alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="461.0" text="Assign driver to route" />
+                           </children>
+                        </HBox>
+                        <AnchorPane prefHeight="21.0" prefWidth="464.0">
+                           <children>
+                              <VBox layoutY="-312.0" prefHeight="453.0" prefWidth="465.0">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="46.0" prefWidth="463.0">
+                                       <children>
+                                          <Label text="Pick A Driver by ID">
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <ChoiceBox fx:id="driverChoiceBox" prefWidth="150.0">
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                          </ChoiceBox>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Pick the Route by ID" />
+                                          <ChoiceBox fx:id="routeChoiceBox" prefWidth="150.0">
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                          </ChoiceBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                        <Button mnemonicParsing="false" onAction="#confirmRouteAssignment" prefWidth="266.0" text="Confirm assignment" />
+                     </children>
+                  </VBox>
+                  <VBox fx:id="servicesVbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" visible="false">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="52.0" prefWidth="464.0">
+                           <children>
+                              <Label fx:id="paneText1" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="465.0" text="Editing services" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="523.0" prefWidth="464.0">
+                           <children>
+                              <ScrollPane prefHeight="494.0" prefWidth="165.0">
+                                 <content>
+                                    <VBox fx:id="currentItemsBox" alignment="CENTER" prefHeight="492.0" prefWidth="161.0" spacing="10.0" />
+                                 </content>
+                              </ScrollPane>
+                              <ScrollPane prefHeight="494.0" prefWidth="299.0">
+                                 <content>
+                                    <TilePane fx:id="editItemsPane" alignment="CENTER" prefColumns="2" prefHeight="491.0" prefWidth="294.0" vgap="10.0" />
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <Button fx:id="confirmChanges" mnemonicParsing="false" prefWidth="266.0" text="Confirm changes">
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+         </center></BorderPane>
       <BorderPane fx:id="initChoicePane" prefHeight="200.0" prefWidth="200.0">
          <center>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" BorderPane.alignment="CENTER">

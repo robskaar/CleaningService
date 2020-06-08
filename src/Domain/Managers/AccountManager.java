@@ -41,7 +41,7 @@ public final class AccountManager {
             DB.setDBPropertiesPath(Role.Costumer);
             CallableStatement cstmt;
             Connection con = DB.getConnection();
-            cstmt = con.prepareCall("{call CleaningService.dbo.create_user(?,?,?,?,?,?,?,?)}");
+            cstmt = con.prepareCall("{call CleaningService.dbo.createUser(?,?,?,?,?,?,?,?)}");
             cstmt.setString(1, userName);
             cstmt.setString(2, Password.hashPassword(password));
             cstmt.setString(3, firstName);

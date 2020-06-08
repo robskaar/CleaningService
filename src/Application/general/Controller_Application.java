@@ -285,6 +285,9 @@ public class Controller_Application {
 
 
     public void logOff( ) {
+        // resets size if changed in another pane on logoff.
+        primaryStage.setWidth(600);
+        primaryStage.setHeight(600);
         fxmlLoginLoader(currentEmulator);
         switch (currentEmulator) {
             case LaundryCentral:
