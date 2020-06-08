@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        /*Setting the map size*/
+        #map {
+            height: 470px;
+            width: 100%;
+        }
+    </style>
+    <title>Map</title>
+</head>
+<body>
+<div id="map"></div>
+<script>
+
+    let map;
+    let defaultLocation = {lat: 54.945147, lng: 9.259303};
+    let driverMarker;
+    let markerLocations = [];
+    let geoCoder;
+    /*
+    Not in use atm
+    let directionsRenderer;
+    let directionsService;
+    */
+
+    function initMap() {
+        // Init the map
+        map = new google.maps.Map(
+            document.getElementById('map'), {zoom: 6, center: defaultLocation});
+
+        // Sets up arbitrary/imaginary position of the driver on the map
+        // Would be actual live position on real iPad app
+        driverMarker = new google.maps.Marker({
+            map: map,
+            position: defaultLocation,
+            icon: 'http://maps.google.com/mapfiles/kml/pal4/icon31.png'
+        });
+
+        // Init address to coordinates translator
+        geoCoder = new google.maps.Geocoder();
+
+        /*
+        Not in use, because directions is currently not supported
+        directionsService = new google.maps.DirectionsService();
+        directionsRenderer = new google.maps.DirectionsRenderer();
+        directionsRenderer.setMap(map);
+         */
+    }
+
+    // This function gets executed from java, when the map is shown first time
+    function setMarker(address,storeName) {
+
+        geoCoder.geocode({'address': address}, function(results, status) {
+
+            if (status === google.maps.GeocoderStatus.OK) {
+                map.setCenter(results[0].geometry.location);
+                map.setZoom(10);
+                let marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location,
+                    animation: google.maps.Animation.DROP,
+                    icon: 'http://maps.google.com/mapfiles/kml/pal3/icon31.png'
+                });
+
+                // Adds marker to array that stores all the markers
+                markerLocations.push(marker);
+
+                // Info window shows name and address on marker hover
+                let infoWindow = new google.maps.InfoWindow({
+                    content: storeName + '<br>' + address
+                });
+
+                // Setup listener for hover
+                marker.addListener('mouseover', function() {
+                    infoWindow.open(map, this);
+                    if (marker.getAnimation() !== null) {
+                        marker.setAnimation(null);
+                    } else {
+                        marker.setAnimation(google.maps.Animation.BOUNCE);
+                    }
+                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                });
+
+                // Setup listener for hover gone
+                marker.addListener('mouseout', function() {
+                    marker.setAnimation(null);
+                    infoWindow.close();
+                });
+
+
+            } else {
+                alert('Could not get coordinated from address');
+            }
+        });
+    }
+
+    /*
+        This functions is not used at the moment, because JavaFx WebView fails to represent the correct directions
+        even though they are displayed correct in a normal browser
+     */
+    function showDirections() {
+
+        directionsService.route(
+            {
+                origin: driverMarker.getPosition(),
+                destination: 'haderslev',
+                travelMode: 'DRIVING'
+            },
+            function(response, status) {
+                if (status === 'OK') {
+                    directionsRenderer.setDirections(response);
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+    }
+
+</script>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDESNg4JQmILm84J79WD_7qEGZFP3hirQY&callback=initMap">
+</script>
+
+</body>
+</html>

@@ -3,7 +3,7 @@ package Application.LaundryCentral;
 import Domain.DeliveryPoint.DeliveryPoint;
 import Domain.Driver.Driver;
 import Domain.Enums.Role;
-import Domain.LaundryItems.Item;
+import Domain.LaundryItems.LaundryItem;
 import Domain.Managers.*;
 import Domain.Order.Order;
 import Domain.Route.Route;
@@ -63,8 +63,8 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
     @FXML private VBox servicesVbox;
     @FXML private VBox assignDriverVbox;
     @FXML private PieChart chart;
-    @FXML private ChoiceBox driverChoiceBox;
-    @FXML private ChoiceBox routeChoiceBox;
+    @FXML private ChoiceBox<Integer> driverChoiceBox;
+    @FXML private ChoiceBox<Integer> routeChoiceBox;
 
     private Order viewingOrder;
     private int buttonWidth = 50;
@@ -73,7 +73,7 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
     private int ongoingOrderID = 3;
     private int outboundOrderID = 4;
     private Order activeOngoingOrder;
-    private Item itemEditing;
+    private LaundryItem itemEditing;
     ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
     Label labelName = new Label("Item Name: ");
     Label labelDuration = new Label("Handling Duration: ");
@@ -96,7 +96,7 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
         ongoingOrderButton.setOnAction(e -> initOngoingList());
         confirmDoneOrder.setOnAction(e -> {
             activeOngoingOrder.setStatus(4);
-            OrderManager.updateOrderDB(activeOngoingOrder);
+            OrderHandler.updateOrderDB(activeOngoingOrder);
             initOngoingList();
         });
         statisticsPane.setCenter(chart);
@@ -148,8 +148,8 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
         currentItemsBox.getChildren().clear();
         editItemsPane.getChildren().clear();
         confirmChanges.setVisible(false);
-        ObservableList<Item> items = ItemsManager.getItems();
-        for (Item item : items) {
+        ObservableList<LaundryItem> items = ItemsHandler.getItems();
+        for (LaundryItem item : items) {
             Button itemButton = new Button(item.getName());
             itemButton.prefHeight(30);
             itemButton.setMinWidth(100);
@@ -221,7 +221,7 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
         double newPrice = Double.parseDouble(itemPrice.getText());
         int newDuration = Integer.parseInt(itemDuration.getText());
         String newName = itemName.getText();
-        ItemsManager.addNewItem(newName,newPrice,newDuration);
+        ItemsHandler.addNewItem(newName,newPrice,newDuration);
         getItems();
     }
     public void updateItems(){
@@ -229,7 +229,7 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
         int newDuration = Integer.parseInt(itemDuration.getText());
         String newName = itemName.getText();
         int itemID = itemEditing.getLaundryItemID();
-        ItemsManager.updateItem(itemID,newName,newPrice,newDuration);
+        ItemsHandler.updateItem(itemID,newName,newPrice,newDuration);
         getItems();
     }
 
@@ -247,7 +247,7 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
     }
 
     public void confirmRouteAssignment(){
-    RouteHandler.assignRoute((Integer) routeChoiceBox.getValue(), (Integer) driverChoiceBox.getValue());
+    RouteHandler.assignRoute(routeChoiceBox.getValue(), driverChoiceBox.getValue());
     routeChoiceBox.getItems().clear();
     driverChoiceBox.getItems().clear();
     getDriversAndRoutes();
@@ -256,10 +256,10 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
     public void addDeliveryPointStatistics(){
         chart.getData().clear();
         chart.setTitle("Delivery Point Share of orders");
-        ObservableList<DeliveryPoint> deliveryPoints = DeliveryPointManager.getDeliveryPoints();
+        ObservableList<DeliveryPoint> deliveryPoints = DeliveryPointHandler.getDeliveryPoints();
         for (DeliveryPoint deliveryPoint: deliveryPoints) {
 
-            int orderAmount = OrderManager.getOrderByDeliveryPoint(Integer.parseInt(deliveryPoint.getID()));
+            int orderAmount = OrderHandler.getOrderByDeliveryPoint(Integer.parseInt(deliveryPoint.getID()));
             pieChartData.add(new PieChart.Data(deliveryPoint.getName()+": "+orderAmount,orderAmount));
 
 
@@ -270,11 +270,11 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
     public void addDurationStatistics(){
         chart.getData().clear();
         chart.setTitle("Expected vs Real Average Handling Days");
-        ObservableList<Item> laundryItems = ItemsManager.getItems();
-        for (Item laundryItem: laundryItems) {
-            int laundryAmount = ItemsManager.getItemCount(laundryItem.getLaundryItemID());
+        ObservableList<LaundryItem> laundryItems = ItemsHandler.getItems();
+        for (LaundryItem laundryItem: laundryItems) {
+            int laundryAmount = ItemsHandler.getItemCount(laundryItem.getLaundryItemID());
             int expectedDuration = laundryItem.getHandlingDuration();
-            double actualDuration = ItemsManager.getActualAverageHandlingDuration(laundryItem.getLaundryItemID());
+            double actualDuration = ItemsHandler.getActualAverageHandlingDuration(laundryItem.getLaundryItemID());
             PieChart.Data data = new PieChart.Data(laundryItem.getName()+" Expected: "+expectedDuration+ " Actual: "+actualDuration,actualDuration);
             pieChartData.add(data);
             if (expectedDuration>=actualDuration){
@@ -290,9 +290,9 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
     public void addLaundryItemStatistics(){
         chart.getData().clear();
         chart.setTitle("Laundry Item Share of orders");
-        ObservableList<Item> laundryItems = ItemsManager.getItems();
-        for (Item laundryItem: laundryItems) {
-            int laundryAmount = ItemsManager.getItemCount(laundryItem.getLaundryItemID());
+        ObservableList<LaundryItem> laundryItems = ItemsHandler.getItems();
+        for (LaundryItem laundryItem: laundryItems) {
+            int laundryAmount = ItemsHandler.getItemCount(laundryItem.getLaundryItemID());
             pieChartData.add(new PieChart.Data(laundryItem.getName()+": "+laundryAmount,laundryAmount));
         }
         chart.setData(pieChartData);

@@ -69,6 +69,11 @@
             <HBox alignment="CENTER" prefHeight="54.0" prefWidth="174.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#logIn" prefHeight="26.0" prefWidth="70.0" text="Log in" />
+                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#changeScene" prefHeight="26.0" prefWidth="72.0" text="Register">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
          </children>

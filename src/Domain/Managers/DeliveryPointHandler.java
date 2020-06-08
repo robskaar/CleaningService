@@ -8,13 +8,13 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
-public class DeliveryPointManager {
+public class DeliveryPointHandler {
 
-    public static ObservableList<DeliveryPoint> getRouteDeliveryPoints(int routeID) {
+    public static ArrayList<DeliveryPoint> getRouteDeliveryPoints(int routeID) {
 
         DB.selectSQL("SELECT * FROM getRouteDeliveryPoints(" + routeID + ")");
 
-        return FXCollections.observableArrayList(convertResultSetToArrayList());
+        return convertResultSetToArrayList();
     }
 
     public static ObservableList<DeliveryPoint> getDeliveryPoints() {

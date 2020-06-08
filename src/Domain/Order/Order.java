@@ -27,6 +27,13 @@ public class Order {
         this.items = new ArrayList<>();
     }
 
+    public Order(int ID,int statusID) {
+        this.ID = ID;
+        this.statusID = statusID;
+        this.items = new ArrayList<>();
+    }
+
+
     public Order(String status, int orderID, int statusID) {
         this.status = status;
         this.ID = orderID;
@@ -35,9 +42,18 @@ public class Order {
         this.items = new ArrayList<>();
     }
 
-    public void updateStatus(String status) {
-        this.status = status;
+    public Order(LocalDateTime startDate, int statusID, int deliveryPointID, int customerID) {
+        this.startDate = startDate;
+        this.statusID = statusID;
+        this.deliveryPointID = deliveryPointID;
+        this.customerID = customerID;
+        this.items = new ArrayList<>();
     }
+
+    public void updateStatus(int status) {
+        this.statusID = status;
+    }
+
     public void setStatus(int status) {
         this.statusID = status;
     }
@@ -45,7 +61,7 @@ public class Order {
     /**
      * @return Status message of the order
      */
-    public String getStatusMessage(){
+    public String getStatusMessage() {
         DB.selectSQL("SELECT * FROM getOrderStatus(" + this.statusID + ")");
         return DB.getData();
     }
@@ -78,5 +94,18 @@ public class Order {
 
     public String getStatus() {
         return status;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
     }
 }

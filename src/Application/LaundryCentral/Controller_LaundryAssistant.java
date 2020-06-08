@@ -2,7 +2,7 @@ package Application.LaundryCentral;
 
 import Application.general.Controller_Application;
 import Domain.Enums.Role;
-import Domain.Managers.OrderManager;
+import Domain.Managers.OrderHandler;
 import Domain.Order.Order;
 import Domain.Order.OrderItem;
 import Foundation.Database.DB;
@@ -66,7 +66,7 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
         ongoingOrderButton.setOnAction(e -> initOngoingList());
         confirmDoneOrder.setOnAction(e -> {
             activeOngoingOrder.setStatus(4);
-            OrderManager.updateOrderDB(activeOngoingOrder);
+            OrderHandler.updateOrderDB(activeOngoingOrder);
             initOngoingList();
         });
 
@@ -81,7 +81,7 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
      * @return - returns the bool to work with it later
      */
     private boolean checkIfAllItemsConfirmed(OrderItem orderItem, Label status, Button statusButton, boolean allItemsConfirmed){
-        if (OrderManager.getWashStatusFromDB(orderItem)) {
+        if (OrderHandler.getWashStatusFromDB(orderItem)) {
             status.setText("Washed");
             statusButton.setText("Set as not finished");
             statusButton.setStyle("-fx-background-color: #FB323C ");
@@ -100,7 +100,7 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
      * then creates new labels, buttons, etc for it and displays it
      */
     public void searchForOrder( ) {
-        ObservableList<Order> outboundOrders = OrderManager.getSearchOrder(Integer.parseInt(searchField.getText()));
+        ObservableList<Order> outboundOrders = OrderHandler.getSearchOrder(Integer.parseInt(searchField.getText()));
         Order order = outboundOrders.get(0);
         resetUIstates(order);
         boolean allItemsConfirmed = true;
@@ -112,7 +112,7 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
 
             allItemsConfirmed = checkIfAllItemsConfirmed(orderItem,status,statusButton,allItemsConfirmed);
             statusButton.setOnAction(ae -> {
-                OrderManager.setWashStatusInDB(orderItem);
+                OrderHandler.setWashStatusInDB(orderItem);
                 searchForOrder();
             });
             ID.setText("Item ID: " + orderItem.getID());
@@ -170,7 +170,7 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
         inboundTilePane.getChildren().clear();
         washingLabelPrintButton.setVisible(false);
         paneText.setText("Arriving today with Driver");
-        ObservableList<Order> inboundOrders = OrderManager.getCentralOrders(inboundOrderID);
+        ObservableList<Order> inboundOrders = OrderHandler.getCentralOrders(inboundOrderID);
         for (Order order : inboundOrders) {
             Button orderButton = new Button(String.valueOf(order.getID()));
             orderButton.setMinWidth(50);
@@ -213,7 +213,7 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
      * @param tilePane - the tilepane we are working on
      */
     private void addOngoingOrderButtons(int orderStatusID, TilePane tilePane) {
-        ObservableList<Order> outboundOrders = OrderManager.getCentralOrders(orderStatusID);
+        ObservableList<Order> outboundOrders = OrderHandler.getCentralOrders(orderStatusID);
 
         for (Order order : outboundOrders) {
             Button button = new Button(String.valueOf(order.getID()));
@@ -233,7 +233,7 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
                     allItemsConfirmed = checkIfAllItemsConfirmed(orderItem,status,statusButton,allItemsConfirmed);
 
                     statusButton.setOnAction(ae -> {
-                        OrderManager.setWashStatusInDB(orderItem);
+                        OrderHandler.setWashStatusInDB(orderItem);
                         button.fire();
                     });
                     ID.setText("Item ID: " + orderItem.getID());

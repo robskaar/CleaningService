@@ -196,7 +196,7 @@
             </StackPane>
          </center>
       </BorderPane>
-      <BorderPane fx:id="statisticsPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+      <BorderPane fx:id="statisticsPane" prefHeight="200.0" prefWidth="200.0">
          <top>
             <VBox prefHeight="26.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
@@ -245,13 +245,16 @@
                               <Insets bottom="10.0" left="4.0" />
                            </VBox.margin>
                         </Label>
-                        <Button mnemonicParsing="false" onAction="#addDeliveryPointStatistics" prefWidth="100.0" text="Delivery Point">
+                        <Button mnemonicParsing="false" onAction="#addDeliveryPointStatistics" prefWidth="120.0" text="Delivery Point">
                            <VBox.margin>
                               <Insets bottom="10.0" left="4.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#addDurationStatistics" text="Handling Duration" />
-                        <Button mnemonicParsing="false" onAction="#addLaundryItemStatistics" prefWidth="100.0" text="Laundry Item">
+                        <Button mnemonicParsing="false" onAction="#addDurationStatistics" prefWidth="120.0" text="Handling Duration">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="4.0" />
+                           </VBox.margin></Button>
+                        <Button mnemonicParsing="false" onAction="#addLaundryItemStatistics" prefWidth="120.0" text="Laundry Item">
                            <VBox.margin>
                               <Insets left="4.0" />
                            </VBox.margin>
@@ -426,7 +429,7 @@
                </children>
             </StackPane>
          </center></BorderPane>
-      <BorderPane fx:id="initChoicePane" prefHeight="200.0" prefWidth="200.0">
+      <BorderPane fx:id="initChoicePane" prefHeight="200.0" prefWidth="200.0" visible="false">
          <center>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" BorderPane.alignment="CENTER">
                <children>
