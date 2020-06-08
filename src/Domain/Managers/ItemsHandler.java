@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
-public class ItemsManager {
+public class ItemsHandler {
 
     public static ObservableList<LaundryItem> getItems() {
         DB.selectSQL("Select * FROM getLaundryItems()");

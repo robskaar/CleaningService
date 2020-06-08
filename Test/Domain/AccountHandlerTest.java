@@ -2,7 +2,7 @@ package Domain;
 
 import Application.general.Controller_Application;
 import Domain.Enums.Emulator;
-import Domain.Managers.AccountManager;
+import Domain.Managers.AccountHandler;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertTrue;
  * @Date 11-05-2020
  **/
 
-public class AccountManagerTest {
+public class AccountHandlerTest {
 
     /**
      * fields used to test with, should also be present in database (note password is stored hashed not plaintext)
@@ -30,7 +30,7 @@ public class AccountManagerTest {
         Controller_Application.currentEmulator = Emulator.DeliveryPoint;
         System.out.println("Testing if log in method / procedure works");
         System.out.println();
-        assertTrue(AccountManager.logIn(userName, passWord));
+        assertTrue(AccountHandler.logIn(userName, passWord));
         System.out.println();
         System.out.println("SUCCESS");
     }

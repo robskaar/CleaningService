@@ -2,10 +2,10 @@ package Application.DeliveryPoint;
 
 import Application.general.Controller_Application;
 import Domain.LaundryItems.LaundryItem;
-import Domain.Managers.AccountManager;
+import Domain.Managers.AccountHandler;
 import Domain.Managers.CustomerHandler;
-import Domain.Managers.ItemsManager;
-import Domain.Managers.OrderManager;
+import Domain.Managers.ItemsHandler;
+import Domain.Managers.OrderHandler;
 import Domain.Order.Order;
 import Domain.Order.OrderItem;
 import UI.Costumer.ItemBox;
@@ -93,6 +93,10 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
     private final int READY_FOR_TRANSIT_ORDER_STATUS = 1;
     private final int READY_FOR_PICKUP_ORDER_STATUS = 6;
     private final int COMPLETED_ORDER_STATUS = 7;
+    final int FIRST_DELIVERY_DATE= 4;
+    final int SECOND_DELIVERY_DATE= 9;
+    final int THIRD_DELIVERY_DATE= 11;
+    final int FOURTH_DELIVERY_DATE= 16;
     private final String NEW_ORDER = "New Order";
     private final String NO_ORDER = "No Orders ready";
     private final String PHONE_REGEX = "^[0-9]{8}$";
@@ -105,6 +109,9 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
         startPane.toFront();
     }
 
+    /***
+     * searches for costumers through it's phone number
+      */
     public void searchOnPhoneNumber() {
         Pattern pattern = Pattern.compile(PHONE_REGEX);
         Matcher matcher = pattern.matcher(phoneNumberSearch.getText());
@@ -129,10 +136,16 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
         }
     }
 
+    /***
+     * shows the register customer pane
+     */
     public void showCustomerRegister() {
         registerCustomer.toFront();
     }
 
+    /***
+     * makes a new customer and changes to the correct panes
+     */
     public void makeNewCustomer() {
 
         if (isEditing==false && checkIfFilledOut()) {
@@ -158,19 +171,23 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
         registerCustomer.toFront();
         isEditing = true;
     }
+
+    /***
+     * confirms the order, and either makes a new order of adds the order items to the order.
+     */
     public void confirmOrder() {
         if (hasMultipleDeliveryDays()) {
             splitOrder();
         } else {
             if (!addedLaundryItems.isEmpty() && currentOrder.getID() == 0) {
-                OrderManager.createOrder(currentOrder.getCustomerID(), READY_FOR_TRANSIT_ORDER_STATUS, currentOrder.getOrderItems(), currentOrder.getStartDate(), AccountManager.currentDeliveryPointID);
+                OrderHandler.createOrder(currentOrder.getCustomerID(), READY_FOR_TRANSIT_ORDER_STATUS, currentOrder.getOrderItems(), currentOrder.getStartDate(), AccountHandler.currentDeliveryPointID);
             } else {
-                OrderManager.createOrderItems(addedLaundryItems, currentOrder.getID());
+                OrderHandler.createOrderItems(addedLaundryItems, currentOrder.getID());
             }
             if (!removedItems.isEmpty()) {
                 for (LaundryItem laundryItem : removedItems
                 ) {
-                    OrderManager.deleteOrderItems(laundryItem.getOrderItemID());
+                    OrderHandler.deleteOrderItems(laundryItem.getOrderItemID());
                 }
             }
         }
@@ -178,7 +195,9 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
         startPane.toFront();
     }
 
-
+    /***
+     * makes a new order if criterias are met for it
+     */
     public void addNewOrder() {
 
         if (canMakeNewItem()) {
@@ -186,19 +205,23 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
             currentOrder = new Order(
                     LocalDateTime.now(),
                     READY_FOR_TRANSIT_ORDER_STATUS,
-                    AccountManager.currentDeliveryPointID,
+                    AccountHandler.currentDeliveryPointID,
                     currentCostumerID
             );
             orderListPane.getChildren().add(label);
         }
     }
+
+    /***
+     * returns to the start pane
+     */
     public void returnToStart(){
         startPane.toFront();
     }
 
     private void setOrderListPane() {
         ArrayList<Order> orders = new ArrayList<>();
-        orders = OrderManager.getCustomerOrders(Integer.parseInt(phoneNumberSearch.getText()));
+        orders = OrderHandler.getCustomerOrders(Integer.parseInt(phoneNumberSearch.getText()));
         currentCostumerID = CustomerHandler.getCustomerIDByPhoneNumber(Integer.parseInt(phoneNumberSearch.getText()));
         orderPane.toFront();
         for (Order order : orders
@@ -216,7 +239,7 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
                 button.setOnMouseClicked(mouseEvent -> {
                     order.setStatus(COMPLETED_ORDER_STATUS);
                     order.setEndDate(LocalDateTime.now());
-                    OrderManager.updateOrderDB(order);
+                    OrderHandler.updateOrderDB(order);
                     orderListPane.getChildren().remove(hBox);
                     orderItemsPane.getChildren().clear();
                 });
@@ -234,7 +257,7 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
     }
 
     private void showItems() {
-        for (LaundryItem laundryItem : ItemsManager.getItems()
+        for (LaundryItem laundryItem : ItemsHandler.getItems()
         ) {
             ItemBox itemBox = new ItemBox(laundryItem);
             itemBox.setAddButton();
@@ -251,7 +274,7 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
     }
 
     private void addOrderItems(int orderID) {
-        for (LaundryItem laundryItem : ItemsManager.getorderLaundryItems(orderID)
+        for (LaundryItem laundryItem : ItemsHandler.getorderLaundryItems(orderID)
         ) {
             ItemBox itemBox = new ItemBox(laundryItem);
             itemBox.setRemoveButton();
@@ -282,31 +305,35 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
     }
 
     private boolean hasMultipleDeliveryDays() {
+        final int FIRST_DELIVERY_DATE= 4;
         final int DAY_OF_WEEK = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        //GateKeeper boolean
         boolean alreadyHasDeliveryDay = false;
         boolean[] deliveryDays = new boolean[4];
         int deliveryDay;
+        //Depending on the day of  the week, there is up 4 different returning date for the orders, this algorithm assigns the closes one to the order item
         for (OrderItem item : currentOrder.getOrderItems()
         ) {
             deliveryDay = DAY_OF_WEEK + item.getLaundryItem().getHandlingDuration();
 
-            if (deliveryDay <= 4) {
+            if (deliveryDay <= FIRST_DELIVERY_DATE) {
                 deliveryDays[0] = true;
-                item.setDeliveryDay(4);
-            } else if (deliveryDay <= 9) {
+                item.setDeliveryDay(FIRST_DELIVERY_DATE);
+            } else if (deliveryDay <= SECOND_DELIVERY_DATE) {
                 deliveryDays[1] = true;
-                item.setDeliveryDay(9);
-            } else if (deliveryDay <= 11) {
+                item.setDeliveryDay(SECOND_DELIVERY_DATE);
+            } else if (deliveryDay <= THIRD_DELIVERY_DATE) {
                 deliveryDays[2] = true;
-                item.setDeliveryDay(11);
-            } else if (deliveryDay <= 16) {
+                item.setDeliveryDay(THIRD_DELIVERY_DATE);
+            } else if (deliveryDay <= FOURTH_DELIVERY_DATE) {
                 deliveryDays[3] = true;
-                item.setDeliveryDay(16);
+                item.setDeliveryDay(FOURTH_DELIVERY_DATE);
             } else {
                 System.out.println("More than 2 weeks delivery");
             }
 
         }
+        //Works like a double OR-GATE that you need two true conditions to get past it
         for (Boolean hasDeliveryDay : deliveryDays
         ) {
             if (hasDeliveryDay) {
@@ -321,6 +348,9 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
         return false;
     }
 
+    /***
+     * splits the order depending on the Deliverydate
+     */
     private void splitOrder() {
         ArrayList<OrderItem> orderItems;
         for (int i = 0; i < 4; i++) {
@@ -329,22 +359,22 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
             ) {
                 switch (i) {
                     case 0:
-                        if (orderItem.getDeliveryDay() == 4) {
+                        if (orderItem.getDeliveryDay() == FIRST_DELIVERY_DATE) {
                             orderItems.add(orderItem);
                         }
                         break;
                     case 1:
-                        if (orderItem.getDeliveryDay() == 9) {
+                        if (orderItem.getDeliveryDay() == SECOND_DELIVERY_DATE) {
                             orderItems.add(orderItem);
                         }
                         break;
                     case 2:
-                        if (orderItem.getDeliveryDay() == 11) {
+                        if (orderItem.getDeliveryDay() == THIRD_DELIVERY_DATE) {
                             orderItems.add(orderItem);
                         }
                         break;
                     case 3:
-                        if (orderItem.getDeliveryDay() == 16) {
+                        if (orderItem.getDeliveryDay() == FOURTH_DELIVERY_DATE) {
                             orderItems.add(orderItem);
                         }
                         break;
@@ -352,12 +382,12 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
 
             }
             if (!orderItems.isEmpty()) {
-                OrderManager.createOrder(currentOrder.getCustomerID(), READY_FOR_TRANSIT_ORDER_STATUS, orderItems, currentOrder.getStartDate(), AccountManager.currentDeliveryPointID);
+                OrderHandler.createOrder(currentOrder.getCustomerID(), READY_FOR_TRANSIT_ORDER_STATUS, orderItems, currentOrder.getStartDate(), AccountHandler.currentDeliveryPointID);
                 showInvisibleLabel(orderMsg);
             }
         }
         if (currentOrder.getID() != 0) {
-            OrderManager.deleteOrder(currentOrder.getID());
+            OrderHandler.deleteOrder(currentOrder.getID());
         }
     }
 
@@ -410,6 +440,10 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
         phoneNumberTF.clear();
     }
 
+    /***
+     * checks if the patterns are matched in our register temp costumer pane
+     * @return
+     */
     private boolean checkIfFilledOut(){
         Pattern pattern = Pattern.compile(PHONE_REGEX);
         Pattern emailPattern = Pattern.compile(EMAIL_REGEX);

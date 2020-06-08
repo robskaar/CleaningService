@@ -14,7 +14,7 @@ import java.time.LocalDate;
  * @Date 11-05-2020
  **/
 
-public final class AccountManager {
+public final class AccountHandler {
 
     public static String currentUser;
     public static int currentCostumerID;
@@ -23,7 +23,7 @@ public final class AccountManager {
     public static Role currentRole = null;
 
 
-    private AccountManager( ) {
+    private AccountHandler( ) {
 
     }
 

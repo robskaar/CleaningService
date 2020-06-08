@@ -1,10 +1,9 @@
 package Application.Costumer;
 
 import Application.general.Controller_Application;
-import Domain.Managers.AccountManager;
+import Domain.Managers.AccountHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Point2D;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -86,7 +85,7 @@ public class Controller_RegisterScene extends Controller_Application implements 
         if (pwdCriteriasMet && matcher.matches() && userName.getText() != null
             && firstName.getText() != null && lastName.getText() != null
             && emailAddress.getText() != null && phoneNumber.getText() != null) {
-            AccountManager.register(userName.getText(), passWord.getText(), firstName.getText(), lastName.getText(),
+            AccountHandler.register(userName.getText(), passWord.getText(), firstName.getText(), lastName.getText(),
                                     emailAddress.getText(), phoneNumber.getText(), dateOfBirth.getValue(),
                                     0); //0 is a false bit and 1 is a true in mssql
             changeScene(); // changes into login scene after successful registration

@@ -2,7 +2,7 @@ package Application.general;
 
 import Domain.Enums.Emulator;
 import Domain.Enums.Role;
-import Domain.Managers.AccountManager;
+import Domain.Managers.AccountHandler;
 import Services.Resizer.ResizeHelper;
 import Services.Themes.ThemeControl;
 import javafx.application.Platform;
@@ -166,14 +166,9 @@ public class Controller_Application {
         String pass_word = passWord.getText();
         String user_name = userName.getText();
 
-        if(currentEmulator.equals(Emulator.DeliveryPoint)){
-            user_name ="DeliveryPoint";
-            pass_word ="Deliverypoint123!";
 
-        }
-
-        if (AccountManager.logIn(user_name, pass_word)) {
-            fxmlLoader(currentEmulator, AccountManager.currentRole);
+        if (AccountHandler.logIn(user_name, pass_word)) {
+            fxmlLoader(currentEmulator, AccountHandler.currentRole);
             switch (Controller_Application.currentEmulator) {
                 case Driver:
                     currentScene = driverScene;
@@ -181,10 +176,10 @@ public class Controller_Application {
                     break;
                 case LaundryCentral:
                     currentScene = laundryAssistantScene;
-                    if (AccountManager.currentRole.equals(Role.Laundry_Manager)) {
+                    if (AccountHandler.currentRole.equals(Role.Laundry_Manager)) {
                         changeScene(laundryManagerScene);
                     }
-                    else if (AccountManager.currentRole.equals(Role.Laundry_Assistant)) {
+                    else if (AccountHandler.currentRole.equals(Role.Laundry_Assistant)) {
                         changeScene(laundryAssistantScene);
                     }
 
@@ -306,7 +301,7 @@ public class Controller_Application {
                 changeScene(logInSceneDriver);
                 break;
         }
-        AccountManager.logOff();
+        AccountHandler.logOff();
     }
 
 }
