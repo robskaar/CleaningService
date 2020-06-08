@@ -51,6 +51,24 @@ public class OrderHandler {
 
         return orders;
     }
+    public static int getOrderByDeliveryPoint(int deliveryPointID){
+        int amountOfOrder = 0;
+        try {
+            CallableStatement cstmt;
+            Connection con = DB.getConnection();
+            cstmt = con.prepareCall("{call CleaningService.dbo.getOrderByDeliveryPoint(?,?)}");
+            cstmt.setInt(1, deliveryPointID);
+            cstmt.registerOutParameter(2,Types.INTEGER);
+            cstmt.execute();
+            amountOfOrder = cstmt.getInt(2);
+            cstmt.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return amountOfOrder;
+    }
 
     public static ArrayList<Order> getCustomerOrders(int customerPhoneNumber) {
         int costumerID;

@@ -273,19 +273,26 @@ public class Controller_Application {
     }
 
     public void fxmlLoginLoader(Emulator emulator){
+
         try{
             switch (emulator){
                 case LaundryCentral:
+                    primaryStage.setWidth(600);
+                    primaryStage.setHeight(600);
                     FXMLLoader logInLoaderLaundryCentral = new FXMLLoader(getClass().getResource("/UI/LaundryCentral/loginSceneLaundryCentral.fxml"));
                     Parent logInParentLaundryCentral = logInLoaderLaundryCentral.load();
                     Controller_Application.logInSceneLaundryCentral = new Scene(logInParentLaundryCentral, 600, 600);
                     break;
                 case DeliveryPoint:
+                    primaryStage.setWidth(600);
+                    primaryStage.setHeight(600);
                     FXMLLoader logInLoaderDeliveryPoint = new FXMLLoader(getClass().getResource("/UI/DeliveryPoint/loginSceneDeliveryPoint.fxml"));
                     Parent logInParentDeliveryPoint = logInLoaderDeliveryPoint.load();
                     Controller_Application.logInSceneDeliveryPoint = new Scene(logInParentDeliveryPoint, 600, 600);
                     break;
                 case Costumer:
+                    primaryStage.setWidth(600);
+                    primaryStage.setHeight(600);
                     FXMLLoader logInLoaderCostumer = new FXMLLoader(getClass().getResource("/UI/Costumer/loginSceneCostumer.fxml"));
                     Parent logInParentCostumer = logInLoaderCostumer.load();
                     Controller_Application.logInSceneCostumer = new Scene(logInParentCostumer, 600, 600);
@@ -295,6 +302,8 @@ public class Controller_Application {
                     Controller_Application.registerScene = new Scene(registerParent, 600, 600);
                     break;
                 case Driver:
+                    primaryStage.setWidth(1020);
+                    primaryStage.setHeight(860);
                     FXMLLoader logInLoaderDriver = new FXMLLoader(getClass().getResource("/UI/Driver/loginSceneDriver.fxml"));
                     Parent logInParentDriver = logInLoaderDriver.load();
                     Controller_Application.logInSceneDriver = new Scene(logInParentDriver, 600, 600);
@@ -312,6 +321,7 @@ public class Controller_Application {
 
 
     public void logOff( ) {
+        // resets size if changed in another pane on logoff.
         fxmlLoginLoader(currentEmulator);
         switch (currentEmulator) {
             case LaundryCentral:

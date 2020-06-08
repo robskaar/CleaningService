@@ -23,12 +23,13 @@ public class PasswordTest {
     public void testPassword(){
         System.out.println("Testing if hashing and checking hash of password methods work");
         System.out.println();
-        String passWord = "LaundryAssistant123!";
+        String passWord = "Mh12345!";
         String hashedPassword = Password.hashPassword(passWord);
         System.out.println(hashedPassword);
         assertTrue(Password.checkPassword(passWord, hashedPassword));
         System.out.println();
         System.out.println("SUCCESS");
     }
+
 
 }
