@@ -31,6 +31,12 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @Author Kasper Schou
+ * @Project CleaningService  -  https://github.com/robskaar
+ * @Date 09-06-2020
+ **/
+
 public class Controller_DeliveryPoint extends Controller_Application implements Initializable {
     @FXML
     private VBox startPane;
@@ -103,7 +109,6 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
     private final String EMAIL_REGEX ="(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
 
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         startPane.toFront();
@@ -111,7 +116,7 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
 
     /***
      * searches for costumers through it's phone number
-      */
+     */
     public void searchOnPhoneNumber() {
         Pattern pattern = Pattern.compile(PHONE_REGEX);
         Matcher matcher = pattern.matcher(phoneNumberSearch.getText());
@@ -167,6 +172,7 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
             clearCustomerTextfields();
         }
     }
+
     public void editCustomer(){
         registerCustomer.toFront();
         isEditing = true;

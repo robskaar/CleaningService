@@ -22,6 +22,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * @Author Kasper Schou
+ * @Project CleaningService
+ * @Date 09-06-2020
+ **/
+
 
 public class Controller_Costumer extends Controller_Application implements Initializable {
 

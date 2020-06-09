@@ -8,6 +8,11 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * @Author Kasper Schou
+ * @Project CleaningService
+ * @Date 09-06-2020
+ **/
 public class ItemsHandler {
 
     public static ObservableList<LaundryItem> getItems() {
@@ -50,8 +55,7 @@ public class ItemsHandler {
             boolean results = cstmt.execute();
             cstmt.close();
             con.close();
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
@@ -68,11 +72,11 @@ public class ItemsHandler {
             boolean results = cstmt.execute();
             cstmt.close();
             con.close();
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
+
     public static LaundryItem getLaundryItems(int laundryItemID){
         DB.selectSQL("SELECT * FROM getLaundryItem(" + laundryItemID + ")");
         String itemName = DB.getData();
@@ -80,6 +84,7 @@ public class ItemsHandler {
         int handlingDuration = Integer.parseInt(DB.getData());
         return new LaundryItem(laundryItemID,itemName,price,handlingDuration);
     }
+
     private static ArrayList<LaundryItem> convertResultSetToArrayList(boolean hasOrderItemID) {
         int laundryItemID;
         int price;
@@ -127,8 +132,7 @@ public class ItemsHandler {
             cstmt.close();
             con.close();
             return actualDuration;
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return actualDuration;
