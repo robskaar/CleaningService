@@ -2,9 +2,9 @@ package Application.Costumer;
 
 import Application.general.Controller_Application;
 import Domain.LaundryItems.LaundryItem;
-import Domain.Managers.AccountHandler;
-import Domain.Managers.ItemsHandler;
-import Domain.Managers.OrderHandler;
+import Domain.Handlers.AccountHandler;
+import Domain.Handlers.ItemsHandler;
+import Domain.Handlers.OrderHandler;
 import Domain.Order.Order;
 import UI.Costumer.ItemBox;
 import javafx.beans.binding.Bindings;

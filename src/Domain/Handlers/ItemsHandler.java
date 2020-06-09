@@ -1,10 +1,7 @@
-package Domain.Managers;
-
-import Domain.Enums.Role;
+package Domain.Handlers;
 
 import Domain.LaundryItems.LaundryItem;
 import Foundation.Database.DB;
-import Services.Passwordmodifier.Password;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

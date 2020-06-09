@@ -2,7 +2,7 @@ package Domain;
 
 import Application.general.Controller_Application;
 import Domain.Enums.Emulator;
-import Domain.Managers.AccountHandler;
+import Domain.Handlers.AccountHandler;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
