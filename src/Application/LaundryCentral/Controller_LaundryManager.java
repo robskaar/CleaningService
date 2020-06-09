@@ -264,6 +264,8 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
      * gets unassigned drivers and unassigned routes, puts them in Choice boxes that can be picked
      */
     public void getDriversAndRoutes( ) {
+        routeChoiceBox.getItems().clear();
+        driverChoiceBox.getItems().clear();
         assignDriverVbox.setVisible(true);
         servicesVbox.setVisible(false);
         ObservableList<Driver> drivers = DriverHandler.getDrivers();
