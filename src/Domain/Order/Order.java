@@ -4,6 +4,11 @@ import Foundation.Database.DB;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+/**
+ * @Author Kasper Schou + Jacob Bonefeld
+ * @Project CleaningService  -  https://github.com/robskaar
+ * @Date 09-06-2020
+ **/
 
 public class Order {
 
@@ -89,16 +94,13 @@ public class Order {
     @Override
     public String toString() {
         return "OrderID: " + this.ID + " Start date: " + this.startDate + " End date " + this.endDate +
-               " Status: " + this.statusID + " DeliveryPointID " + this.deliveryPointID + " CustomerID " + this.customerID;
+                " Status: " + this.statusID + " DeliveryPointID " + this.deliveryPointID + " CustomerID " + this.customerID;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
-    }
 
     public LocalDateTime getStartDate() {
         return startDate;

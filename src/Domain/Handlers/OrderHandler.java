@@ -13,7 +13,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @Author Kasper Schou + Jacob bonefeld +
+ * @Project CleaningService  -  https://github.com/robskaar
+ * @Date 09-06-2020
+ **/
 public class OrderHandler {
 
     // Used to format SQL DateTime to Java LocalDateTime

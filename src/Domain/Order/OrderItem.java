@@ -6,6 +6,7 @@ import javafx.scene.control.CheckBox;
 
 import java.time.LocalDateTime;
 
+
 public class OrderItem {
 
     private boolean isWashed;
@@ -44,18 +45,10 @@ public class OrderItem {
                 " start date " + startDateTime + " end date " + endDateTime;
     }
 
-    public boolean isWashed() {
-        return this.isWashed;
-    }
-
     public int getID() {
         return ID;
     }
 
-
-    public CheckBox getCheckBox() {
-        return checkBox;
-    }
 
     public boolean isChecked(){
         return this.checkBox.isSelected();

@@ -7,6 +7,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
+/**
+ * @Author Kasper Schou
+ * @Project CleaningService
+ * @Date 09-06-2020
+ **/
 
 public class ItemBox extends HBox {
     private Button button;
