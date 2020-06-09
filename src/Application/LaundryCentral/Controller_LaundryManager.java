@@ -4,7 +4,7 @@ import Domain.DeliveryPoint.DeliveryPoint;
 import Domain.Driver.Driver;
 import Domain.Enums.Role;
 import Domain.LaundryItems.LaundryItem;
-import Domain.Managers.*;
+import Domain.Handlers.*;
 import Domain.Order.Order;
 import Domain.Route.Route;
 import Foundation.Database.DB;
@@ -25,8 +25,6 @@ import javafx.event.ActionEvent;
 
 import java.net.URL;
 import java.util.*;
-
-import static Domain.Managers.CustomerHandler.getCostumerID;
 
 /**
  * @Author Robert Skaar

@@ -1,7 +1,6 @@
-package Domain.Managers;
+package Domain.Handlers;
 
 import Application.general.Controller_Application;
-import Domain.Enums.Emulator;
 import Domain.Enums.Role;
 import Foundation.Database.DB;
 import Services.Passwordmodifier.Password;

@@ -3,7 +3,7 @@ package Application.general;
 import Application.Driver.Controller_Driver;
 import Domain.Enums.Emulator;
 import Domain.Enums.Role;
-import Domain.Managers.AccountHandler;
+import Domain.Handlers.AccountHandler;
 import Foundation.Database.DB;
 import Services.Resizer.ResizeHelper;
 import Services.Themes.ThemeControl;
@@ -339,11 +339,11 @@ public class Controller_Application {
                     primaryStage.setHeight(600);
                     FXMLLoader logInLoaderCostumer = new FXMLLoader(getClass().getResource("/UI/Costumer/loginSceneCostumer.fxml"));
                     Parent logInParentCostumer = logInLoaderCostumer.load();
-                    Controller_Application.logInSceneCostumer = new Scene(logInParentCostumer, 600, 600);
+                    Controller_Application.logInSceneCostumer = new Scene(logInParentCostumer, 600, 600, Color.TRANSPARENT);
 
                     FXMLLoader registerLoader = new FXMLLoader(getClass().getResource("/UI/Costumer/registerScene.fxml"));
                     Parent registerParent = registerLoader.load();
-                    Controller_Application.registerScene = new Scene(registerParent, 600, 600);
+                    Controller_Application.registerScene = new Scene(registerParent, 600, 600, Color.TRANSPARENT);
                     break;
                 case Driver:
                     primaryStage.setWidth(1020);

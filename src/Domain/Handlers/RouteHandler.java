@@ -1,4 +1,4 @@
-package Domain.Managers;
+package Domain.Handlers;
 
 import Domain.Route.Route;
 import Foundation.Database.DB;

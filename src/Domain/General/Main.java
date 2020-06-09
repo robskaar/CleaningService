@@ -28,10 +28,10 @@ import javafx.stage.StageStyle;
         Controller_Application.primaryStage = primaryStage;
         FXMLLoader logInLoaderCostumer = new FXMLLoader(getClass().getResource("/UI/Costumer/loginSceneCostumer.fxml"));
         Parent logInParentCostumer = logInLoaderCostumer.load();
-        Controller_Application.logInSceneCostumer = new Scene(logInParentCostumer, 600, 600);
+        Controller_Application.logInSceneCostumer = new Scene(logInParentCostumer, 600, 600, Color.TRANSPARENT);
         FXMLLoader registerLoader = new FXMLLoader(getClass().getResource("/UI/Costumer/registerScene.fxml"));
         Parent registerParent = registerLoader.load();
-        Controller_Application.registerScene = new Scene(registerParent, 600, 600);
+        Controller_Application.registerScene = new Scene(registerParent, 600, 600, Color.TRANSPARENT);
 
 
         //sets initial theme for the application

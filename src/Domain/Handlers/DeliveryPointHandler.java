@@ -1,7 +1,6 @@
-package Domain.Managers;
+package Domain.Handlers;
 
 import Domain.DeliveryPoint.DeliveryPoint;
-import Domain.Order.Order;
 import Foundation.Database.DB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

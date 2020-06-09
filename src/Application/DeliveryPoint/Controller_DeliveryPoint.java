@@ -2,10 +2,10 @@ package Application.DeliveryPoint;
 
 import Application.general.Controller_Application;
 import Domain.LaundryItems.LaundryItem;
-import Domain.Managers.AccountHandler;
-import Domain.Managers.CustomerHandler;
-import Domain.Managers.ItemsHandler;
-import Domain.Managers.OrderHandler;
+import Domain.Handlers.AccountHandler;
+import Domain.Handlers.CustomerHandler;
+import Domain.Handlers.ItemsHandler;
+import Domain.Handlers.OrderHandler;
 import Domain.Order.Order;
 import Domain.Order.OrderItem;
 import UI.Costumer.ItemBox;
@@ -190,6 +190,7 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
                     OrderHandler.deleteOrderItems(laundryItem.getOrderItemID());
                 }
             }
+            //ADD METHOD HERE TO SEND EMAIL to customer as an confirmation slip
         }
         clearPanes();
         startPane.toFront();
