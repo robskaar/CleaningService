@@ -9,17 +9,13 @@ import java.sql.Date;
  **/
 
 public class Driver {
-    private int driverID;
-    private String firstName;
-    private String lastName;
-    private  String emailAddress;
-    private String phoneNo;
-    /*
-     corporateIDNO is the ID we expect the driver to have at the delivery company.
-      used for manager to see time schedule and choose a driver for a route
-     */
-    private  int corporateIDNO;
-    private  Date dateOfBirth;
+    int driverID;
+    String firstName;
+    String lastName;
+    String emailAddress;
+    String phoneNo;
+    int corporateIDNO;
+    Date dateOfBirth;
 
 
     public Driver(int driverID, String firstName, String lastName, String emailAddress, String phoneNo, int corporateIDNO, Date dateOfBirth ) {
@@ -32,7 +28,31 @@ public class Driver {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public int getDriverID( ) {
+        return driverID;
+    }
+
+    public String getFirstName( ) {
+        return firstName;
+    }
+
+    public String getLastName( ) {
+        return lastName;
+    }
+
+    public String getEmailAddress( ) {
+        return emailAddress;
+    }
+
+    public String getPhoneNo( ) {
+        return phoneNo;
+    }
+
     public int getCorporateIDNO( ) {
         return corporateIDNO;
+    }
+
+    public Date getDateOfBirth( ) {
+        return dateOfBirth;
     }
 }

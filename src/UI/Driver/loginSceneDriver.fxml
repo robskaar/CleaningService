@@ -10,11 +10,14 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.general.Controller_Application">
+<BorderPane prefHeight="860.0" prefWidth="1020.0" stylesheets="@../../Foundation/Resources/CSS/Driver/Driver.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.general.Controller_Application">
    <top>
 
       <VBox prefHeight="35.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -56,27 +59,38 @@
       </VBox>
    </top>
    <center>
-      <VBox alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="90.0" prefWidth="174.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="userName" alignment="CENTER" prefHeight="26.0" prefWidth="433.0" promptText="Username">
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin></TextField>
-            <PasswordField fx:id="passWord" alignment="CENTER" onAction="#logIn" prefHeight="26.0" prefWidth="433.0" promptText="Password">
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin></PasswordField>
-            <HBox alignment="CENTER" prefHeight="54.0" prefWidth="174.0">
+            <ImageView fitHeight="817.0" fitWidth="1060.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Foundation/Resources/Icons/Driver/ipad.png" />
+               </image>
+            </ImageView>
+            <VBox alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="625.0" prefWidth="832.0" styleClass="driverVBox" AnchorPane.leftAnchor="94.0" AnchorPane.topAnchor="97.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#logIn" prefHeight="26.0" prefWidth="70.0" text="Log in" />
-                  <Button fx:id="registerButton" mnemonicParsing="false" onAction="#changeToRegisterScene" prefHeight="26.0" prefWidth="72.0" text="Register">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </Button>
+                  <TextField fx:id="userName" alignment="CENTER" prefHeight="26.0" prefWidth="433.0" promptText="Username">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <PasswordField fx:id="passWord" alignment="CENTER" onAction="#logIn" prefHeight="26.0" prefWidth="433.0" promptText="Password">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </PasswordField>
+                  <HBox alignment="CENTER" prefHeight="54.0" prefWidth="174.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#logIn" prefHeight="26.0" prefWidth="70.0" text="Log in" />
+                        <Button fx:id="registerButton" mnemonicParsing="false" onAction="#changeScene" prefHeight="26.0" prefWidth="72.0" text="Register">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
+            </VBox>
          </children>
-      </VBox>
+      </AnchorPane>
    </center>
 </BorderPane>
