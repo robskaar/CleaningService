@@ -17,11 +17,19 @@ import java.util.ArrayList;
 public class DriverHandler {
 
 
-
+    /**
+     * gets drivers from db.
+     * @return returns a observable array list with driver objects converted from result set.
+     */
     public static ObservableList<Driver> getDrivers() {
         DB.selectSQL("SELECT * FROM getDrivers()");
         return FXCollections.observableArrayList(convertResultSetToArrayList());
     }
+
+    /**
+     * makes a object from a result set and adds it to an array list until no more objects can be made
+     * @return returns an array list of driver objects
+     */
     private static ArrayList<Driver> convertResultSetToArrayList() {
         int driverID = 0;
         String firstName = null;

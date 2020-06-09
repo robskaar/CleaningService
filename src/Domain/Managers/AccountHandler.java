@@ -28,17 +28,33 @@ public final class AccountHandler {
 
     }
 
+    /*
+    gets the current route of a user - only used from the driver
+     */
     public static int getCurrentRoute() {
         DB.selectSQL("SELECT * FROM getDriverRoute('" + currentUser + "')");
         return Integer.parseInt(DB.getData());
     }
 
+    /*
+    returns the currentUser logged in
+     */
     public static String getCurrentUser() {
         return currentUser;
     }
 
+    /**
+     *  registers a costumer
+     * @param userName - info input
+     * @param password - info input
+     * @param firstName - info input
+     * @param lastName - info input
+     * @param emailAddress - info input
+     * @param phoneNumber - info input
+     * @param dateOfBirth - info input
+     * @param isTemporary - info input
+     */
     public static void registerCustomer(String userName, String password, String firstName, String lastName, String emailAddress, String phoneNumber, LocalDate dateOfBirth, int isTemporary) {
-        System.out.println(currentRole);
 
         try {
 
@@ -63,6 +79,18 @@ public final class AccountHandler {
         }
     }
 
+    /**
+     * registers a driver
+     * @param userName - info input
+     * @param password - info input
+     * @param firstName - info input
+     * @param lastName - info input
+     * @param emailAddress - info input
+     * @param phoneNumber - info input
+     * @param dateOfBirth - info input
+     * @param corporateID - info input - the ID we expect a driver to have from the delivery firm.
+     *                    manager uses this ID for selecting the driver from a time schedule by their ID from delivery firm
+     */
     public static void registerDriver(String userName, String password, String firstName, String lastName, String emailAddress, String phoneNumber, LocalDate dateOfBirth, int corporateID) {
 
         try {
@@ -88,6 +116,13 @@ public final class AccountHandler {
         }
     }
 
+    /**
+     * log in a user
+     * will alter connection used depending on the current emulator
+     * @param userName - info input
+     * @param password - info input
+     * @return returns true if success, else false
+     */
     public static Boolean logIn(String userName, String password) {
         try {
             CallableStatement cstmt;
@@ -174,6 +209,9 @@ public final class AccountHandler {
         }
     }
 
+    /**
+     * logoff, reset states.
+     */
     public static void logOff() {
         isLoggedIn = false;
         currentUser = null;

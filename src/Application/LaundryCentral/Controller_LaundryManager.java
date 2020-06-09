@@ -26,6 +26,8 @@ import javafx.event.ActionEvent;
 import java.net.URL;
 import java.util.*;
 
+import static Domain.Managers.CustomerHandler.getCostumerID;
+
 /**
  * @Author Robert Skaar
  * @Project newProject  -  https://github.com/robskaar
@@ -82,6 +84,12 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
     TextField itemDuration = new TextField();
     TextField itemPrice = new TextField();
 
+    /**
+     * initialize the LaundryManager fxml/controller
+     *
+     * @param url            - standard param of init
+     * @param resourceBundle - standard param of init
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -100,9 +108,14 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
             initOngoingList();
         });
         statisticsPane.setCenter(chart);
-        chart.setMinSize(600,600);
+        chart.setMinSize(600, 600);
     }
 
+    /**
+     * handles what pane to show and which to hide depending on actionEvent from a button
+     *
+     * @param event
+     */
     @FXML
     private void showPanes(ActionEvent event) {
         primaryStage.setHeight(600);
@@ -133,6 +146,9 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
 
     }
 
+    /**
+     * shows the main menu for the manager
+     */
     public void showManagerMenu( ) {
         primaryStage.setHeight(600);
         primaryStage.setWidth(600);
@@ -142,6 +158,10 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
         assistantTaskPane.setVisible(false);
     }
 
+    /**
+     * get laundry items and display them as buttons.
+     * also adds action events when the button clicked will be able to edit that item
+     */
     public void getItems( ) {
         servicesVbox.setVisible(true);
         assignDriverVbox.setVisible(false);
@@ -156,8 +176,8 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
             currentItemsBox.getChildren().add(itemButton);
 
             itemButton.setOnAction(e -> {
-                confirmChanges.setOnAction(actionEvent->{
-                updateItems();
+                confirmChanges.setOnAction(actionEvent -> {
+                    updateItems();
                 });
                 confirmChanges.setVisible(true);
                 itemEditing = item;
@@ -187,97 +207,118 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
         newItemButton.prefHeight(30);
         newItemButton.setMinWidth(100);
         currentItemsBox.getChildren().add(newItemButton);
-        newItemButton.setOnAction(e->{
-            confirmChanges.setOnAction(actionEvent->{
-            addItem();
+        newItemButton.setOnAction(e -> {
+            confirmChanges.setOnAction(actionEvent -> {
+                addItem();
             });
-                confirmChanges.setVisible(true);
-                editItemsPane.getChildren().clear();
-                labelName.setPrefWidth(120);
-                itemName.setPromptText("Name of service");
-                itemName.clear();
-                itemName.setStyle("-fx-background-color: white");
-                itemName.setPrefWidth(50);
-                labelDuration.setPrefWidth(120);
-                itemDuration.setPromptText("Handling Duration");
-                itemDuration.clear();
-                itemDuration.setPrefWidth(50);
-                itemDuration.setStyle("-fx-background-color: white");
-                labelPrice.setPrefWidth(120);
-                itemPrice.setPromptText("Price for service");
-                itemPrice.setPrefWidth(50);
-                itemPrice.clear();
-                itemPrice.setStyle("-fx-background-color: white");
-                editItemsPane.getChildren().add(labelName);
-                editItemsPane.getChildren().add(itemName);
-                editItemsPane.getChildren().add(labelDuration);
-                editItemsPane.getChildren().add(itemDuration);
-                editItemsPane.getChildren().add(labelPrice);
-                editItemsPane.getChildren().add(itemPrice);
-            });
+            confirmChanges.setVisible(true);
+            editItemsPane.getChildren().clear();
+            labelName.setPrefWidth(120);
+            itemName.setPromptText("Name of service");
+            itemName.clear();
+            itemName.setStyle("-fx-background-color: white");
+            itemName.setPrefWidth(50);
+            labelDuration.setPrefWidth(120);
+            itemDuration.setPromptText("Handling Duration");
+            itemDuration.clear();
+            itemDuration.setPrefWidth(50);
+            itemDuration.setStyle("-fx-background-color: white");
+            labelPrice.setPrefWidth(120);
+            itemPrice.setPromptText("Price for service");
+            itemPrice.setPrefWidth(50);
+            itemPrice.clear();
+            itemPrice.setStyle("-fx-background-color: white");
+            editItemsPane.getChildren().add(labelName);
+            editItemsPane.getChildren().add(itemName);
+            editItemsPane.getChildren().add(labelDuration);
+            editItemsPane.getChildren().add(itemDuration);
+            editItemsPane.getChildren().add(labelPrice);
+            editItemsPane.getChildren().add(itemPrice);
+        });
     }
 
-    public void addItem(){
+    /**
+     * used to add item type to the DB
+     */
+    public void addItem( ) {
         double newPrice = Double.parseDouble(itemPrice.getText());
         int newDuration = Integer.parseInt(itemDuration.getText());
         String newName = itemName.getText();
-        ItemsHandler.addNewItem(newName,newPrice,newDuration);
+        ItemsHandler.addNewItem(newName, newPrice, newDuration);
         getItems();
     }
-    public void updateItems(){
+
+    /**
+     * used to update items in the DB
+     */
+    public void updateItems( ) {
         double newPrice = Double.parseDouble(itemPrice.getText());
         int newDuration = Integer.parseInt(itemDuration.getText());
         String newName = itemName.getText();
         int itemID = itemEditing.getLaundryItemID();
-        ItemsHandler.updateItem(itemID,newName,newPrice,newDuration);
+        ItemsHandler.updateItem(itemID, newName, newPrice, newDuration);
         getItems();
     }
 
-    public void getDriversAndRoutes(){
+    /**
+     * gets unassigned drivers and unassigned routes, puts them in Choice boxes that can be picked
+     */
+    public void getDriversAndRoutes( ) {
         assignDriverVbox.setVisible(true);
         servicesVbox.setVisible(false);
-       ObservableList<Driver> drivers = DriverHandler.getDrivers();
-        for (Driver driver: drivers) {
+        ObservableList<Driver> drivers = DriverHandler.getDrivers();
+        for (Driver driver : drivers) {
             driverChoiceBox.getItems().add(driver.getCorporateIDNO());
         }
         ObservableList<Route> routes = RouteHandler.getRoutes();
-        for (Route route: routes){
+        for (Route route : routes) {
             routeChoiceBox.getItems().add(route.getRouteID());
         }
     }
 
-    public void confirmRouteAssignment(){
-    RouteHandler.assignRoute(routeChoiceBox.getValue(), driverChoiceBox.getValue());
-    routeChoiceBox.getItems().clear();
-    driverChoiceBox.getItems().clear();
-    getDriversAndRoutes();
+    /*
+    confirms the choiceboxes and assigns the route to the driver in DB.
+    will then renew the pane and the assigned route + driver is no longer found in choiceboxes
+     */
+    public void confirmRouteAssignment( ) {
+        RouteHandler.assignRoute(routeChoiceBox.getValue(), driverChoiceBox.getValue());
+        routeChoiceBox.getItems().clear();
+        driverChoiceBox.getItems().clear();
+        getDriversAndRoutes();
     }
 
-    public void addDeliveryPointStatistics(){
+    /*
+    adds statistics for share of delivery point orders to the chart
+     */
+    public void addDeliveryPointStatistics( ) {
         chart.getData().clear();
         chart.setTitle("Delivery Point Share of orders");
         ObservableList<DeliveryPoint> deliveryPoints = DeliveryPointHandler.getDeliveryPoints();
-        for (DeliveryPoint deliveryPoint: deliveryPoints) {
-
+        for (DeliveryPoint deliveryPoint : deliveryPoints) {
             int orderAmount = OrderHandler.getOrderByDeliveryPoint(Integer.parseInt(deliveryPoint.getID()));
-            pieChartData.add(new PieChart.Data(deliveryPoint.getName()+": "+orderAmount,orderAmount));
-
-
+            pieChartData.add(new PieChart.Data(deliveryPoint.getName() + ": " + orderAmount, orderAmount));
         }
         chart.setData(pieChartData);
     }
 
-    public void addDurationStatistics(){
+    /*
+    adds duration statistics to the chart,
+    this will display avg. actual handling duration in days for each type of laundry, versus the expected time.
+    if above, it is displayed red, if below or equal it is green. to indicate the manager of handling time issues
+     */
+    public void addDurationStatistics( ) {
         chart.getData().clear();
         chart.setTitle("Expected vs Real Average Handling Days");
         ObservableList<LaundryItem> laundryItems = ItemsHandler.getItems();
-        for (LaundryItem laundryItem: laundryItems) {
+        for (LaundryItem laundryItem : laundryItems) {
             int laundryAmount = ItemsHandler.getItemCount(laundryItem.getLaundryItemID());
             int expectedDuration = laundryItem.getHandlingDuration();
             double actualDuration = ItemsHandler.getActualAverageHandlingDuration(laundryItem.getLaundryItemID());
-            PieChart.Data data = new PieChart.Data(laundryItem.getName()+" Expected: "+expectedDuration+ " Actual: "+actualDuration,actualDuration);
+            PieChart.Data data = new PieChart.Data(
+                    laundryItem.getName() + " Expected: " + expectedDuration + " Actual: " + actualDuration,
+                    actualDuration);
             pieChartData.add(data);
-            if (expectedDuration>=actualDuration){
+            if (expectedDuration >= actualDuration) {
                 data.getNode().setStyle("-fx-pie-color: #93C553");
             }
             else {
@@ -287,14 +328,58 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
         chart.setData(pieChartData);
     }
 
-    public void addLaundryItemStatistics(){
+    /*
+    adds laundry item share on orders to the chart.
+     */
+    public void addLaundryItemStatistics( ) {
         chart.getData().clear();
         chart.setTitle("Laundry Item Share of orders");
         ObservableList<LaundryItem> laundryItems = ItemsHandler.getItems();
-        for (LaundryItem laundryItem: laundryItems) {
+        for (LaundryItem laundryItem : laundryItems) {
             int laundryAmount = ItemsHandler.getItemCount(laundryItem.getLaundryItemID());
-            pieChartData.add(new PieChart.Data(laundryItem.getName()+": "+laundryAmount,laundryAmount));
+            pieChartData.add(new PieChart.Data(laundryItem.getName() + ": " + laundryAmount, laundryAmount));
         }
         chart.setData(pieChartData);
+    }
+
+    /**
+     * will display a chart of age distribution of the registered customers.
+     */
+    public void addCustomerAgeStatistics( ) {
+        chart.getData().clear();
+        chart.setTitle("Age distribution of registered customers");
+        int age0To15 = 0;
+        int age16To30 = 0;
+        int age31To45 = 0;
+        int age46To60 = 0;
+        int age61To100 = 0;
+        ObservableList<Integer> customerIDs = CustomerHandler.getCostumerID();
+        ArrayList<Integer> customerAges = new ArrayList<>();
+        for (Integer customerID : customerIDs) {
+            int customerAge = CustomerHandler.getAge(customerID);
+            customerAges.add(customerAge);
+        }
+        for (Integer age : customerAges) {
+            if (age > 0 && age < 16) {
+                age0To15++;
+            }
+            else if (age > 15 && age < 31) {
+                age16To30++;
+            }
+            else if (age > 31 && age < 46) {
+                age31To45++;
+            }
+            else if (age > 45 && age < 61) {
+                age46To60++;
+            }
+            else if (age >60 && age<101){
+                age61To100++;
+            }
+        }
+        pieChartData.add(new PieChart.Data("Age 0 to 15: "+age0To15,age0To15));
+        pieChartData.add(new PieChart.Data("Age 16 to 30: "+age16To30,age16To30));
+        pieChartData.add(new PieChart.Data("Age 31 to 45: "+age31To45,age31To45));
+        pieChartData.add(new PieChart.Data("Age 46 to 60: "+age46To60,age46To60));
+        pieChartData.add(new PieChart.Data("Age 61 to 100: "+age61To100,age61To100));
     }
 }

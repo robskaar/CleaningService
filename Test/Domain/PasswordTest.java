@@ -16,7 +16,7 @@ public class PasswordTest {
 
 
     /**
-     * Gets the hash value of a password inserted
+     * Gets the hash value of a password inserted in sysout
      * also, it checks if the hashing + valuation of the hashed password works correctly
      */
     @Test

@@ -17,14 +17,22 @@ import java.util.ArrayList;
 public class RouteHandler {
 
 
+    /**
+     * gets routes from DB.
+     * @return returns observable array list converted from result set, with objects of routes.
+     */
     public static ObservableList<Route> getRoutes( ) {
         DB.selectSQL("SELECT * FROM getRoutes()");
         return FXCollections.observableArrayList(convertResultSetToArrayList());
     }
+
+    /**
+     * converts result set to array list
+     * @return returns an array list of route objects
+     */
     private static ArrayList<Route> convertResultSetToArrayList( ) {
         int routeID;
         int isAssigned;
-
 
         // Stores all orders from result set
         ArrayList<Route> Routes = new ArrayList<>();
@@ -45,6 +53,11 @@ public class RouteHandler {
         return Routes;
     }
 
+    /**
+     * assigns a route in the DB, and updates route fldIsAssigned true/false depending on the current state.
+     * @param routeID - the route ID to be assigned
+     * @param driverCorpID - the corp ID of the driver to get the route assigned
+     */
     public static void assignRoute(int routeID, int driverCorpID){
         try {
             CallableStatement cstmt;

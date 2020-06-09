@@ -42,8 +42,30 @@ public class Controller_Application {
     @FXML private TextField userName;
     @FXML private PasswordField passWord;
     @FXML public Label emulationType;
+    // Fields
+    private static boolean isFullScreen;
+    public static Scene currentScene;
+    public static Stage primaryStage;
+    public static Emulator currentEmulator = null;
+    public static Controller_Driver driverController;
 
+    //Scenes
+    public static Scene logInSceneCostumer;
+    public static Scene logInSceneLaundryCentral;
+    public static Scene logInSceneDeliveryPoint;
+    public static Scene logInSceneDriver;
+    public static Scene registerSceneDriver;
+    public static Scene registerScene;
+    public static Scene costumerScene;
+    public static Scene deliveryPointScene;
+    public static Scene laundryAssistantScene;
+    public static Scene driverScene;
+    public static Scene laundryManagerScene;
 
+    /**
+     * method used when choosing what system to be emulated
+     * @param actionEvent - actionevent that we get source from to determin what button -> what emulation to use
+     */
     @FXML
     private void emulateAs(ActionEvent actionEvent) {
 
@@ -81,38 +103,29 @@ public class Controller_Application {
         }
     }
 
-    // Fields
-    private static boolean isFullScreen;
-    public static Scene currentScene;
-    public static Stage primaryStage;
-    public static Emulator currentEmulator = null;
-    public static Controller_Driver driverController;
 
-    //Scenes
-    public static Scene logInSceneCostumer;
-    public static Scene logInSceneLaundryCentral;
-    public static Scene logInSceneDeliveryPoint;
-    public static Scene logInSceneDriver;
-    public static Scene registerSceneDriver;
-    public static Scene registerScene;
-    public static Scene costumerScene;
-    public static Scene deliveryPointScene;
-    public static Scene laundryAssistantScene;
-    public static Scene driverScene;
-    public static Scene laundryManagerScene;
-
+    /**
+     * changes to dark theme
+     */
     public void changeThemeDark( ) {
         ThemeControl.currentTheme = ThemeControl.DARK;
         currentScene.getStylesheets().add(ThemeControl.currentTheme.getTheme());
         changeScene(currentScene);
     }
 
+    /**
+     * changes to default theme
+     */
     public void changeThemeDefault( ) {
         ThemeControl.currentTheme = ThemeControl.DEFAULT;
         currentScene.getStylesheets().add(ThemeControl.currentTheme.getTheme());
         changeScene(currentScene);
     }
 
+    /**
+     * clears textfields and datepickers of a node, e.g switching between login and register
+     * @param pane
+     */
     protected void clearFields(Pane pane) {
         for (Node node : pane.getChildren()) {
             if (node instanceof TextField) {
@@ -127,6 +140,10 @@ public class Controller_Application {
     }
 
 
+    /**
+     * change the scene, adds stylesheet and resizer, aswell as continued state for new scene
+     * @param scene - scene to be changed into
+     */
     protected static void changeScene(Scene scene) {
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(isFullScreen);
@@ -136,10 +153,16 @@ public class Controller_Application {
         ResizeHelper.addResizeListener(primaryStage);
     }
 
+    /**
+     * closes application
+     */
     public void closeWindow( ) {
         Platform.exit();
     }
 
+    /**
+     * minimizes window, if fullscreen will just minimize, if already minimize, then minimize to tray
+     */
     public void minimizeWindow( ) {
         Stage primaryStage = getPrimaryStage();
         if (primaryStage.isFullScreen()) {
@@ -151,6 +174,9 @@ public class Controller_Application {
         }
     }
 
+    /**
+     * will maximize the window
+     */
     public void maximizeWindow( ) {
         Stage primaryStage = getPrimaryStage();
         primaryStage.setFullScreen(true);
@@ -166,11 +192,17 @@ public class Controller_Application {
         return primaryStage;
     }
 
+    /**
+     * login used by all the login extended controllers
+     */
     public void logIn( ) {
+
+        // gets user input
+
         String pass_word = passWord.getText();
         String user_name = userName.getText();
 
-
+        // if login correct change the scene to the init pane after login of the current emulator
         if (AccountHandler.logIn(user_name, pass_word)) {
             fxmlLoader(currentEmulator, AccountHandler.currentRole);
             switch (Controller_Application.currentEmulator) {
@@ -216,6 +248,11 @@ public class Controller_Application {
         }
     }
 
+    /**
+     * used to load a fresh fxml/controller instance after sign in is completed.
+     * @param emulator - the emulator to load for
+     * @param role - the current role
+     */
     public void fxmlLoader(Emulator emulator, Role role) {
         try {
             switch (emulator) {
@@ -259,7 +296,10 @@ public class Controller_Application {
 
     }
 
-    public void changeScene( ) {
+    /**
+     * specific changescene for register option
+     */
+    public void changeToRegisterScene( ) {
 
         switch (Controller_Application.currentEmulator) {
             case Costumer:
@@ -272,8 +312,11 @@ public class Controller_Application {
         clearFields((Pane) userName.getParent());
     }
 
-    public void fxmlLoginLoader(Emulator emulator){
-
+    /**
+     * used to load fxml of login screen that you want to emulate
+     * @param emulator - the emulator to load login screen for
+     */
+    private void fxmlLoginLoader(Emulator emulator){
         try{
             switch (emulator){
                 case LaundryCentral:
@@ -319,7 +362,9 @@ public class Controller_Application {
 
     }
 
-
+    /**
+     * will log off the system, resetting to login screen of the current emulator
+     */
     public void logOff( ) {
         // resets size if changed in another pane on logoff.
         fxmlLoginLoader(currentEmulator);
@@ -340,6 +385,10 @@ public class Controller_Application {
         AccountHandler.logOff();
     }
 
+    /**
+     * will check if a route is assigned to the current user - this is only called by a driver
+     * @return - returns boolean, if assigned or not
+     */
     private boolean isRouteAssigned(){
 
         DB.selectSQL("SELECT * FROM getDriverRoute('" + AccountHandler.currentUser + "')");

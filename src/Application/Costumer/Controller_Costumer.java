@@ -67,7 +67,7 @@ public class Controller_Costumer extends Controller_Application implements Initi
 
 
     @Override
-    public void changeScene() {
+    public void changeToRegisterScene( ) {
 
     }
 

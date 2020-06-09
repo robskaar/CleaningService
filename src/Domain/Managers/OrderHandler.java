@@ -223,11 +223,7 @@ public class OrderHandler {
     public static boolean getWashStatusFromDB(OrderItem orderItem) {
         DB.selectSQL("SELECT * FROM getWashedStatus(" + orderItem.getID() + ")");
         int washed = Integer.parseInt(DB.getData());
-        if (washed == 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return washed != 0;
     }
 
     /**

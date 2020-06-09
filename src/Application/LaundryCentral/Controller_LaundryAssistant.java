@@ -2,6 +2,7 @@ package Application.LaundryCentral;
 
 import Application.general.Controller_Application;
 import Domain.Enums.Role;
+import Domain.Managers.AccountHandler;
 import Domain.Managers.OrderHandler;
 import Domain.Order.Order;
 import Domain.Order.OrderItem;
@@ -47,15 +48,16 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
     private Order viewingOrder;
     private int buttonWidth = 50;
     private int buttonHeight = 30;
-    private int inboundOrderID = 2;
     private int ongoingOrderID = 3;
-    private int outboundOrderID = 4;
     private Order activeOngoingOrder;
+    private int readyForPickupStatusID = 4;
+
 
     /**
-     * initializes the laundryassistant
-     * @param url
-     * @param resourceBundle
+     * initializes the laundry assistant
+     *
+     * @param url            - standard param of init
+     * @param resourceBundle - standard param of init
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -65,7 +67,7 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
         inboundOrderButton.setOnAction(e -> initInboundList());
         ongoingOrderButton.setOnAction(e -> initOngoingList());
         confirmDoneOrder.setOnAction(e -> {
-            activeOngoingOrder.setStatus(4);
+            activeOngoingOrder.setStatus(readyForPickupStatusID);
             OrderHandler.updateOrderDB(activeOngoingOrder);
             initOngoingList();
         });
@@ -74,13 +76,14 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
 
     /**
      * updates labels, buttons depending on a orderitem is washed or not
-     * @param orderItem - the order item
-     * @param status - the label with status
-     * @param statusButton - the button depending on orderitem status
+     *
+     * @param orderItem         - the order item
+     * @param status            - the label with status
+     * @param statusButton      - the button depending on orderitem status
      * @param allItemsConfirmed - bool to track if all is confirmed
      * @return - returns the bool to work with it later
      */
-    private boolean checkIfAllItemsConfirmed(OrderItem orderItem, Label status, Button statusButton, boolean allItemsConfirmed){
+    private boolean checkIfAllItemsConfirmed(OrderItem orderItem, Label status, Button statusButton, boolean allItemsConfirmed) {
         if (OrderHandler.getWashStatusFromDB(orderItem)) {
             status.setText("Washed");
             statusButton.setText("Set as not finished");
@@ -101,16 +104,16 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
      */
     public void searchForOrder( ) {
         ObservableList<Order> outboundOrders = OrderHandler.getSearchOrder(Integer.parseInt(searchField.getText()));
-        Order order = outboundOrders.get(0);
+        int FIRST = 0;
+        Order order = outboundOrders.get(FIRST);
         resetUIstates(order);
         boolean allItemsConfirmed = true;
         for (OrderItem orderItem : order.getOrderItems()) {
             Label ID = new Label();
             Button statusButton = new Button();
-
             Label status = new Label();
 
-            allItemsConfirmed = checkIfAllItemsConfirmed(orderItem,status,statusButton,allItemsConfirmed);
+            allItemsConfirmed = checkIfAllItemsConfirmed(orderItem, status, statusButton, allItemsConfirmed);
             statusButton.setOnAction(ae -> {
                 OrderHandler.setWashStatusInDB(orderItem);
                 searchForOrder();
@@ -138,13 +141,18 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
             }
             ID.setStyle("-fx-font-size: 20");
             status.setStyle("-fx-font-size: 20");
-            status.setPadding(new Insets(0, 0, 0, 10));
+            int TOPMARGIN = 0;
+            int LEFTMARGIN = 10;
+            int RIGHTMARGIN = 0;
+            int BOTTUMMARGIN = 0;
+            status.setPadding(new Insets(TOPMARGIN, RIGHTMARGIN, BOTTUMMARGIN, LEFTMARGIN));
         }
 
     }
 
     /**
      * resets states of UI - panes visible/unvisible etc.
+     *
      * @param order - depending on the order, updates UI
      */
     private void resetUIstates(Order order) {
@@ -170,11 +178,12 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
         inboundTilePane.getChildren().clear();
         washingLabelPrintButton.setVisible(false);
         paneText.setText("Arriving today with Driver");
+        int inboundOrderID = 2;
         ObservableList<Order> inboundOrders = OrderHandler.getCentralOrders(inboundOrderID);
         for (Order order : inboundOrders) {
             Button orderButton = new Button(String.valueOf(order.getID()));
-            orderButton.setMinWidth(50);
-            orderButton.setMinHeight(50);
+            orderButton.setMinWidth(buttonWidth);
+            orderButton.setMinHeight(buttonHeight);
             inboundTilePane.getChildren().add(orderButton);
             orderButton.setOnAction(e -> {
                 backFromInboundItem.setVisible(true);
@@ -203,14 +212,16 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
         addOngoingOrderButtons(ongoingOrderID, washingTilePane);
 
         readyToPickUpTilePane.getChildren().clear();
+        int outboundOrderID = 4;
         addOngoingOrderButtons(outboundOrderID, readyToPickUpTilePane);
     }
 
     /**
      * will add buttons to the pane with onactions etc. to show the orders and items of these.
      * will also make it possible to complete an order and set it ready for pickup
+     *
      * @param orderStatusID - the orderstatusID used to get all orders with that id
-     * @param tilePane - the tilepane we are working on
+     * @param tilePane      - the tilepane we are working on
      */
     private void addOngoingOrderButtons(int orderStatusID, TilePane tilePane) {
         ObservableList<Order> outboundOrders = OrderHandler.getCentralOrders(orderStatusID);
@@ -230,7 +241,7 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
                     status.setStyle("-fx-font-size: 20");
                     status.setPadding(new Insets(0, 0, 0, 10));
                     boolean allItemsConfirmed = true;
-                    allItemsConfirmed = checkIfAllItemsConfirmed(orderItem,status,statusButton,allItemsConfirmed);
+                    allItemsConfirmed = checkIfAllItemsConfirmed(orderItem, status, statusButton, allItemsConfirmed);
 
                     statusButton.setOnAction(ae -> {
                         OrderHandler.setWashStatusInDB(orderItem);
@@ -276,7 +287,7 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
         for (OrderItem orderItem : viewingOrder.getOrderItems()) {
 
             WashingLabel washingLabel = new WashingLabel(String.valueOf(orderItem.getID()), 30, viewingOrder.getID(),
-                                                         orderItem.getID(), 4,
+                                                         orderItem.getID(), AccountHandler.currentCostumerID,
                                                          "Costumer ID: " + viewingOrder.getCustomerID(),
                                                          "Order ID: " + viewingOrder.getID(),
                                                          "Laundry Item ID: " + orderItem.getID());

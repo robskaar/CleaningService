@@ -1,11 +1,14 @@
 package Domain.Managers;
 
 import Foundation.Database.DB;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 
 public class CustomerHandler {
@@ -20,6 +23,37 @@ public class CustomerHandler {
         }
         customerID = Integer.parseInt(data);
         return customerID;
+    }
+
+    public static ObservableList<Integer> getCostumerID(){
+        String data;
+        int customerID;
+        ArrayList<Integer> customerIDs = new ArrayList<>();
+        DB.selectSQL("SELECT * FROM getCustomerID()");
+        data = DB.getData();
+        while(!data.equals(DB.NOMOREDATA)){
+            customerIDs.add(Integer.parseInt(data));
+            data = DB.getData();
+        }
+        return FXCollections.observableArrayList(customerIDs);
+    }
+
+    public static int getAge(int customerID){
+        CallableStatement cstmt;
+        int age = 0;
+        Connection con = DB.getConnection();
+        try{
+            cstmt = con.prepareCall("{call CleaningService.dbo.getAge(?,?)}");
+            cstmt.setInt(1,customerID);
+            cstmt.registerOutParameter(2, Types.INTEGER);
+            boolean results = cstmt.execute();
+            age = cstmt.getInt(2);
+            cstmt.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return age;
     }
 
     public static int register(String firstName, String lastName, String emailAddress, String phoneNumber) {

@@ -46,6 +46,13 @@ public class DB {
     private static boolean pendingData = false; // from select statement
     private static boolean terminated = false;
 
+    /**
+     * i made this so we can emulate logging in with a different set of properties.
+     * @param role - takes a role "the type of person we are emulating" and switch case it.
+     * depending on the role, we get a new resource for our connection that is established,
+     * whenever we call to the DB.
+     * all these have been assigned execute/select on SP's and functions in the DB, so they cant access anything they shouldnt
+     */
     public static void setDBPropertiesPath(Role role){
         Properties props = new Properties();
         switch (role){
@@ -120,6 +127,10 @@ public class DB {
         }
     }
 
+    /**
+     * gets the connection
+     * @return - the connection with the properties
+     */
     public static Connection getConnection() {
         try {
             con = DriverManager.getConnection("jdbc:sqlserver://localhost:" + port + ";databaseName=" + databaseName,
