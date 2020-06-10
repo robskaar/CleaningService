@@ -10,9 +10,15 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+/**
+ * @Author Kasper Schou
+ * @Project CleaningService  -  https://github.com/robskaar
+ * @Date 09-06-2020
+ **/
 
 public class CustomerHandler {
     private static final byte ISTEMPORARY = 1;
+
     public static int getCustomerIDByPhoneNumber(int phoneNr) throws InputMismatchException {
         String data;
         int customerID;
@@ -72,8 +78,7 @@ public class CustomerHandler {
             costumerID = cstmt.getInt(6);
             cstmt.close();
             con.close();
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return costumerID;

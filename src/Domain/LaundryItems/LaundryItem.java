@@ -1,5 +1,11 @@
 package Domain.LaundryItems;
 
+/**
+ * @Author Kasper Schou
+ * @Project CleaningService
+ * @Date 09-06-2020
+ **/
+
 public class LaundryItem {
     private int laundryItemID;
     private int handlingDuration;
