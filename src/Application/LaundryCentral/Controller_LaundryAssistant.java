@@ -1,6 +1,6 @@
 package Application.LaundryCentral;
 
-import Application.general.Controller_Application;
+import Application.General.Controller_Application;
 import Domain.Enums.Role;
 import Domain.Handlers.AccountHandler;
 import Domain.Handlers.OrderHandler;

@@ -1,4 +1,4 @@
-package Application.general;
+package Application.General;
 
 import Application.Driver.Controller_Driver;
 import Domain.Enums.Emulator;

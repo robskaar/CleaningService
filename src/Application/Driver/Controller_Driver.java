@@ -1,6 +1,6 @@
 package Application.Driver;
 
-import Application.general.Controller_Application;
+import Application.General.Controller_Application;
 import Domain.DeliveryPoint.DeliveryPoint;
 import Domain.Enums.Role;
 import Domain.Handlers.AccountHandler;

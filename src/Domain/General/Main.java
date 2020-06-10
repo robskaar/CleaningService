@@ -1,6 +1,6 @@
 package Domain.General;
 
-import Application.general.Controller_Application;
+import Application.General.Controller_Application;
 import Domain.Enums.Emulator;
 import Services.Resizer.ResizeHelper;
 import Services.Themes.ThemeControl;

@@ -1,6 +1,6 @@
 package Application.Costumer;
 
-import Application.general.Controller_Application;
+import Application.General.Controller_Application;
 import Domain.Handlers.AccountHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

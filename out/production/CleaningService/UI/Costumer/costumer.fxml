@@ -16,15 +16,19 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Costumer.Controller_Costumer">
+<BorderPane prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: transparent;"
+            xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Application.Costumer.Controller_Costumer">
     <right>
-        <VBox alignment="CENTER" prefHeight="601.0" prefWidth="600.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+        <VBox alignment="CENTER" prefHeight="601.0" prefWidth="600.0" style="-fx-background-color: transparent;"
+              BorderPane.alignment="CENTER">
             <children>
                 <HBox fx:id="toolBar" prefHeight="16.0" prefWidth="600.0">
                     <children>
                         <ToolBar prefHeight="36.0" prefWidth="194.0" style="-fx-background-color: Transparent;">
                             <items>
-                                <MenuButton fx:id="settingsBtn" minHeight="16.0" minWidth="16.0" mnemonicParsing="false">
+                                <MenuButton fx:id="settingsBtn" minHeight="16.0" minWidth="16.0"
+                                            mnemonicParsing="false">
                                     <items>
                                         <Menu mnemonicParsing="false" text="Themes">
                                             <items>
@@ -42,16 +46,19 @@
                     </children>
                 </HBox>
                 <Separator prefWidth="600.0" style="-fx-background-color: Transparent;" />
-                <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="556.0" prefWidth="278.0" style="-fx-background-color: Transparent;">
+                <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="556.0" prefWidth="278.0"
+                           style="-fx-background-color: transparent;">
                     <children>
-                        <ImageView fitHeight="559.0" fitWidth="497.0" pickOnBounds="true" preserveRatio="true" style="tr: 100;">
+                        <ImageView fitHeight="559.0" fitWidth="497.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../Foundation/Resources/Icons/PhoneEmulator/iphone.png" />
+                                <Image url="@../../Foundation/Resources/Icons/PhoneEmulator/iphone.png"/>
                             </image>
                         </ImageView>
-                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="474.0" prefWidth="252.0" style="-fx-background-color: white;">
+                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="474.0" prefWidth="252.0"
+                                   style="-fx-background-color: white;">
                             <children>
-                                <VBox fx:id="costumerMenu" alignment="TOP_CENTER" prefHeight="481.0" prefWidth="283.0" style="-fx-background-color: white;" styleClass="customerVBox">
+                                <VBox fx:id="costumerMenu" alignment="TOP_CENTER" prefHeight="481.0" prefWidth="283.0"
+                                      style="-fx-background-color: white;" styleClass="customerVBox">
                                     <children>
                                         <Button mnemonicParsing="false" onAction="#showItems" prefHeight="53.0" prefWidth="175.0" styleClass="customerButton" text="New Order">
                                             <VBox.margin>

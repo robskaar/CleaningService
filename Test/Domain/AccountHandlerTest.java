@@ -1,6 +1,6 @@
 package Domain;
 
-import Application.general.Controller_Application;
+import Application.General.Controller_Application;
 import Domain.Enums.Emulator;
 import Domain.Handlers.AccountHandler;
 import org.junit.Test;
