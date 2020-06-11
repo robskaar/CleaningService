@@ -1,9 +1,11 @@
 package Application.General;
 
 import Application.Driver.Controller_Driver;
+import Domain.Driver.Driver;
 import Domain.Enums.Emulator;
 import Domain.Enums.Role;
 import Domain.Handlers.AccountHandler;
+import Domain.Handlers.DriverHandler;
 import Domain.Handlers.RouteHandler;
 import Foundation.Database.DB;
 import Services.Resizer.ResizeHelper;
@@ -208,7 +210,7 @@ public class Controller_Application {
             fxmlLoader(currentEmulator, AccountHandler.currentRole);
             switch (Controller_Application.currentEmulator) {
                 case Driver:
-                    if(RouteHandler.isRouteAssigned()){
+                    if(DriverHandler.isDriverAssignedWithRoute()){
                         currentScene = driverScene;
                         changeScene(driverScene);
                     }

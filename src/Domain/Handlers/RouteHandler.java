@@ -27,24 +27,6 @@ public class RouteHandler {
     }
 
     /**
-     * will check if a route is assigned to the current user - this is only called by a driver
-     * @return - returns boolean, if assigned or not
-     */
-    public static boolean isRouteAssigned( ){
-
-        DB.selectSQL("SELECT * FROM getDriverRoute('" + AccountHandler.currentUser + "')");
-
-        String data = DB.getData();
-
-        if(data.equals("null")){
-            return false;
-        }
-
-        return true;
-    }
-
-
-    /**
      * converts result set to array list
      * @return returns an array list of route objects
      */

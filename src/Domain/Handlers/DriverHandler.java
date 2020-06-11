@@ -18,6 +18,23 @@ public class DriverHandler {
 
 
     /**
+     * will check if a route is assigned to the current user - this is only called by a driver
+     * @return - returns boolean, if assigned or not
+     */
+    public static boolean isDriverAssignedWithRoute( ){
+
+        DB.selectSQL("SELECT * FROM getDriverRoute('" + AccountHandler.currentUser + "')");
+
+        String data = DB.getData();
+
+        if(data.equals("null")){
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * gets drivers from db.
      * @return returns a observable array list with driver objects converted from result set.
      */
