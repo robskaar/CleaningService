@@ -4,6 +4,7 @@ import Application.Driver.Controller_Driver;
 import Domain.Enums.Emulator;
 import Domain.Enums.Role;
 import Domain.Handlers.AccountHandler;
+import Domain.Handlers.RouteHandler;
 import Foundation.Database.DB;
 import Services.Resizer.ResizeHelper;
 import Services.Themes.ThemeControl;
@@ -207,7 +208,7 @@ public class Controller_Application {
             fxmlLoader(currentEmulator, AccountHandler.currentRole);
             switch (Controller_Application.currentEmulator) {
                 case Driver:
-                    if(isRouteAssigned()){
+                    if(RouteHandler.isRouteAssigned()){
                         currentScene = driverScene;
                         changeScene(driverScene);
                     }
@@ -253,7 +254,7 @@ public class Controller_Application {
      * @param emulator - the emulator to load for
      * @param role - the current role
      */
-    public void fxmlLoader(Emulator emulator, Role role) {
+    private void fxmlLoader(Emulator emulator, Role role) {
         try {
             switch (emulator) {
                 case Driver:
@@ -316,7 +317,7 @@ public class Controller_Application {
      * used to load fxml of login screen that you want to emulate
      * @param emulator - the emulator to load login screen for
      */
-    public void fxmlLoginLoader(Emulator emulator){
+    private void fxmlLoginLoader(Emulator emulator){
 
         try{
             switch (emulator){
@@ -385,22 +386,4 @@ public class Controller_Application {
         }
         AccountHandler.logOff();
     }
-
-    /**
-     * will check if a route is assigned to the current user - this is only called by a driver
-     * @return - returns boolean, if assigned or not
-     */
-    private boolean isRouteAssigned(){
-
-        DB.selectSQL("SELECT * FROM getDriverRoute('" + AccountHandler.currentUser + "')");
-
-        String data = DB.getData();
-
-        if(data.equals("null")){
-            return false;
-        }
-
-        return true;
-    }
-
 }

@@ -74,13 +74,13 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
     private int outboundOrderID = 4;
     private Order activeOngoingOrder;
     private LaundryItem itemEditing;
-    ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-    Label labelName = new Label("Item Name: ");
-    Label labelDuration = new Label("Handling Duration: ");
-    Label labelPrice = new Label("Price: ");
-    TextField itemName = new TextField();
-    TextField itemDuration = new TextField();
-    TextField itemPrice = new TextField();
+    private ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+    private Label labelName = new Label("Item Name: ");
+    private Label labelDuration = new Label("Handling Duration: ");
+    private Label labelPrice = new Label("Price: ");
+    private TextField itemName = new TextField();
+    private TextField itemDuration = new TextField();
+    private TextField itemPrice = new TextField();
 
     /**
      * initialize the LaundryManager fxml/controller
@@ -249,7 +249,7 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
     /**
      * used to update items in the DB
      */
-    public void updateItems( ) {
+    private void updateItems( ) {
         double newPrice = Double.parseDouble(itemPrice.getText());
         int newDuration = Integer.parseInt(itemDuration.getText());
         String newName = itemName.getText();
@@ -372,14 +372,14 @@ public class Controller_LaundryManager extends Controller_LaundryAssistant imple
             else if (age > 45 && age < 61) {
                 age46To60++;
             }
-            else if (age >60 && age<101){
+            else if (age > 60 && age < 101) {
                 age61To100++;
             }
         }
-        pieChartData.add(new PieChart.Data("Age 0 to 15: "+age0To15,age0To15));
-        pieChartData.add(new PieChart.Data("Age 16 to 30: "+age16To30,age16To30));
-        pieChartData.add(new PieChart.Data("Age 31 to 45: "+age31To45,age31To45));
-        pieChartData.add(new PieChart.Data("Age 46 to 60: "+age46To60,age46To60));
-        pieChartData.add(new PieChart.Data("Age 61 to 100: "+age61To100,age61To100));
+        pieChartData.add(new PieChart.Data("Age 0 to 15: " + age0To15, age0To15));
+        pieChartData.add(new PieChart.Data("Age 16 to 30: " + age16To30, age16To30));
+        pieChartData.add(new PieChart.Data("Age 31 to 45: " + age31To45, age31To45));
+        pieChartData.add(new PieChart.Data("Age 46 to 60: " + age46To60, age46To60));
+        pieChartData.add(new PieChart.Data("Age 61 to 100: " + age61To100, age61To100));
     }
 }
