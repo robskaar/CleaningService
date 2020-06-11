@@ -107,7 +107,7 @@
                             <children>
                                 <Button mnemonicParsing="false" onAction="#register" prefHeight="26.0" prefWidth="60.0"
                                         text="Register"/>
-                                <Button mnemonicParsing="false" onAction="#changeToRegisterScene" prefHeight="26.0"
+                                <Button mnemonicParsing="false" onAction="#changeToLoginScene" prefHeight="26.0"
                                         prefWidth="58.0" text="Log in">
                                     <HBox.margin>
                                         <Insets left="10.0"/>

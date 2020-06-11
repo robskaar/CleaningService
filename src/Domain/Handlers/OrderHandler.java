@@ -182,7 +182,7 @@ public class OrderHandler {
 
     }
 
-    public static void createOrderItems(List<OrderItem> orderItemList, int orderID) {
+    private static void createOrderItems(List<OrderItem> orderItemList, int orderID) {
 
         CallableStatement cstmt;
         Connection con;

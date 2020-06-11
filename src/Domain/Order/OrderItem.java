@@ -19,7 +19,8 @@ public class OrderItem {
     private LaundryItem laundryItem;
     private int deliveryDay;
 
-    public OrderItem(int ID, int laundryItemID, int orderID, boolean isWashed, LocalDateTime startDateTime, LocalDateTime endDateTime){
+    public OrderItem(int ID, int laundryItemID, int orderID, boolean isWashed,
+                     LocalDateTime startDateTime, LocalDateTime endDateTime){
         this.isWashed = isWashed;
         this.ID =  ID;
         this.laundryItemID = laundryItemID;

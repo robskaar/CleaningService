@@ -22,7 +22,8 @@ public class Order {
     private ArrayList<OrderItem> items;
 
 
-    public Order(int ID, LocalDateTime startDate, LocalDateTime endDate, int statusID, int deliveryPointID, int customerID) {
+    public Order(int ID, LocalDateTime startDate, LocalDateTime endDate,
+                 int statusID, int deliveryPointID, int customerID) {
         this.ID = ID;
         this.startDate = startDate;
         this.endDate = endDate;

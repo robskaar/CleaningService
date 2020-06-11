@@ -98,7 +98,7 @@ public class Controller_RegisterScene extends Controller_Application implements 
                     break;
             }
 
-            changeToRegisterScene(); // changes into login scene after successful registration
+            changeToLoginScene(); // changes into login scene after successful registration
         } else {
             if (!pwdCriteriasMet) {
                 passWord.setStyle("-fx-border-color: red");
@@ -116,7 +116,7 @@ public class Controller_RegisterScene extends Controller_Application implements 
     }
 
 
-    public void changeToRegisterScene( ) {
+    public void changeToLoginScene( ) {
 
         switch (Controller_Application.currentEmulator) {
             case Costumer:
