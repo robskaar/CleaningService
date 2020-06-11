@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.LaundryCentral.Controller_LaundryManager">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-border-color: darkgrey;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.LaundryCentral.Controller_LaundryManager">
    <children>
       <BorderPane fx:id="assistantTaskPane" prefHeight="600.0" prefWidth="600.0" visible="false">
          <top>
@@ -400,7 +400,7 @@
                         <Button mnemonicParsing="false" onAction="#confirmRouteAssignment" prefWidth="266.0" text="Confirm assignment" />
                      </children>
                   </VBox>
-                  <VBox fx:id="servicesVbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" visible="false">
+                  <VBox fx:id="servicesVbox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <HBox alignment="CENTER" prefHeight="52.0" prefWidth="464.0">
                            <children>
@@ -409,9 +409,9 @@
                         </HBox>
                         <HBox prefHeight="523.0" prefWidth="464.0">
                            <children>
-                              <ScrollPane prefHeight="494.0" prefWidth="165.0">
+                              <ScrollPane prefHeight="493.0" prefWidth="173.0">
                                  <content>
-                                    <VBox fx:id="currentItemsBox" alignment="CENTER" prefHeight="492.0" prefWidth="161.0" spacing="10.0" />
+                                    <VBox fx:id="currentItemsBox" alignment="CENTER" prefHeight="490.0" prefWidth="167.0" spacing="10.0" />
                                  </content>
                               </ScrollPane>
                               <ScrollPane prefHeight="494.0" prefWidth="299.0">
