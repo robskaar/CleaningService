@@ -2,6 +2,7 @@ package Domain.Map;
 
 
 import Domain.DeliveryPoint.DeliveryPoint;
+import Services.Handlers.DeliveryPointHandler;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
@@ -42,11 +43,14 @@ public class GoogleMap {
     }
 
     /**
-     *
-     * @param deliveryPoints Takes an Array list of Delivery points, and display their addresses on the map
+     * Sets markers on the map for all delivery points on the route
+     * @param routeID The ID of the route.
      */
-    public void setMarkers(ArrayList<DeliveryPoint> deliveryPoints) {
+    public void setMarkers(int routeID) {
+
         if(!isMarkersSet){
+
+            ArrayList<DeliveryPoint> deliveryPoints = DeliveryPointHandler.getRouteDeliveryPoints(routeID);
             String address;
             String storeName;
 

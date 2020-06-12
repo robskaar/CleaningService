@@ -81,4 +81,12 @@ public class OrderItem {
     public LocalDateTime getStartDateTime() {
         return startDateTime;
     }
+
+    public CheckBox getCheckBox() {
+        return checkBox;
+    }
+
+    public void setCheckBox(CheckBox checkBox) {
+        this.checkBox = checkBox;
+    }
 }
