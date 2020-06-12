@@ -1,4 +1,4 @@
-package Domain.Handlers;
+package Services.Handlers;
 
 import Domain.LaundryItems.LaundryItem;
 import Domain.Order.Order;
@@ -360,6 +360,14 @@ public class OrderHandler {
         addOrderItems(orders);
 
         return orders;
+    }
+
+    /**
+     * @return Status message of the order
+     */
+    public static String getStatusMessage(Order order) {
+        DB.selectSQL("SELECT * FROM getOrderStatus(" + order.getStatusID() + ")");
+        return DB.getData();
     }
 
     /**

@@ -1,4 +1,4 @@
-package Domain.Handlers;
+package Services.Handlers;
 
 import Foundation.Database.DB;
 import javafx.collections.FXCollections;

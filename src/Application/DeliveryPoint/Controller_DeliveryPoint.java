@@ -2,10 +2,10 @@ package Application.DeliveryPoint;
 
 import Application.General.Controller_Application;
 import Domain.LaundryItems.LaundryItem;
-import Domain.Handlers.AccountHandler;
-import Domain.Handlers.CustomerHandler;
-import Domain.Handlers.ItemsHandler;
-import Domain.Handlers.OrderHandler;
+import Services.Handlers.AccountHandler;
+import Services.Handlers.CustomerHandler;
+import Services.Handlers.ItemsHandler;
+import Services.Handlers.OrderHandler;
 import Domain.Order.Order;
 import Domain.Order.OrderItem;
 import UI.Costumer.ItemBox;

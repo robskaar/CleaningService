@@ -2,11 +2,11 @@ package Application.LaundryCentral;
 
 import Application.General.Controller_Application;
 import Domain.Enums.Role;
-import Domain.Handlers.AccountHandler;
-import Domain.Handlers.OrderHandler;
 import Domain.Order.Order;
 import Domain.Order.OrderItem;
 import Foundation.Database.DB;
+import Services.Handlers.AccountHandler;
+import Services.Handlers.OrderHandler;
 import Services.PDF.WashingLabel;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -124,7 +124,7 @@ public class Controller_LaundryAssistant extends Controller_Application implemen
 
             if (order.getStatusID() != ongoingOrderID) {
 
-                status.setText(order.getStatusMessage());
+                status.setText(OrderHandler.getStatusMessage(order));
             }
             statusButton.setContentDisplay(ContentDisplay.CENTER);
 

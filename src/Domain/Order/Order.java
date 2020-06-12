@@ -1,7 +1,5 @@
 package Domain.Order;
 
-import Foundation.Database.DB;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 /**
@@ -62,14 +60,6 @@ public class Order {
 
     public void setStatus(int status) {
         this.statusID = status;
-    }
-
-    /**
-     * @return Status message of the order
-     */
-    public String getStatusMessage() {
-        DB.selectSQL("SELECT * FROM getOrderStatus(" + this.statusID + ")");
-        return DB.getData();
     }
 
     public int getCustomerID() {

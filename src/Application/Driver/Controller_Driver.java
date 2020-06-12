@@ -2,14 +2,13 @@ package Application.Driver;
 
 import Application.General.Controller_Application;
 import Domain.DeliveryPoint.DeliveryPoint;
-import Domain.Enums.Role;
-import Domain.Handlers.AccountHandler;
-import Domain.Handlers.DeliveryPointHandler;
-import Domain.Handlers.OrderHandler;
+import Services.Handlers.AccountHandler;
+import Services.Handlers.DeliveryPointHandler;
+import Services.Handlers.DriverHandler;
+import Services.Handlers.OrderHandler;
 import Domain.Map.GoogleMap;
 import Domain.Order.Order;
 import Domain.Order.OrderItem;
-import Foundation.Database.DB;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -107,7 +106,7 @@ public class Controller_Driver extends Controller_Application implements Initial
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        DB.setDBPropertiesPath(Role.Driver);
+
         currentRoute = AccountHandler.getCurrentRoute();
         initCentralOrderTable();
         initCentralItemTable();

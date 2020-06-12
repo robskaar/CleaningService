@@ -1,4 +1,4 @@
-package Domain.Handlers;
+package Services.Handlers;
 
 import Domain.DeliveryPoint.DeliveryPoint;
 import Foundation.Database.DB;
