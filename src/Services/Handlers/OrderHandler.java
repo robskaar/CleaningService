@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * @Author Kasper Schou + Jacob bonefeld +
+ * @Author Jacob Bonefeld & Kasper Schou
  * @Project CleaningService  -  https://github.com/robskaar
  * @Date 09-06-2020
  **/

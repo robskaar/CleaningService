@@ -9,7 +9,7 @@ import java.sql.*;
 import java.time.LocalDate;
 
 /**
- * @Author Robert Skaar
+ * @Author Robert Skaar & Jacob Bonefeld
  * @Project newProject  -  https://github.com/robskaar
  * @Date 11-05-2020
  **/

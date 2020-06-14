@@ -6,7 +6,9 @@ import javafx.scene.control.CheckBox;
 
 import java.time.LocalDateTime;
 
-
+/**
+ * @author jacob Bonefeld
+ */
 public class OrderItem {
 
     private boolean isWashed;
@@ -80,5 +82,13 @@ public class OrderItem {
 
     public LocalDateTime getStartDateTime() {
         return startDateTime;
+    }
+
+    public CheckBox getCheckBox() {
+        return checkBox;
+    }
+
+    public void setCheckBox(CheckBox checkBox) {
+        this.checkBox = checkBox;
     }
 }
