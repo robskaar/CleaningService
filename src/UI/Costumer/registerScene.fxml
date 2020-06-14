@@ -34,11 +34,12 @@
                                             <items>
                                                 <MenuItem fx:id="defaultThemeBtn" mnemonicParsing="false"
                                                           onAction="#changeThemeDefault" text="Default"/>
-                                    <MenuItem fx:id="darkThemeBtn" mnemonicParsing="false" onAction="#changeThemeDark" text="Dark" />
-                                 </items>
-                              </Menu>
-                           </items>
-                        </MenuButton>
+                                                <MenuItem fx:id="darkThemeBtn" mnemonicParsing="false"
+                                                          onAction="#changeThemeDark" text="Dark"/>
+                                            </items>
+                                        </Menu>
+                                    </items>
+                                </MenuButton>
                         <Button fx:id="closeBtn" minHeight="16.0" minWidth="16.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="16.0" prefWidth="16.0" />
                         <Button fx:id="minimizeBtn" minHeight="16.0" minWidth="16.0" mnemonicParsing="false" onAction="#minimizeWindow" />
                         <Button fx:id="maximizeBtn" alignment="CENTER" contentDisplay="CENTER" minHeight="16.0" minWidth="16.0" mnemonicParsing="false" onAction="#maximizeWindow" />
@@ -59,8 +60,9 @@
                         <Image url="@../../Foundation/Resources/Icons/PhoneEmulator/iphone.png"/>
                     </image>
                 </ImageView>
-                <VBox alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="482.0"
-                      prefWidth="269.0" style="-fx-background-color: white;">
+                <VBox alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="486.0"
+                      prefWidth="259.0" styleClass="root"
+                      stylesheets="@../../Foundation/Resources/CSS/DefaultStyle.css">
                     <children>
                         <TextField fx:id="userName" alignment="CENTER" prefHeight="26.0" prefWidth="155.0"
                                    promptText="Username">
