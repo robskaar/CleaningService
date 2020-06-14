@@ -32,8 +32,10 @@
                                     <items>
                                         <Menu mnemonicParsing="false" text="Themes">
                                             <items>
-                                                <MenuItem fx:id="defaultThemeBtn" mnemonicParsing="false" onAction="#changeThemeDefault" text="Default" />
-                                                <MenuItem fx:id="darkThemeBtn" mnemonicParsing="false" onAction="#changeThemeDark" text="Dark" />
+                                                <MenuItem fx:id="defaultThemeBtn" mnemonicParsing="false"
+                                                          onAction="#changeThemeDefault" text="Default"/>
+                                                <MenuItem fx:id="darkThemeBtn" mnemonicParsing="false"
+                                                          onAction="#changeThemeDark" text="Dark"/>
                                             </items>
                                         </Menu>
                                     </items>
@@ -54,20 +56,22 @@
                                 <Image url="@../../Foundation/Resources/Icons/PhoneEmulator/iphone.png"/>
                             </image>
                         </ImageView>
-                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="474.0" prefWidth="252.0"
+                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="465.0" prefWidth="258.0"
                                    style="-fx-background-color: white;">
                             <children>
                                 <VBox fx:id="costumerMenu" alignment="TOP_CENTER" prefHeight="481.0" prefWidth="283.0"
                                       style="-fx-background-color: white;" styleClass="customerVBox">
                                     <children>
-                                        <Button mnemonicParsing="false" onAction="#showItems" prefHeight="53.0" prefWidth="175.0" styleClass="customerButton" text="New Order">
+                                        <Button mnemonicParsing="false" onAction="#showItems" prefHeight="53.0"
+                                                prefWidth="175.0" styleClass="customerButton" text="New Order">
                                             <VBox.margin>
-                                                <Insets top="100.0" />
+                                                <Insets top="100.0"/>
                                             </VBox.margin>
                                         </Button>
-                                        <Button mnemonicParsing="false" onAction="#showOrderHistory" prefHeight="55.0" prefWidth="175.0" styleClass="customerButton" text="Order History">
+                                        <Button mnemonicParsing="false" onAction="#showOrderHistory" prefHeight="55.0"
+                                                prefWidth="175.0" styleClass="customerButton" text="Order History">
                                             <VBox.margin>
-                                                <Insets top="30.0" />
+                                                <Insets top="30.0"/>
                                             </VBox.margin>
                                         </Button>
                                         <Label fx:id="nameLabel" prefHeight="24.0" prefWidth="72.0" textAlignment="CENTER">
@@ -184,7 +188,8 @@
                                         </HBox>
                                         <ScrollPane hbarPolicy="NEVER" prefHeight="343.0" prefWidth="252.0" styleClass="customerScroolPane">
                                             <content>
-                                                <VBox fx:id="orderVBox" prefHeight="337.0" prefWidth="249.0" styleClass="customerVBox" />
+                                                <VBox fx:id="orderVBox" prefHeight="337.0" prefWidth="249.0"
+                                                      spacing="10.0" styleClass="customerVBox"/>
                                             </content>
                                  <padding>
                                     <Insets bottom="10.0" top="10.0" />
