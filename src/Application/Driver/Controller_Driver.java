@@ -453,7 +453,7 @@ public class Controller_Driver extends Controller_Application implements Initial
      */
     public void showMap(){
 
-        googleMap.setMarkers(deliveryPoints);
+        googleMap.setMarkers(currentRoute);
         stackOrders.setVisible(false);
         stackMap.setVisible(true);
 
