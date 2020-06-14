@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" style="-fx-border-color: darkgrey;" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.LaundryCentral.Controller_LaundryAssistant">
+<BorderPane prefHeight="600.0" prefWidth="600.0" style="-fx-border-color: darkgrey;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.LaundryCentral.Controller_LaundryAssistant">
    <top>
 
        <VBox prefHeight="29.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -169,14 +169,15 @@
                         <Label fx:id="paneText" alignment="CENTER" contentDisplay="CENTER" prefHeight="42.0" prefWidth="444.0" text="Label" />
                      </children>
                   </HBox>
-                  <TilePane fx:id="inboundTilePane" hgap="10.0" prefHeight="519.0" prefWidth="464.0" vgap="5.0">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                     <padding>
-                        <Insets left="20.0" />
-                     </padding>
-                  </TilePane>
+                  <ScrollPane prefHeight="485.0" prefWidth="466.0">
+                     <content>
+                        <TilePane fx:id="inboundTilePane" hgap="10.0" prefHeight="477.0" prefWidth="459.0" vgap="5.0">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </TilePane>
+                     </content>
+                  </ScrollPane>
                   <Button fx:id="washingLabelPrintButton" mnemonicParsing="false" onAction="#printLabel" prefWidth="266.0" text="Print Washing label for all above Laundry items">
                      <VBox.margin>
                         <Insets bottom="20.0" />

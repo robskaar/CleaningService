@@ -32,8 +32,10 @@
                                     <items>
                                         <Menu mnemonicParsing="false" text="Themes">
                                             <items>
-                                                <MenuItem fx:id="defaultThemeBtn" mnemonicParsing="false" onAction="#changeThemeDefault" text="Default" />
-                                                <MenuItem fx:id="darkThemeBtn" mnemonicParsing="false" onAction="#changeThemeDark" text="Dark" />
+                                                <MenuItem fx:id="defaultThemeBtn" mnemonicParsing="false"
+                                                          onAction="#changeThemeDefault" text="Default"/>
+                                                <MenuItem fx:id="darkThemeBtn" mnemonicParsing="false"
+                                                          onAction="#changeThemeDark" text="Dark"/>
                                             </items>
                                         </Menu>
                                     </items>
@@ -54,20 +56,22 @@
                                 <Image url="@../../Foundation/Resources/Icons/PhoneEmulator/iphone.png"/>
                             </image>
                         </ImageView>
-                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="474.0" prefWidth="252.0"
+                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="465.0" prefWidth="258.0"
                                    style="-fx-background-color: white;">
                             <children>
                                 <VBox fx:id="costumerMenu" alignment="TOP_CENTER" prefHeight="481.0" prefWidth="283.0"
-                                      style="-fx-background-color: white;" styleClass="customerVBox">
+                                      styleClass="customerVBox">
                                     <children>
-                                        <Button mnemonicParsing="false" onAction="#showItems" prefHeight="53.0" prefWidth="175.0" styleClass="customerButton" text="New Order">
+                                        <Button mnemonicParsing="false" onAction="#showItems" prefHeight="53.0"
+                                                prefWidth="175.0" styleClass="customerButton" text="New Order">
                                             <VBox.margin>
-                                                <Insets top="100.0" />
+                                                <Insets top="100.0"/>
                                             </VBox.margin>
                                         </Button>
-                                        <Button mnemonicParsing="false" onAction="#showOrderHistory" prefHeight="55.0" prefWidth="175.0" styleClass="customerButton" text="Order History">
+                                        <Button mnemonicParsing="false" onAction="#showOrderHistory" prefHeight="55.0"
+                                                prefWidth="175.0" styleClass="customerButton" text="Order History">
                                             <VBox.margin>
-                                                <Insets top="30.0" />
+                                                <Insets top="30.0"/>
                                             </VBox.margin>
                                         </Button>
                                         <Label fx:id="nameLabel" prefHeight="24.0" prefWidth="72.0" textAlignment="CENTER">
@@ -82,16 +86,23 @@
                                         </Button>
                                     </children>
                                 </VBox>
-                                <VBox fx:id="itemView" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="489.0" prefWidth="254.0" style="-fx-background-color: white;" styleClass="customerVBox" StackPane.alignment="TOP_CENTER">
+                                <VBox fx:id="itemView" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="489.0"
+                                      prefWidth="254.0" styleClass="customerVBox" StackPane.alignment="TOP_CENTER">
                                     <children>
-                                        <HBox prefHeight="30.0" prefWidth="254.0" styleClass="customerHBox" VBox.vgrow="ALWAYS">
+                                        <HBox prefHeight="30.0" prefWidth="254.0" styleClass="customerHBox"
+                                              VBox.vgrow="ALWAYS">
                                             <children>
-                                                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="28.0" styleClass="customerBackButton" stylesheets="@../../Foundation/Resources/CSS/DefaultStyle.css">
+                                                <Button maxHeight="1.7976931348623157E308"
+                                                        maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                                        onAction="#goBack" prefHeight="25.0" prefWidth="28.0"
+                                                        styleClass="customerBackButton"
+                                                        stylesheets="@../../Foundation/Resources/CSS/DefaultStyle.css">
                                                     <HBox.margin>
-                                                        <Insets left="5.0" />
+                                                        <Insets left="5.0"/>
                                                     </HBox.margin>
                                                 </Button>
-                                                <Label prefHeight="26.0" prefWidth="60.0" styleClass="customerLabel" text="Time" wrapText="true">
+                                                <Label prefHeight="26.0" prefWidth="60.0" styleClass="customerLabel"
+                                                       text="Time" wrapText="true">
                                                     <HBox.margin>
                                                         <Insets left="5.0" />
                                                     </HBox.margin>
@@ -111,13 +122,17 @@
                                         <Button fx:id="addOrderButton" mnemonicParsing="false" onAction="#showCart" prefHeight="81.0" prefWidth="254.0" styleClass="itemBox" textFill="WHITE" />
                                     </children>
                                 </VBox>
-                                <VBox fx:id="orderHistoryPane" prefHeight="449.0" prefWidth="252.0" style="-fx-background-color: lightblue;" styleClass="customerVBox">
+                                <VBox fx:id="orderHistoryPane" prefHeight="449.0" prefWidth="252.0"
+                                      styleClass="customerVBox">
                                     <children>
                                         <HBox prefHeight="9.0" prefWidth="252.0" styleClass="customerHBox">
                                             <children>
-                                                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="30.0" styleClass="customerBackButton">
+                                                <Button maxHeight="1.7976931348623157E308"
+                                                        maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                                        onAction="#goBack" prefHeight="25.0" prefWidth="30.0"
+                                                        styleClass="customerBackButton">
                                                     <HBox.margin>
-                                                        <Insets />
+                                                        <Insets/>
                                                     </HBox.margin>
                                                 </Button>
                                             </children>
@@ -170,21 +185,28 @@
                                         </VBox>
                                     </children>
                                 </VBox>
-                                <VBox fx:id="confirmOrderPane" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white;" styleClass="customerVBox">
+                                <VBox fx:id="confirmOrderPane" prefHeight="200.0" prefWidth="100.0"
+                                      styleClass="customerVBox">
                                     <children>
                                         <HBox prefHeight="12.0" prefWidth="252.0" styleClass="customerHBox">
                                             <children>
-                                                <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="30.0" styleClass="customerBackButton">
+                                                <Button alignment="CENTER" contentDisplay="CENTER"
+                                                        maxHeight="1.7976931348623157E308"
+                                                        maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                                        onAction="#goBack" prefHeight="25.0" prefWidth="30.0"
+                                                        styleClass="customerBackButton">
                                                     <HBox.margin>
-                                                        <Insets />
+                                                        <Insets/>
                                                     </HBox.margin>
                                                 </Button>
-                                                <Label prefHeight="29.0" prefWidth="145.0" styleClass="customerLabel" text="Order ID" textAlignment="CENTER" />
+                                                <Label prefHeight="29.0" prefWidth="145.0" styleClass="customerLabel"
+                                                       text="Order ID" textAlignment="CENTER"/>
                                             </children>
                                         </HBox>
                                         <ScrollPane hbarPolicy="NEVER" prefHeight="343.0" prefWidth="252.0" styleClass="customerScroolPane">
                                             <content>
-                                                <VBox fx:id="orderVBox" prefHeight="337.0" prefWidth="249.0" styleClass="customerVBox" />
+                                                <VBox fx:id="orderVBox" prefHeight="337.0" prefWidth="249.0"
+                                                      spacing="10.0" styleClass="customerVBox"/>
                                             </content>
                                  <padding>
                                     <Insets bottom="10.0" top="10.0" />
