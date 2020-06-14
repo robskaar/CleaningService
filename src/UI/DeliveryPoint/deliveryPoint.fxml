@@ -57,16 +57,14 @@
        </VBox>
    </top>
    <center>
-       <StackPane id="DisplayPane" prefHeight="554.0" prefWidth="607.0"
-                  stylesheets="@../../Foundation/Resources/CSS/DefaultStyle.css" BorderPane.alignment="CENTER">
+       <StackPane id="DisplayPane" prefHeight="554.0" prefWidth="607.0" stylesheets="@../../Foundation/Resources/CSS/DefaultStyle.css" BorderPane.alignment="CENTER">
            <children>
                <VBox fx:id="startPane" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="root">
 
                    <children>
-                       <Label fx:id="orderMsg" alignment="CENTER" prefHeight="34.0" prefWidth="233.0"
-                              text="Order was split into several orders" visible="false" wrapText="true">
+                       <Label fx:id="orderMsg" alignment="CENTER" prefHeight="34.0" prefWidth="233.0" text="Order was split into several orders" visible="false" wrapText="true">
                            <VBox.margin>
-                               <Insets bottom="70.0"/>
+                               <Insets bottom="70.0" />
                            </VBox.margin>
                        </Label>
                        <HBox alignment="CENTER" prefHeight="91.0" prefWidth="600.0">
@@ -92,7 +90,7 @@
                            <children>
                                <Button mnemonicParsing="false" onAction="#returnToStart" text="Return">
                                    <HBox.margin>
-                                       <Insets left="20.0" right="10.0"/>
+                                       <Insets left="20.0" right="10.0" />
                                    </HBox.margin>
                                </Button>
                            </children>
@@ -101,7 +99,7 @@
                      <children>
                         <StackPane prefHeight="455.0" prefWidth="251.0">
                            <children>
-                              <VBox fx:id="tempCustomerPane" alignment="TOP_CENTER" prefHeight="455.0" prefWidth="173.0">
+                              <VBox fx:id="tempCustomerPane" alignment="TOP_CENTER" prefHeight="455.0" prefWidth="173.0" styleClass="scroll-pane">
                                  <children>
                                     <Label fx:id="firstNameLabel" text="First Name: ">
                                        <VBox.margin>
@@ -126,21 +124,16 @@
                                     <Button mnemonicParsing="false" onAction="#editCustomer" text="Edit" />
                                  </children>
                               </VBox>
-                               <VBox alignment="CENTER" prefHeight="463.0" prefWidth="158.0"
-                                     style="-fx-border-color: grey;" styleClass="scroll-pane"
-                                     stylesheets="@../../Foundation/Resources/CSS/DefaultStyle.css">
+                               <VBox alignment="CENTER" prefHeight="463.0" prefWidth="158.0" style="-fx-border-color: grey;" styleClass="scroll-pane" stylesheets="@../../Foundation/Resources/CSS/DefaultStyle.css">
                                    <children>
-                                       <HBox alignment="CENTER" prefHeight="60.0" prefWidth="166.0"
-                                             styleClass="scroll-pane"
-                                             stylesheets="@../../Foundation/Resources/CSS/DefaultStyle.css">
+                                       <HBox alignment="CENTER" prefHeight="60.0" prefWidth="166.0" styleClass="scroll-pane" stylesheets="@../../Foundation/Resources/CSS/DefaultStyle.css">
                                            <children>
-                                               <Label text="Order ID"/>
+                                               <Label text="Order ID" />
                                            </children>
                                        </HBox>
                                        <ScrollPane hbarPolicy="NEVER" prefHeight="356.0" prefWidth="144.0">
                                            <content>
-                                               <VBox fx:id="orderListPane" prefHeight="340.0" prefWidth="181.0"
-                                                     spacing="5.0"/>
+                                               <VBox fx:id="orderListPane" prefHeight="340.0" prefWidth="181.0" spacing="5.0" />
                       </content>
                                     </ScrollPane>
                                     <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addNewOrder" prefHeight="28.0" prefWidth="86.0" text="Create New" textAlignment="CENTER">
@@ -154,23 +147,21 @@
                         </StackPane>
                          <ScrollPane hbarPolicy="NEVER" prefHeight="455.0" prefWidth="325.0">
                              <content>
-                                 <VBox fx:id="orderItemsPane" alignment="TOP_CENTER" prefHeight="452.0"
-                                       prefWidth="246.0" spacing="10.0" style="-fx-border-color: grey;">
+                                 <VBox fx:id="orderItemsPane" alignment="TOP_CENTER" prefHeight="452.0" prefWidth="246.0" spacing="10.0" style="-fx-border-color: grey;">
                                      <opaqueInsets>
-                                         <Insets/>
+                                         <Insets />
                                      </opaqueInsets>
                                  </VBox>
                              </content>
                              <HBox.margin>
-                                 <Insets left="10.0"/>
+                                 <Insets left="10.0" />
                              </HBox.margin>
                          </ScrollPane>
                         <ScrollPane hbarPolicy="NEVER" prefHeight="463.0" prefWidth="237.0">
                            <content>
-                               <VBox fx:id="laundryItemsPane" prefHeight="453.0" prefWidth="161.0"
-                                     style="-fx-border-color: grey;">
+                               <VBox fx:id="laundryItemsPane" prefHeight="453.0" prefWidth="161.0" style="-fx-border-color: grey;">
                                    <padding>
-                                       <Insets left="10.0"/>
+                                       <Insets left="10.0" />
                                    </padding>
                                </VBox>
                            </content>
@@ -182,22 +173,19 @@
                   </HBox>
                        <HBox alignment="CENTER" prefHeight="65.0" prefWidth="610.0">
                            <children>
-                               <Button mnemonicParsing="false" onAction="#confirmOrder" text="Confirm"/>
+                               <Button mnemonicParsing="false" onAction="#confirmOrder" text="Confirm" />
                            </children>
                        </HBox>
                </children>
             </VBox>
-               <VBox fx:id="registerCustomer" alignment="TOP_CENTER" prefHeight="564.0" prefWidth="605.0"
-                     styleClass="root">
+               <VBox fx:id="registerCustomer" alignment="TOP_CENTER" prefHeight="564.0" prefWidth="605.0" styleClass="root">
                    <children>
                        <Label text="New Customer">
                            <VBox.margin>
-                               <Insets bottom="30.0" top="10.0"/>
+                               <Insets bottom="30.0" top="10.0" />
                            </VBox.margin>
                        </Label>
-                       <Label fx:id="errorMessage"
-                              text="Please Make sure to fill out all fields and that the phone number has 8 digits"
-                              textFill="RED" visible="false" wrapText="true"/>
+                       <Label fx:id="errorMessage" text="Please Make sure to fill out all fields and that the phone number has 8 digits" textFill="RED" visible="false" wrapText="true" />
                        <HBox alignment="CENTER" prefHeight="46.0" prefWidth="600.0">
                            <children>
                                <Label prefHeight="17.0" prefWidth="85.0" text="First name">
