@@ -6,7 +6,9 @@ import javafx.scene.control.CheckBox;
 
 import java.time.LocalDateTime;
 
-
+/**
+ * @author jacob Bonefeld
+ */
 public class OrderItem {
 
     private boolean isWashed;

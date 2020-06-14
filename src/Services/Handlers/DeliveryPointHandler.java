@@ -23,10 +23,7 @@ public class DeliveryPointHandler {
         return FXCollections.observableArrayList(convertResultSetToArrayList());
     }
 
-
-
     private static ArrayList<DeliveryPoint> convertResultSetToArrayList() {
-
         // Stores all delivery from result set
         ArrayList<DeliveryPoint> deliveryPoints = new ArrayList<>();
 
