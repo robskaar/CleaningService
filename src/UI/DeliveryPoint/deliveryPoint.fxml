@@ -135,6 +135,9 @@
                                            <content>
                                                <VBox fx:id="orderListPane" prefHeight="340.0" prefWidth="181.0" spacing="5.0" />
                       </content>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
                                     </ScrollPane>
                                     <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addNewOrder" prefHeight="28.0" prefWidth="86.0" text="Create New" textAlignment="CENTER">
                                        <VBox.margin>
@@ -144,6 +147,9 @@
                                  </children>
                               </VBox>
                            </children>
+                           <HBox.margin>
+                              <Insets left="2.0" />
+                           </HBox.margin>
                         </StackPane>
                          <ScrollPane hbarPolicy="NEVER" prefHeight="455.0" prefWidth="325.0" style="-fx-border-color: grey;">
                              <content>
@@ -157,16 +163,16 @@
                                  <Insets left="10.0" />
                              </HBox.margin>
                          </ScrollPane>
-                        <ScrollPane hbarPolicy="NEVER" prefHeight="455.0" prefWidth="184.0" style="-fx-border-color: grey;">
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="455.0" prefWidth="195.0" style="-fx-border-color: grey;">
                            <content>
-                               <VBox fx:id="laundryItemsPane" prefHeight="451.0" prefWidth="156.0">
+                               <VBox fx:id="laundryItemsPane" prefHeight="451.0" prefWidth="123.0">
                                    <padding>
                                        <Insets left="10.0" />
                                    </padding>
                                </VBox>
                            </content>
                            <HBox.margin>
-                              <Insets left="10.0" />
+                              <Insets left="10.0" right="3.0" />
                            </HBox.margin>
                         </ScrollPane>
                      </children>
