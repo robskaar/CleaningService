@@ -1,6 +1,7 @@
 package Application.DeliveryPoint;
 
 import Application.General.Controller_Application;
+import Domain.Enums.Regex;
 import Domain.LaundryItems.LaundryItem;
 import Services.Handlers.AccountHandler;
 import Services.Handlers.CustomerHandler;
@@ -105,9 +106,6 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
     final int FOURTH_DELIVERY_DATE= 16;
     private final String NEW_ORDER = "New Order";
     private final String NO_ORDER = "No Orders ready";
-    private final String PHONE_REGEX = "^[0-9]{8}$";
-    private final String EMAIL_REGEX ="(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -118,9 +116,9 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
      * searches for costumers through it's phone number
      */
     public void searchOnPhoneNumber() {
-        Pattern pattern = Pattern.compile(PHONE_REGEX);
-        Matcher matcher = pattern.matcher(phoneNumberSearch.getText());
-        if (matcher.matches()) {
+
+        Boolean phoneCriteriasMet = Regex.PHONE_REGEX.matches(phoneNumberSearch.getText());
+        if (phoneCriteriasMet) {
             phoneNumberSearch.setStyle("-fx-border-color: green");
 
             try {
@@ -452,12 +450,10 @@ public class Controller_DeliveryPoint extends Controller_Application implements 
      * @return
      */
     private boolean checkIfFilledOut(){
-        Pattern pattern = Pattern.compile(PHONE_REGEX);
-        Pattern emailPattern = Pattern.compile(EMAIL_REGEX);
-        Matcher phoneMatcher = pattern.matcher(phoneNumberTF.getText());
-        Matcher emailMatcher = emailPattern.matcher(emailTF.getText());
+        Boolean phoneMatcher = Regex.PHONE_REGEX.matches(phoneNumberTF.getText());
+        Boolean emailMatcher = Regex.EMAIL_REGEX.matches(emailTF.getText());
 
-        if (emailMatcher.matches() && phoneMatcher.matches() && firstNameTF.getText() != null && lastNameTF.getText() != null
+        if (emailMatcher && phoneMatcher && firstNameTF.getText() != null && lastNameTF.getText() != null
                 && emailTF.getText() != null && phoneNumberTF.getText() != null){
             return true;
         } else {

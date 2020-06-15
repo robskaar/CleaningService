@@ -1,6 +1,7 @@
 package Application.Costumer;
 
 import Application.General.Controller_Application;
+import Domain.Enums.Regex;
 import Services.Handlers.AccountHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,15 +51,15 @@ public class Controller_RegisterScene extends Controller_Application implements 
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Pattern passComplexity = Pattern.compile("((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})");
         passWord.setTooltip(passwordTip);
         passwordTip.setShowDelay(null);
         passWord.textProperty().addListener(((observableValue, oldVal, newVal) -> {
-            Matcher matching = passComplexity.matcher(passWord.getText());
-            if (matching.matches()) {
+            Boolean matchingPassWordCriteria = Regex.PASSWORD_REGEX.matches(passWord.getText());
+            if (matchingPassWordCriteria) {
                 passWord.setStyle("-fx-border-color: green");
                 pwdCriteriasMet = true;
-            } else {
+            }
+            else {
                 passWord.setStyle("-fx-border-color: red");
                 pwdCriteriasMet = false;
             }
@@ -75,43 +76,68 @@ public class Controller_RegisterScene extends Controller_Application implements 
 
     }
 
-    public void register() {
-        String dateRegex = "^(3[01]|[12][0-9]|0[1-9])/(1[0-2]|0[1-9])/[0-9]{4}$";
-        Pattern pattern = Pattern.compile(dateRegex);
-        Matcher matcher = pattern.matcher(dateOfBirth.getEditor().getText());
+    public void register( ) {
+
+        Boolean phoneMatcher = Regex.PHONE_REGEX.matches(phoneNumber.getText());
+        Boolean emailMatcher = Regex.EMAIL_REGEX.matches(emailAddress.getText());
+        Boolean dateOfBirthMatcher = Regex.DATE_OF_BIRTH_REGEX.matches(dateOfBirth.getEditor().getText());
         if (dateOfBirth.getValue() == null) {
             LocalDate tempDate = LocalDate.parse(dateOfBirth.getEditor().getText(), formatter);
             dateOfBirth.setValue(tempDate);
         }
-        if (pwdCriteriasMet && matcher.matches() && userName.getText() != null
-                && firstName.getText() != null && lastName.getText() != null
-                && emailAddress.getText() != null && phoneNumber.getText() != null) {
+        if (pwdCriteriasMet && dateOfBirthMatcher && userName.getText() != null
+            && firstName.getText() != null && lastName.getText() != null
+            && emailMatcher && phoneMatcher) {
             switch (Controller_Application.currentEmulator) {
                 case Costumer:
-                    AccountHandler.registerCustomer(userName.getText(), passWord.getText(), firstName.getText(), lastName.getText(),
-                            emailAddress.getText(), phoneNumber.getText(), dateOfBirth.getValue(),
-                            0); //0 is a false bit and 1 is a true in mssql
+                    AccountHandler.registerCustomer(userName.getText(), passWord.getText(), firstName.getText(),
+                                                    lastName.getText(),
+                                                    emailAddress.getText(), phoneNumber.getText(),
+                                                    dateOfBirth.getValue(),
+                                                    0); //0 is a false bit and 1 is a true in mssql
                     break;
                 case Driver:
-                    AccountHandler.registerDriver(userName.getText(),passWord.getText(),firstName.getText(),lastName.getText(),
-                            emailAddress.getText(),phoneNumber.getText(),dateOfBirth.getValue(),Integer.parseInt(corporateID.getText()));
+                    AccountHandler.registerDriver(userName.getText(), passWord.getText(), firstName.getText(),
+                                                  lastName.getText(),
+                                                  emailAddress.getText(), phoneNumber.getText(), dateOfBirth.getValue(),
+                                                  Integer.parseInt(corporateID.getText()));
                     break;
             }
 
             changeToLoginScene(); // changes into login scene after successful registration
-        } else {
+        }
+        else {
             if (!pwdCriteriasMet) {
                 passWord.setStyle("-fx-border-color: red");
                 passWord.requestFocus();
-            } else {
+            }
+            else {
                 passWord.setStyle("-fx-border-color: transparent");
             }
-            if (!matcher.matches()) {
+            if (!dateOfBirthMatcher) {
                 dateOfBirth.setStyle("-fx-border-color: red");
                 dateOfBirth.requestFocus();
-            } else {
+            }
+            else {
                 dateOfBirth.setStyle("-fx-border-color: transparent");
             }
+            if (!emailMatcher){
+                emailAddress.setStyle("-fx-border-color: red");
+                emailAddress.requestFocus();
+                emailAddress.setTooltip(new Tooltip("Invalid email provided"));
+            }else{
+                emailAddress.getTooltip().hide();
+                emailAddress.setStyle("-fx-border-color: transparent");
+            }
+            if (!phoneMatcher){
+                phoneNumber.setStyle("-fx-border-color: red");
+                phoneNumber.requestFocus();
+                phoneNumber.setTooltip(new Tooltip("Incorrect Phone Number, 8 digits only 0-9"));
+            }else{
+                phoneNumber.getTooltip().hide();
+                phoneNumber.setStyle("-fx-border-color: transparent");
+            }
+
         }
     }
 
