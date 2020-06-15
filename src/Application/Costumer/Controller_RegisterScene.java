@@ -5,10 +5,12 @@ import Domain.Enums.Regex;
 import Services.Handlers.AccountHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -53,10 +55,12 @@ public class Controller_RegisterScene extends Controller_Application implements 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         passWord.setTooltip(passwordTip);
         passwordTip.setShowDelay(null);
+        passwordTip.setHideDelay(Duration.millis(3000));
         passWord.textProperty().addListener(((observableValue, oldVal, newVal) -> {
             Boolean matchingPassWordCriteria = Regex.PASSWORD_REGEX.matches(passWord.getText());
             if (matchingPassWordCriteria) {
                 passWord.setStyle("-fx-border-color: green");
+                passwordTip.hide();
                 pwdCriteriasMet = true;
             }
             else {
