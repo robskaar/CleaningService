@@ -16,9 +16,13 @@
 
     let map;
     let defaultLocation = {lat: 54.945147, lng: 9.259303};
+    let locationLaundryCentral = {lat: 54.913132, lng: 9.779663};
+
     let driverMarker;
+    let laundryCentralMarker;
     let markerLocations = [];
     let geoCoder;
+
     /*
     Not in use atm
     let directionsRenderer;
@@ -37,6 +41,50 @@
             position: defaultLocation,
             icon: 'http://maps.google.com/mapfiles/kml/pal4/icon31.png'
         });
+        laundryCentralMarker = new google.maps.Marker({
+            map: map,
+            position: locationLaundryCentral,
+            icon: 'http://maps.google.com/mapfiles/kml/pal3/icon21.png'
+        });
+
+        let infoWindowLaundryCentral = new google.maps.InfoWindow({
+            content: 'This is the Laundry Central, oddly enough, also our school'
+        });
+        let infoDriver = new google.maps.InfoWindow({
+            content: 'Driver on a route'
+        });
+
+        // Setup listener for hover
+        driverMarker.addListener('mouseover', function () {
+            infoDriver.open(map, this);
+            if (driverMarker.getAnimation() !== null) {
+                driverMarker.setAnimation(null);
+            } else {
+                driverMarker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+            driverMarker.setAnimation(google.maps.Animation.BOUNCE);
+        });
+        // Setup listener for hover gone
+        driverMarker.addListener('mouseout', function () {
+            driverMarker.setAnimation(null);
+            infoDriver.close();
+        });
+
+        // Setup listener for hover
+        laundryCentralMarker.addListener('mouseover', function () {
+            infoWindowLaundryCentral.open(map, this);
+            if (laundryCentralMarker.getAnimation() !== null) {
+                laundryCentralMarker.setAnimation(null);
+            } else {
+                laundryCentralMarker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+            laundryCentralMarker.setAnimation(google.maps.Animation.BOUNCE);
+        });
+        // Setup listener for hover gone
+        laundryCentralMarker.addListener('mouseout', function () {
+            laundryCentralMarker.setAnimation(null);
+            infoWindowLaundryCentral.close();
+        });
 
         // Init address to coordinates translator
         geoCoder = new google.maps.Geocoder();
@@ -50,9 +98,9 @@
     }
 
     // This function gets executed from java, when the map is shown first time
-    function setMarker(address,storeName) {
+    function setMarker(address, storeName) {
 
-        geoCoder.geocode({'address': address}, function(results, status) {
+        geoCoder.geocode({'address': address}, function (results, status) {
 
             if (status === google.maps.GeocoderStatus.OK) {
                 map.setCenter(results[0].geometry.location);
@@ -73,7 +121,7 @@
                 });
 
                 // Setup listener for hover
-                marker.addListener('mouseover', function() {
+                marker.addListener('mouseover', function () {
                     infoWindow.open(map, this);
                     if (marker.getAnimation() !== null) {
                         marker.setAnimation(null);
@@ -84,7 +132,7 @@
                 });
 
                 // Setup listener for hover gone
-                marker.addListener('mouseout', function() {
+                marker.addListener('mouseout', function () {
                     marker.setAnimation(null);
                     infoWindow.close();
                 });
@@ -108,7 +156,7 @@
                 destination: 'haderslev',
                 travelMode: 'DRIVING'
             },
-            function(response, status) {
+            function (response, status) {
                 if (status === 'OK') {
                     directionsRenderer.setDirections(response);
                 } else {
