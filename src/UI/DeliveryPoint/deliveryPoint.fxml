@@ -97,7 +97,7 @@
                        </HBox>
                   <HBox prefHeight="460.0" prefWidth="572.0">
                      <children>
-                        <StackPane prefHeight="455.0" prefWidth="251.0" style="-fx-border-color: grey;">
+                        <StackPane prefHeight="455.0" prefWidth="194.0" style="-fx-border-color: grey;">
                            <children>
                               <VBox fx:id="tempCustomerPane" alignment="TOP_CENTER" prefHeight="455.0" prefWidth="173.0" styleClass="scroll-pane">
                                  <children>
@@ -133,7 +133,7 @@
                                        </HBox>
                                        <ScrollPane hbarPolicy="NEVER" prefHeight="356.0" prefWidth="144.0">
                                            <content>
-                                               <VBox fx:id="orderListPane" prefHeight="340.0" prefWidth="181.0" spacing="5.0" />
+                                               <VBox fx:id="orderListPane" prefHeight="340.0" prefWidth="140.0" spacing="5.0" />
                       </content>
                                        <VBox.margin>
                                           <Insets />
@@ -151,9 +151,9 @@
                               <Insets left="2.0" />
                            </HBox.margin>
                         </StackPane>
-                         <ScrollPane hbarPolicy="NEVER" prefHeight="455.0" prefWidth="325.0" style="-fx-border-color: grey;">
+                         <ScrollPane hbarPolicy="NEVER" prefHeight="455.0" prefWidth="334.0" style="-fx-border-color: grey;">
                              <content>
-                                 <VBox fx:id="orderItemsPane" alignment="TOP_CENTER" prefHeight="447.0" prefWidth="241.0" spacing="10.0">
+                                 <VBox fx:id="orderItemsPane" alignment="TOP_CENTER" prefHeight="447.0" prefWidth="280.0" spacing="10.0">
                                      <opaqueInsets>
                                          <Insets />
                                      </opaqueInsets>
@@ -165,7 +165,7 @@
                          </ScrollPane>
                         <ScrollPane hbarPolicy="NEVER" prefHeight="455.0" prefWidth="195.0" style="-fx-border-color: grey;">
                            <content>
-                               <VBox fx:id="laundryItemsPane" prefHeight="451.0" prefWidth="123.0">
+                               <VBox fx:id="laundryItemsPane" prefHeight="451.0" prefWidth="143.0">
                                    <padding>
                                        <Insets left="10.0" />
                                    </padding>
