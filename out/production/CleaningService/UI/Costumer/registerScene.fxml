@@ -17,9 +17,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: transparent;"
-            xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="Application.Costumer.Controller_RegisterScene">
+<BorderPane prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Costumer.Controller_RegisterScene">
     <top>
         <VBox prefHeight="38.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
@@ -27,15 +25,12 @@
                     <children>
                         <ToolBar prefHeight="38.0" prefWidth="142.0">
                             <items>
-                                <MenuButton fx:id="settingsBtn" minHeight="16.0" minWidth="16.0"
-                                            mnemonicParsing="false">
+                                <MenuButton fx:id="settingsBtn" minHeight="16.0" minWidth="16.0" mnemonicParsing="false">
                                     <items>
                                         <Menu mnemonicParsing="false" text="Themes">
                                             <items>
-                                                <MenuItem fx:id="defaultThemeBtn" mnemonicParsing="false"
-                                                          onAction="#changeThemeDefault" text="Default"/>
-                                                <MenuItem fx:id="darkThemeBtn" mnemonicParsing="false"
-                                                          onAction="#changeThemeDark" text="Dark"/>
+                                                <MenuItem fx:id="defaultThemeBtn" mnemonicParsing="false" onAction="#changeThemeDefault" text="Default" />
+                                                <MenuItem fx:id="darkThemeBtn" mnemonicParsing="false" onAction="#changeThemeDark" text="Dark" />
                                             </items>
                                         </Menu>
                                     </items>
@@ -52,67 +47,56 @@
       </VBox>
    </top>
     <center>
-        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="554.0" prefWidth="262.0"
-                   BorderPane.alignment="CENTER">
+        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="554.0" prefWidth="262.0" BorderPane.alignment="CENTER">
             <children>
                 <ImageView fitHeight="559.0" fitWidth="275.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../Foundation/Resources/Icons/PhoneEmulator/iphone.png"/>
+                        <Image url="@../../Foundation/Resources/Icons/PhoneEmulator/iphone.png" />
                     </image>
                 </ImageView>
-                <VBox alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="486.0"
-                      prefWidth="259.0" styleClass="root"
-                      stylesheets="@../../Foundation/Resources/CSS/DefaultStyle.css">
+                <VBox alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="486.0" prefWidth="259.0" styleClass="root" stylesheets="@../../Foundation/Resources/CSS/DefaultStyle.css">
                     <children>
-                        <TextField fx:id="userName" alignment="CENTER" prefHeight="26.0" prefWidth="155.0"
-                                   promptText="Username">
+                        <TextField fx:id="userName" alignment="CENTER" prefHeight="26.0" prefWidth="155.0" promptText="Username">
                             <VBox.margin>
-                                <Insets bottom="10.0"/>
+                                <Insets bottom="10.0" />
                             </VBox.margin>
                         </TextField>
-                        <PasswordField fx:id="passWord" alignment="CENTER" prefHeight="26.0" prefWidth="155.0"
-                                       promptText="Password">
+                        <PasswordField fx:id="passWord" alignment="CENTER" prefHeight="26.0" prefWidth="155.0" promptText="Password">
                             <VBox.margin>
-                                <Insets bottom="10.0"/>
+                                <Insets bottom="10.0" />
                             </VBox.margin>
                         </PasswordField>
-                        <TextField fx:id="firstName" alignment="CENTER" prefHeight="26.0" prefWidth="155.0"
-                                   promptText="First name">
+                        <TextField fx:id="firstName" alignment="CENTER" prefHeight="26.0" prefWidth="155.0" promptText="First name">
                             <VBox.margin>
-                                <Insets bottom="10.0"/>
+                                <Insets bottom="10.0" />
                             </VBox.margin>
                         </TextField>
-                        <TextField fx:id="lastName" alignment="CENTER" prefHeight="26.0" prefWidth="155.0"
-                                   promptText="Last name">
+                        <TextField fx:id="lastName" alignment="CENTER" prefHeight="26.0" prefWidth="155.0" promptText="Last name">
                             <VBox.margin>
-                                <Insets bottom="10.0"/>
+                                <Insets bottom="10.0" />
                             </VBox.margin>
                         </TextField>
-                        <TextField fx:id="emailAddress" alignment="CENTER" prefHeight="26.0" prefWidth="155.0"
-                                   promptText="Email">
+                        <TextField fx:id="emailAddress" alignment="CENTER" prefHeight="26.0" prefWidth="155.0" promptText="Email">
                             <VBox.margin>
-                                <Insets bottom="10.0"/>
+                                <Insets bottom="10.0" />
                             </VBox.margin>
                         </TextField>
-                        <TextField fx:id="phoneNumber" alignment="CENTER" prefHeight="26.0" prefWidth="155.0"
-                                   promptText="Phone number">
+                        <TextField fx:id="phoneNumber" alignment="CENTER" prefHeight="26.0" prefWidth="155.0" promptText="Phone number">
                             <VBox.margin>
-                                <Insets bottom="10.0"/>
+                                <Insets bottom="10.0" />
                             </VBox.margin>
                         </TextField>
                         <DatePicker fx:id="dateOfBirth" prefHeight="26.0" prefWidth="155.0" promptText="Date of birth">
                             <VBox.margin>
-                                <Insets bottom="10.0"/>
+                                <Insets bottom="10.0" />
                             </VBox.margin>
                         </DatePicker>
                         <HBox alignment="CENTER" prefHeight="43.0" prefWidth="600.0">
                             <children>
-                                <Button mnemonicParsing="false" onAction="#register" prefHeight="26.0" prefWidth="60.0"
-                                        text="Register"/>
-                                <Button mnemonicParsing="false" onAction="#changeToLoginScene" prefHeight="26.0"
-                                        prefWidth="58.0" text="Log in">
+                                <Button mnemonicParsing="false" onAction="#register" prefHeight="26.0" prefWidth="95.0" text="Register now" />
+                                <Button mnemonicParsing="false" onAction="#changeToLoginScene" prefHeight="26.0" prefWidth="95.0" text="Back to Log in">
                                     <HBox.margin>
-                                        <Insets left="10.0"/>
+                                        <Insets left="10.0" />
                                     </HBox.margin>
                                 </Button>
                             </children>
