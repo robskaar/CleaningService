@@ -97,43 +97,43 @@
                        </HBox>
                   <HBox prefHeight="460.0" prefWidth="572.0">
                      <children>
-                        <StackPane prefHeight="455.0" prefWidth="194.0" style="-fx-border-color: grey;">
+                        <StackPane prefHeight="455.0" prefWidth="221.0" style="-fx-border-color: grey;">
                            <children>
                               <VBox fx:id="tempCustomerPane" alignment="TOP_CENTER" prefHeight="455.0" prefWidth="173.0" styleClass="scroll-pane">
                                  <children>
-                                    <Label fx:id="firstNameLabel" text="First Name: ">
+                                    <Label fx:id="firstNameLabel" prefHeight="32.0" prefWidth="149.0" text="First Name: " wrapText="true">
                                        <VBox.margin>
                                           <Insets bottom="20.0" top="50.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="lastNameLabel" text="Last Name: ">
+                                    <Label fx:id="lastNameLabel" prefHeight="30.0" prefWidth="148.0" text="Last Name: " wrapText="true">
                                        <VBox.margin>
                                           <Insets bottom="20.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="emailLabel" text="Email: ">
+                                    <Label fx:id="emailLabel" prefHeight="30.0" prefWidth="148.0" text="Email: ">
                                        <VBox.margin>
                                           <Insets bottom="20.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="phoneNumberLabel" text="Phone Number:" wrapText="true">
+                                    <Label fx:id="phoneNumberLabel" prefHeight="34.0" prefWidth="153.0" text="Phone Number:" wrapText="true">
                                        <VBox.margin>
                                           <Insets bottom="50.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Button mnemonicParsing="false" onAction="#editCustomer" text="Edit" />
+                                    <Button mnemonicParsing="false" onAction="#editCustomer" prefHeight="25.0" prefWidth="75.0" text="Edit" />
                                  </children>
                               </VBox>
-                               <VBox alignment="CENTER" prefHeight="463.0" prefWidth="158.0" styleClass="scroll-pane" stylesheets="@../../Foundation/Resources/CSS/DefaultStyle.css">
+                               <VBox alignment="CENTER" prefHeight="463.0" prefWidth="166.0" styleClass="scroll-pane" stylesheets="@../../Foundation/Resources/CSS/DefaultStyle.css">
                                    <children>
                                        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="166.0" styleClass="scroll-pane" stylesheets="@../../Foundation/Resources/CSS/DefaultStyle.css">
                                            <children>
                                                <Label text="Order ID" />
                                            </children>
                                        </HBox>
-                                       <ScrollPane hbarPolicy="NEVER" prefHeight="356.0" prefWidth="144.0">
+                                       <ScrollPane hbarPolicy="NEVER" prefHeight="356.0" prefWidth="105.0">
                                            <content>
-                                               <VBox fx:id="orderListPane" prefHeight="340.0" prefWidth="140.0" spacing="5.0" />
+                                               <VBox fx:id="orderListPane" prefHeight="340.0" prefWidth="148.0" spacing="5.0" />
                       </content>
                                        <VBox.margin>
                                           <Insets />
@@ -163,9 +163,9 @@
                                  <Insets left="10.0" />
                              </HBox.margin>
                          </ScrollPane>
-                        <ScrollPane hbarPolicy="NEVER" prefHeight="455.0" prefWidth="195.0" style="-fx-border-color: grey;">
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="455.0" prefWidth="227.0" style="-fx-border-color: grey;">
                            <content>
-                               <VBox fx:id="laundryItemsPane" prefHeight="451.0" prefWidth="143.0">
+                               <VBox fx:id="laundryItemsPane" prefHeight="451.0" prefWidth="156.0">
                                    <padding>
                                        <Insets left="10.0" />
                                    </padding>
@@ -184,7 +184,7 @@
                        </HBox>
                </children>
             </VBox>
-               <VBox fx:id="registerCustomer" alignment="TOP_CENTER" prefHeight="564.0" prefWidth="605.0" styleClass="root" visible="false">
+               <VBox fx:id="registerCustomer" alignment="TOP_CENTER" prefHeight="564.0" prefWidth="605.0" styleClass="root">
                    <children>
                        <Label text="New Customer">
                            <VBox.margin>
