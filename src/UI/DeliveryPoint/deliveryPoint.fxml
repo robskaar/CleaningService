@@ -97,7 +97,7 @@
                        </HBox>
                   <HBox prefHeight="460.0" prefWidth="572.0">
                      <children>
-                        <StackPane prefHeight="455.0" prefWidth="251.0">
+                        <StackPane prefHeight="455.0" prefWidth="251.0" style="-fx-border-color: grey;">
                            <children>
                               <VBox fx:id="tempCustomerPane" alignment="TOP_CENTER" prefHeight="455.0" prefWidth="173.0" styleClass="scroll-pane">
                                  <children>
@@ -124,7 +124,7 @@
                                     <Button mnemonicParsing="false" onAction="#editCustomer" text="Edit" />
                                  </children>
                               </VBox>
-                               <VBox alignment="CENTER" prefHeight="463.0" prefWidth="158.0" style="-fx-border-color: grey;" styleClass="scroll-pane" stylesheets="@../../Foundation/Resources/CSS/DefaultStyle.css">
+                               <VBox alignment="CENTER" prefHeight="463.0" prefWidth="158.0" styleClass="scroll-pane" stylesheets="@../../Foundation/Resources/CSS/DefaultStyle.css">
                                    <children>
                                        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="166.0" styleClass="scroll-pane" stylesheets="@../../Foundation/Resources/CSS/DefaultStyle.css">
                                            <children>
@@ -145,9 +145,9 @@
                               </VBox>
                            </children>
                         </StackPane>
-                         <ScrollPane hbarPolicy="NEVER" prefHeight="455.0" prefWidth="325.0">
+                         <ScrollPane hbarPolicy="NEVER" prefHeight="455.0" prefWidth="325.0" style="-fx-border-color: grey;">
                              <content>
-                                 <VBox fx:id="orderItemsPane" alignment="TOP_CENTER" prefHeight="452.0" prefWidth="246.0" spacing="10.0" style="-fx-border-color: grey;">
+                                 <VBox fx:id="orderItemsPane" alignment="TOP_CENTER" prefHeight="447.0" prefWidth="241.0" spacing="10.0">
                                      <opaqueInsets>
                                          <Insets />
                                      </opaqueInsets>
@@ -157,9 +157,9 @@
                                  <Insets left="10.0" />
                              </HBox.margin>
                          </ScrollPane>
-                        <ScrollPane hbarPolicy="NEVER" prefHeight="463.0" prefWidth="237.0">
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="455.0" prefWidth="184.0" style="-fx-border-color: grey;">
                            <content>
-                               <VBox fx:id="laundryItemsPane" prefHeight="453.0" prefWidth="161.0" style="-fx-border-color: grey;">
+                               <VBox fx:id="laundryItemsPane" prefHeight="451.0" prefWidth="156.0">
                                    <padding>
                                        <Insets left="10.0" />
                                    </padding>
@@ -178,7 +178,7 @@
                        </HBox>
                </children>
             </VBox>
-               <VBox fx:id="registerCustomer" alignment="TOP_CENTER" prefHeight="564.0" prefWidth="605.0" styleClass="root">
+               <VBox fx:id="registerCustomer" alignment="TOP_CENTER" prefHeight="564.0" prefWidth="605.0" styleClass="root" visible="false">
                    <children>
                        <Label text="New Customer">
                            <VBox.margin>
